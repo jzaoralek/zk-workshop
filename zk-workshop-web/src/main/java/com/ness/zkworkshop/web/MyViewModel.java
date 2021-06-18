@@ -1,4 +1,4 @@
-package com.ness.zkworkshop.zk_workshop_web;
+package com.ness.zkworkshop.web;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;

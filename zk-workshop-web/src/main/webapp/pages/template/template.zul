@@ -1,0 +1,26 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?meta http-equiv="Content-Type" content="text/html; charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<?link rel="stylesheet" type="text/css" href="/sources/css/styles.css"?>
+
+<zk>
+	<borderlayout hflex="1" vflex="1">
+		<north height="100px" border="none">
+			<include src="/pages/template/banner.zul" />
+		</north>
+		<west width="260px" border="none" 
+			collapsible="true"
+			splittable="true" 
+			minsize="300">
+			<include src="/pages/template/sidebar.zul" />
+		</west>
+		<center id="mainContent" autoscroll="true">
+			<div self="@{insert(mainContent)}" hflex="1" vflex="1">
+			</div>
+		</center>
+		<south height="75px" border="none">
+			<include src="/pages/template/footer.zul" />
+		</south>
+	</borderlayout>
+</zk>
