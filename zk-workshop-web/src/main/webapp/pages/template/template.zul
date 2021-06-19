@@ -2,9 +2,15 @@
 <?meta http-equiv="Content-Type" content="text/html; charset=UTF-8"?>
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 
-<?link rel="stylesheet" type="text/css" href="/sources/css/styles.css"?>
-
-<zk>
+<zk>	
+<!-- 	<style> -->
+<!-- 	     .banner { -->
+<!-- 	         background-color:#102d35; -->
+<!-- 	         color: white; -->
+<!-- 	         padding: 5px 10px; -->
+<!-- 	     } -->
+<!-- 	 </style> -->
+	
 	<borderlayout hflex="1" vflex="1">
 		<north height="100px" border="none"
 			collapsible="true"
