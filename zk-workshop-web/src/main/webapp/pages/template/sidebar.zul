@@ -1,5 +1,5 @@
 <zk>
-	<grid hflex="1" vflex="1" sclass="sidebar">
+	<grid hflex="1" vflex="1" style="border: none;" sclass="sidebar">
 		<columns>
 			<column width="36px" />
 			<column />

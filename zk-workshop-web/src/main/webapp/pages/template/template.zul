@@ -6,7 +6,9 @@
 
 <zk>
 	<borderlayout hflex="1" vflex="1">
-		<north height="100px" border="none">
+		<north height="100px" border="none"
+			collapsible="true"
+			splittable="true" >
 			<include src="/pages/template/banner.zul" />
 		</north>
 		<west width="260px" border="none" 
@@ -19,7 +21,9 @@
 			<div self="@{insert(mainContent)}" hflex="1" vflex="1">
 			</div>
 		</center>
-		<south height="75px" border="none">
+		<south height="75px" border="none"
+			collapsible="true"
+			splittable="true" >
 			<include src="/pages/template/footer.zul" />
 		</south>
 	</borderlayout>

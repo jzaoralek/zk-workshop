@@ -1,13 +1,13 @@
 <div hflex="1" sclass="banner">
     <hbox hflex="1" align="center">
         <a href="http://www.zkoss.org/">
-            <image src="/sources/imgs/zklogo.png" width="90px" />
+            <image src="/sources/imgs/zklogo.png" width="60px" />
         </a>
         <div width="400px">
             <label value="ZK Workshop - demo" sclass="banner" />
         </div>
-        <hbox hflex="1" vflex="1" pack="end" align="end">
-            Anonymní
+        <hbox hflex="1" vflex="1" pack="end" align="center">
+            Anonymní uživatel
         </hbox>
     </hbox>
 </div>
