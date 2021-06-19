@@ -18,6 +18,7 @@ public class SidebarPageConfigImpl implements SidebarPageConfig{
 		pageMap.put("fn1",new SidebarPage("zk","ZK","/sources/imgs/site.png","http://www.zkoss.org/"));
 		pageMap.put("fn2",new SidebarPage("demo","ZK Demo","/sources/imgs/demo.png","http://www.zkoss.org/zkdemo"));
 		pageMap.put("fn3",new SidebarPage("devref", Labels.getLabel("web.zkDeveloperReference"),"/sources/imgs/doc.png","http://books.zkoss.org/wiki/ZK_Developer's_Reference"));
+		pageMap.put("fn4",new SidebarPage("devref", Labels.getLabel("web.userProfile"),"/sources/imgs/profile.png","/pages/user-profile.zul"));
 	}
 	
 	public List<SidebarPage> getPages(){

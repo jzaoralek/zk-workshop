@@ -4,10 +4,9 @@
 
 <zk>
 	<window self="@{define(mainContent)}"
-		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm')@init('com.ness.zkworkshop.web.MyViewModel')"
 		validationMessages="@id('vmsgs')">
-		<label style="font-size:50px">Content</label>
+		<label style="font-size:50px">Home page</label>
 		<hlayout>
 			count:
 			<label value="@load(vm.count)" />
