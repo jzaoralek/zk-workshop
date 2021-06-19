@@ -5,7 +5,7 @@
 	<artifactId>zk-workshop-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-		<zk.version>9.0.0</zk.version>
+		<zk.version>8.0.0</zk.version>
 		<commons-io>2.6</commons-io>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<packname>-${project.version}-FL-${maven.build.timestamp}</packname>

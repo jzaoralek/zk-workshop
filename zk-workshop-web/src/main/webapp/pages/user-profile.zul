@@ -1,4 +1,4 @@
-<?page title="Formulář" contentType="text/html;charset=UTF-8"?>
+<?page title="${c:l('web.userProfile')}" contentType="text/html;charset=UTF-8"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
 <?link rel="stylesheet" type="text/css" href="/sources/css/styles.css"?>
 <zk>

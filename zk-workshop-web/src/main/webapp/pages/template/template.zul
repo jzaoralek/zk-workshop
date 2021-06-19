@@ -3,16 +3,8 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 
 <zk>	
-<!-- 	<style> -->
-<!-- 	     .banner { -->
-<!-- 	         background-color:#102d35; -->
-<!-- 	         color: white; -->
-<!-- 	         padding: 5px 10px; -->
-<!-- 	     } -->
-<!-- 	 </style> -->
-	
 	<borderlayout hflex="1" vflex="1">
-		<north height="100px" border="none"
+		<north  border="none"
 			collapsible="true"
 			splittable="true" >
 			<include src="/pages/template/banner.zul" />
