@@ -4,10 +4,10 @@
             <image src="/sources/imgs/zklogo.png" width="60px" />
         </a>
         <div width="400px">
-            <label value="ZK Workshop - demo" sclass="banner" />
+            <label value="${c:l('web.application.name')}" sclass="banner" />
         </div>
         <hbox hflex="1" vflex="1" pack="end" align="center">
-            Anonymní uživatel
+            ${c:l('web.anonymousUser')}
         </hbox>
     </hbox>
 </div>
