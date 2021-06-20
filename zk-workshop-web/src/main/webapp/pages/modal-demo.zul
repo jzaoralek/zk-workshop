@@ -1,0 +1,16 @@
+<?page title="${c:l('web.application.name')} | Modál" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ModalDemoVM')">
+			<caption sclass="fn-caption" iconSclass="z-icon-window-maximize">Modál</caption>
+			<panelchildren>
+				<vlayout style="margin-bottom: 10px;">
+					<label value="Hodnota předaná do modálu:"/>
+					<textbox value="@bind(vm.modalArg)" />
+				</vlayout>
+				<button label="Otevřít modál" onClick="@command('openModalCmd')" />
+			</panelchildren>
+	</panel>
+</zk>

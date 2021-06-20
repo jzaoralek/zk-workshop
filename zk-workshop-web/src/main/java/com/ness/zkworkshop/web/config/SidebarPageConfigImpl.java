@@ -24,6 +24,7 @@ public class SidebarPageConfigImpl implements SidebarPageConfig{
 		pageMap.put("fn6",new SidebarPage("tree", "Tree" ,null,"/pages/tree.zul", "z-icon-sitemap"));
 		pageMap.put("fn7",new SidebarPage("tabbox", "Tabbox" ,null,"/pages/tabbox.zul", "z-icon-table"));
 		pageMap.put("fn8",new SidebarPage("chart", "Chart" ,null,"/pages/chart.zul", "z-icon-signal"));
+		pageMap.put("fn9",new SidebarPage("modal", "Modál" ,null,"/pages/modal-demo.zul", "z-icon-window-maximize"));
 	}
 	
 	public List<SidebarPage> getPages(){
