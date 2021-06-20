@@ -21,6 +21,7 @@ public class SidebarPageConfigImpl implements SidebarPageConfig{
 		pageMap.put("fn1",new SidebarPage("home","Home","","/", "z-icon-home"));
 		pageMap.put("fn4",new SidebarPage("form", Labels.getLabel("web.userProfile") + " (MVVM)","/sources/imgs/profile.png","/pages/user-profile.zul", "z-icon-user"));
 		pageMap.put("fn5",new SidebarPage("todolist", Labels.getLabel("web.todoList") + " (MVVM)","/sources/imgs/todo.png","/pages/todolist.zul", "z-icon-list"));
+		pageMap.put("fn6",new SidebarPage("tree", "Tree" ,null,"/pages/tree.zul", "z-icon-sitemap"));
 	}
 	
 	public List<SidebarPage> getPages(){

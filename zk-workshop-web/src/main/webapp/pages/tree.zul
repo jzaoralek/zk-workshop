@@ -1,0 +1,28 @@
+<?page title="${c:l('web.application.name')} | Tree" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.TreeViewModel')">
+			<caption sclass="fn-caption" iconSclass="z-icon-sitemap">Tree</caption>
+			<panelchildren>
+				<tree id="tree" hflex="1" model="${vm.treeModel}">
+					<treecols>
+						<treecol hflex="1" label="${c:l('web.path')}" />
+						<treecol hflex="1" label="${c:l('web.description')}" />
+					</treecols>
+					<template name="model">
+				        <treeitem>
+				            <treerow>
+				                <treecell label="${each.data.path}"/>
+				                <treecell label="${each.data.description}"/>
+				            </treerow>
+				        </treeitem>
+			    	</template>
+				</tree>
+			</panelchildren>
+	</panel>
+</zk>
+
+
+
