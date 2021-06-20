@@ -1,16 +1,17 @@
-<?page title="Index" contentType="text/html;charset=UTF-8" ?>
+<?page title="${c:l('web.application.name')} | Home" contentType="text/html;charset=UTF-8" ?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
-<?link rel="stylesheet" type="text/css" href="/sources/css/styles.css"?>
 
 <zk>
-	<window self="@{define(mainContent)}"
-		viewModel="@id('vm')@init('com.ness.zkworkshop.web.MyViewModel')"
-		validationMessages="@id('vmsgs')">
-		<label style="font-size:50px">Home page</label>
-		<hlayout>
-			count:
-			<label value="@load(vm.count)" />
-		</hlayout>
-		<button label="add" onClick="@command('cmd')" />
-	</window>
+	<panel self="@{define(mainContent)}"
+		viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.MyViewModel')">
+			<caption sclass="fn-caption" iconSclass="z-icon-home">Home</caption>
+			<panelchildren>
+				<image src="/sources/imgs/zklogo.png" />
+				<hlayout>
+					count:
+					<label value="@load(vm.count)" />
+				</hlayout>
+				<button label="add" onClick="@command('cmd')" />
+			</panelchildren>
+	</panel>
 </zk>

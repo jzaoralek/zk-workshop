@@ -1,4 +1,4 @@
-package com.ness.zkworkshop.web;
+package com.ness.zkworkshop.web.viewmodel;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;

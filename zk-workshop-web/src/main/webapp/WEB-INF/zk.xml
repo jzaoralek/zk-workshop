@@ -9,5 +9,9 @@
 	<system-config>
 		<label-location>/WEB-INF/labels/labels.properties</label-location>
 	</system-config>
+	
+	<desktop-config>
+		<theme-uri>/sources/css/styles.css</theme-uri>
+	</desktop-config>
 
 </zk>

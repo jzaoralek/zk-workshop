@@ -11,11 +11,11 @@ import com.ness.zkworkshop.web.model.Todo;
 public class TodoListServiceImpl implements TodoListService {
 
 	static int todoId = 0;
-	static List<Todo> todoList = new ArrayList<Todo>();  
+	static List<Todo> todoList = new ArrayList<>();  
 	static{
-		todoList.add(new Todo(todoId++,"Buy some milk",Priority.LOW,null,null));
-		todoList.add(new Todo(todoId++,"Dennis' birthday gift",Priority.MEDIUM,dayAfter(10),null));
-		todoList.add(new Todo(todoId++,"Pay credit-card bill",Priority.HIGH,dayAfter(5),"$1,000"));
+		todoList.add(new Todo(todoId++,"Nakoupt mléko.",Priority.LOW,null,null));
+		todoList.add(new Todo(todoId++,"Koupit dárek manželce k narozeninám.",Priority.MEDIUM,dayAfter(10),null));
+		todoList.add(new Todo(todoId++,"Zaplatit dluh na kreditní kartě.",Priority.HIGH,dayAfter(5),"1.000 Kč"));
 	}
 	
 	
@@ -27,7 +27,7 @@ public class TodoListServiceImpl implements TodoListService {
 	
 	/** synchronized is just because we use static userList in this demo to prevent concurrent access **/
 	public synchronized List<Todo> getTodoList() {
-		List<Todo> list = new ArrayList<Todo>();
+		List<Todo> list = new ArrayList<>();
 		for(Todo todo:todoList){
 			list.add(Todo.clone(todo));
 		}

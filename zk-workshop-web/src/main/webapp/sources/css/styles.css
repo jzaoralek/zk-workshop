@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .banner {
-    background-color:#102d35;
+    background-color: #1585B1;
     color: white;
     padding: 5px 10px;
 }
@@ -15,7 +15,7 @@
 } 
 
 .footer {
-	background-color:#102d35;
+	background-color:#1585B1;
 	color: white;
 	padding-top: 5px;
 }
@@ -68,4 +68,12 @@
 
 .todo-box {
 	padding-right:4px;
+}
+
+.template-north {
+	background: #1585B1;
+}
+
+.template-south {
+	background: #1585B1;
 }

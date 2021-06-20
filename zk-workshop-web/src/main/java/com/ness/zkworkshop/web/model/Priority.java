@@ -4,7 +4,7 @@ package com.ness.zkworkshop.web.model;
  * Enum for Todo
  */
 public enum Priority {
-	HIGH(0, "High"), MEDIUM(1, "Medium"), LOW(2, "Low");
+	HIGH(0, "Vysoká"), MEDIUM(1, "Střední"), LOW(2, "Nízká");
 
 	private int priority;
 	private String label;

@@ -13,6 +13,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.lang.Strings;
+import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.ListModelList;
 
@@ -32,46 +33,19 @@ public class TodoListViewModel implements Serializable{
 	ListModelList<Todo> todoListModel;
 	Todo selectedTodo;
 	
-	//getter & setter for the binding of the view
-	public ListModelList<Todo> getTodoListModel() {
-		return todoListModel;
-	}
-	
-	public List<Priority> getPriorityList(){
-		return Arrays.asList(Priority.values());
-	}
-
-	public Todo getSelectedTodo() {
-		return selectedTodo;
-	}
-
-	public void setSelectedTodo(Todo selectedTodo) {
-		this.selectedTodo = selectedTodo;
-	}
-	
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-	
-	
-	
 	@Init // @Init annotates a initial method
 	public void init(){
 		//get data from service and wrap it to model for the view
 		List<Todo> todoList = todoListService.getTodoList();
 		//you can use List directly, however use ListModelList provide efficient control in MVVM 
-		todoListModel = new ListModelList<Todo>(todoList);
+		todoListModel = new ListModelList<>(todoList);
 	}
 
 	@Command //@Command annotates a command method 
 	@NotifyChange({"selectedTodo","subject"}) //@NotifyChange annotates data changed notification after calling this method 
 	public void addTodo(){
 		if(Strings.isBlank(subject)){
-			Clients.showNotification("Subject is blank, nothing to do ?");
+			showNoSubjectNotifWarn();
 		}else{
 			//save data
 			selectedTodo = todoListService.saveTodo(new Todo(subject));
@@ -84,7 +58,6 @@ public class TodoListViewModel implements Serializable{
 			subject = null;
 		}
 	}
-	
 
 	@Command 
 	//@NotifyChange("selectedTodo") //use postNotifyChange() to notify dynamically
@@ -114,6 +87,12 @@ public class TodoListViewModel implements Serializable{
 			//for the case that notification is decided dynamically
 			BindUtils.postNotifyChange(null, null, this, "selectedTodo");
 		}
+		
+		Clients.showNotification(Labels.getLabel("web.msg.info.taskRemoved"), 
+				Clients.NOTIFICATION_TYPE_INFO, 
+				null, 
+				null, 
+				2000);
 	}
 	
 	@Command 
@@ -125,12 +104,43 @@ public class TodoListViewModel implements Serializable{
 		//update the model, by using ListModelList, you don't need to notify todoListModel change
 		//by reseting an item , it make listbox only refresh one item
 		todoListModel.set(todoListModel.indexOf(selectedTodo), selectedTodo);
+		
+		Clients.showNotification(Labels.getLabel("web.msg.info.changesSaved"), 
+				Clients.NOTIFICATION_TYPE_INFO, 
+				null, 
+				null, 
+				2000);
 	}
 	
 	//when user clicks the update button
 	@Command @NotifyChange("selectedTodo")
 	public void reloadTodo(){
 		//do nothing, the selectedTodo will reload by notify change
+	}
+	
+	//getter & setter for the binding of the view
+	public ListModelList<Todo> getTodoListModel() {
+		return todoListModel;
+	}
+	
+	public List<Priority> getPriorityList(){
+		return Arrays.asList(Priority.values());
+	}
+
+	public Todo getSelectedTodo() {
+		return selectedTodo;
+	}
+
+	public void setSelectedTodo(Todo selectedTodo) {
+		this.selectedTodo = selectedTodo;
+	}
+	
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 	
 	//the validator is the class to validate data before set ui data back to todo
@@ -142,12 +152,20 @@ public class TodoListViewModel implements Serializable{
 				Todo todo = (Todo)ctx.getProperty().getValue();
 				
 				if(Strings.isBlank(todo.getSubject())){
-					Clients.showNotification("Subject is blank, nothing to do ?");
+					showNoSubjectNotifWarn();
 					//mark the validation is invalid, so the data will not update to bean
 					//and the further command will be skipped.
 					ctx.setInvalid();
 				}
 			}
 		};
+	}
+	
+	private void showNoSubjectNotifWarn() {
+		Clients.showNotification(Labels.getLabel("web.msg.warn.nameRequired"), 
+				Clients.NOTIFICATION_TYPE_WARNING, 
+				null, 
+				null, 
+				2000);
 	}
 }

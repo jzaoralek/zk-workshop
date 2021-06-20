@@ -1,11 +1,16 @@
 <zk>
-	<grid id="sidebar" sclass="sidebar"
-		hflex="1"
-		apply="com.ness.zkworkshop.web.controller.SidebarController">
-		<columns>
-			<column width="36px" />
-			<column />
-		</columns>
-		<rows></rows>
-	</grid>
+<!-- Dynamicky generovane menu pomoci komponenty Grid (ZK CE) -->
+<!-- 	<grid id="sidebar" sclass="sidebar" -->
+<!-- 		hflex="1" -->
+<!-- 		apply="com.ness.zkworkshop.web.controller.SidebarController"> -->
+<!-- 		<columns> -->
+<!-- 			<column width="36px" /> -->
+<!-- 			<column /> -->
+<!-- 		</columns> -->
+<!-- 		<rows></rows> -->
+<!-- 	</grid> -->
+
+	<!-- Dynamicky generovane menu pomoci komponenty Navbar (ZK EE) -->
+	<navbar id="navbar" orient="vertical" sclass="vertical"  
+		apply="com.ness.zkworkshop.web.controller.NavbarController" />
 </zk>

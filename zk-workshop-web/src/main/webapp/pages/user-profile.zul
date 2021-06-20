@@ -1,67 +1,76 @@
-<?page title="${c:l('web.userProfile')}" contentType="text/html;charset=UTF-8"?>
+<?page title="${c:l('web.application.name')} | ${c:l('web.userProfile')}" contentType="text/html;charset=UTF-8"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
-<?link rel="stylesheet" type="text/css" href="/sources/css/styles.css"?>
+
 <zk>
-<window self="@{define(mainContent)}"
-	viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.ProfileViewModel')"
-	form="@id('fx') @load(vm.currentUser) @save(vm.currentUser, before='save')"
-	border="normal" hflex="1" vflex="1" contentStyle="overflow:auto">
-	<caption src="/sources/imgs/profile.png" sclass="fn-caption" label="${c:l('web.userProfile')}"/>
-	<vlayout>
-		<grid width="500px">
-			<columns>
-				<column align="right" hflex="min"/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<cell sclass="row-title">${c:l('web.account')} :</cell>
-					<cell><label value="@load(vm.currentUser.account)"/></cell>
-				</row>
-				<row>
-					<cell sclass="row-title">${c:l('web.fullName')} :</cell>
-					<cell>
-						<textbox value="@bind(vm.currentUser.fullName) @save(vm.currentUser.fullName, before='save')" 
-							constraint="no empty" width="200px"/>
-					</cell>
-				</row>
-				<row>
-					<cell sclass="row-title">${c:l('web.email')} :</cell>
-					<cell>
-						<textbox value="@bind(vm.currentUser.email) @save(vm.currentUser.email, before='save')" 
-							constraint="no empty,/.+@.+\.[a-z]+/: Neplatná emailová adresa" width="200px"/>
-						</cell>
-				</row>
-				<row>
-					<cell sclass="row-title">${c:l('web.birthday')} :</cell>
-					<cell>
-						<datebox value="@bind(vm.currentUser.birthday) @save(vm.currentUser.birthday, before='save')" 
-							constraint="no future" width="200px"/>
-						</cell>
-				</row>
-				<row>
-					<cell sclass="row-title">${c:l('web.country')} :</cell>
-					<cell>
-						<listbox model="@load(vm.countryList)" 
-							selectedItem="@bind(vm.currentUser.country)" 
-							mold="select" 
-							width="200px">
-							<template name="model">
-								<listitem label="@load(each)" />
-							</template>
-						</listbox>
-					</cell>
-				</row>
-				<row>
-					<cell sclass="row-title">${c:l('web.info')} :</cell>
-					<cell><textbox value="@bind(vm.currentUser.bio)" multiline="true" hflex="1" height="200px" /></cell>
-				</row>
-			</rows>
-		</grid>
-		<div>Editujete profil <label value="@load(vm.currentUser.fullName)"/>.</div>
-		<hlayout>
-			<button onClick="@command('save')" label="${c:l('web.save')}"/>
-			<button onClick="@command('reload')" label="${c:l('web.reload')}"/>
-		</hlayout>
-	</vlayout>
-</window></zk>
+	<panel self="@{define(mainContent)}"
+		viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.ProfileViewModel')"
+		form="@id('fx') @load(vm.currentUser) @save(vm.currentUser, before='save')"
+		border="none" hflex="1" vflex="1">
+			<caption iconSclass="z-icon-user" sclass="fn-caption" label="${c:l('web.userProfile')}"/>
+			<panelchildren>
+				<vlayout>
+					<grid width="500px">
+						<columns>
+							<column align="right" hflex="min"/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<cell sclass="row-title">${c:l('web.account')} :</cell>
+								<cell><label value="@load(vm.currentUser.account)"/></cell>
+							</row>
+							<row>
+								<cell sclass="row-title">${c:l('web.fullName')} :</cell>
+								<cell>
+									<textbox value="@bind(vm.currentUser.fullName) @save(vm.currentUser.fullName, before='save')" 
+										constraint="no empty" hflex="1"/>
+								</cell>
+							</row>
+							<row>
+								<cell sclass="row-title">${c:l('web.email')} :</cell>
+								<cell>
+									<textbox value="@bind(vm.currentUser.email) @save(vm.currentUser.email, before='save')" 
+										constraint="no empty,/.+@.+\.[a-z]+/: Neplatná emailová adresa"
+										hflex="1"/>
+									</cell>
+							</row>
+							<row>
+								<cell sclass="row-title">${c:l('web.birthday')} :</cell>
+								<cell>
+									<datebox value="@bind(vm.currentUser.birthday) @save(vm.currentUser.birthday, before='save')" 
+										constraint="no future"
+										hflex="1"/>
+								</cell>
+							</row>
+							<row>
+								<cell sclass="row-title">${c:l('web.country')} :</cell>
+								<cell>							
+									<combobox id="countriesCombobox" 
+										model="@load(vm.countryList)"
+										selectedItem="@bind(vm.currentUser.country)"
+					                    autodrop="true"
+					                    hflex="1" >
+					                    <template name="model">
+					                        <comboitem label="${each}" />
+					                    </template>
+					                </combobox>
+								</cell>
+							</row>
+							<row>
+								<cell sclass="row-title">${c:l('web.info')} :</cell>
+								<cell><textbox value="@bind(vm.currentUser.bio)" multiline="true" hflex="1" height="200px" /></cell>
+							</row>
+						</rows>
+					</grid>
+					<div style="margin-top: 5px;margin-bottom: 5px;">
+						Editujete profil <label value="@load(vm.currentUser.fullName)"/>.
+					</div>
+					<hlayout>
+						<button onClick="@command('reload')" iconSclass="z-icon-refresh" label="${c:l('web.reload')}"/>
+						<button onClick="@command('save')" iconSclass="z-icon-check" label="${c:l('web.save')}"/>
+					</hlayout>
+				</vlayout>
+			</panelchildren>
+	</panel>
+	
+</zk>

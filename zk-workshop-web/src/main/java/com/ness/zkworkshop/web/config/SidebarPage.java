@@ -8,12 +8,14 @@ public class SidebarPage implements Serializable{
 	String label;
 	String iconUri;
 	String uri;
+	String iconSclass;
 
-	public SidebarPage(String name, String label, String iconUri, String uri) {
+	public SidebarPage(String name, String label, String iconUri, String uri, String iconSclass) {
 		this.name = name;
 		this.label = label;
 		this.iconUri = iconUri;
 		this.uri = uri;
+		this.iconSclass = iconSclass;
 	}
 
 	public String getName() {
@@ -30,5 +32,9 @@ public class SidebarPage implements Serializable{
 
 	public String getUri() {
 		return uri;
+	}
+	
+	public String getIconSclass() {
+		return iconSclass;
 	}
 }
