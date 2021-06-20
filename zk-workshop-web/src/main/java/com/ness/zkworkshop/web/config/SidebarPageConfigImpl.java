@@ -23,6 +23,7 @@ public class SidebarPageConfigImpl implements SidebarPageConfig{
 		pageMap.put("fn5",new SidebarPage("todolist", Labels.getLabel("web.todoList") + " (MVVM)","/sources/imgs/todo.png","/pages/todolist.zul", "z-icon-list"));
 		pageMap.put("fn6",new SidebarPage("tree", "Tree" ,null,"/pages/tree.zul", "z-icon-sitemap"));
 		pageMap.put("fn7",new SidebarPage("tabbox", "Tabbox" ,null,"/pages/tabbox.zul", "z-icon-table"));
+		pageMap.put("fn8",new SidebarPage("chart", "Chart" ,null,"/pages/chart.zul", "z-icon-signal"));
 	}
 	
 	public List<SidebarPage> getPages(){
