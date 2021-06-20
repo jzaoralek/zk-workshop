@@ -1,0 +1,50 @@
+<?page title="${c:l('web.application.name')} | Tabbox" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.MyViewModel')">
+			<caption sclass="fn-caption" iconSclass="z-icon-table">Tabbox</caption>
+			<panelchildren>
+				<hlayout>
+					<radiogroup>
+					    <attribute name="onCheck"><![CDATA[
+					        String orientation = self.getSelectedItem().getValue();
+					        tb.orient = orientation;
+					        if("left".equals(orientation) || "right".equals(orientation)) {
+					            tabs.setWidth("70px");
+					        } else {
+					            tabs.setWidth("");
+					        }
+					    ]]></attribute>
+					    <hlayout style="margin-top: 10px; margin-bottom: 10px;">
+					    	${c:l('web.orientation')} :
+					        <radio label="Top" value="top" selected="true"/>
+					        <radio label="Left" value="left"/>
+					        <radio label="Bottom" value="bottom"/>
+					        <radio label="Right" value="right"/>
+					    </hlayout>
+					</radiogroup>
+				</hlayout>
+			
+				<tabbox id="tb" height="300px" >
+				    <tabs id="tabs">
+				        <tab id="A" label="Tab A" />
+				        <tab id="B" label="Tab B" />
+				        <tab id="C" label="Tab C" />
+				        <tab id="D" label="Tab D" />
+				        <tab id="E" label="Tab E" />
+				    </tabs>
+				    <tabpanels>
+				        <tabpanel>This is panel A</tabpanel>
+				        <tabpanel>This is panel B</tabpanel>
+				        <tabpanel>This is panel C</tabpanel>
+				        <tabpanel>This is panel D</tabpanel>
+				        <tabpanel>This is panel E</tabpanel>
+				    </tabpanels>
+				</tabbox>
+				
+			</panelchildren>
+	</panel>
+</zk>
+
