@@ -16,12 +16,12 @@ public class SidebarPageConfigImpl implements SidebarPageConfig{
 	HashMap<String,SidebarPage> pageMap = new LinkedHashMap<String,SidebarPage>();
 	public SidebarPageConfigImpl(){		
 		pageMap.put("fn1",new SidebarPage("home","Home","","/", "z-icon-home"));
-		pageMap.put("fn2",new SidebarPage("form", Labels.getLabel("web.userProfile") + " (MVVM)","/sources/imgs/profile.png","/pages/user-profile.zul", "z-icon-user"));
-		pageMap.put("fn3",new SidebarPage("todolist", Labels.getLabel("web.todoList") + " (MVVM)","/sources/imgs/todo.png","/pages/todolist.zul", "z-icon-list"));
-		pageMap.put("fn4",new SidebarPage("tree", "Tree" ,null,"/pages/tree.zul", "z-icon-sitemap"));
+		pageMap.put("fn2",new SidebarPage("form", "Formulář","/sources/imgs/profile.png","/pages/user-profile.zul", "z-icon-user"));
+		pageMap.put("fn3",new SidebarPage("todolist", "CRUD operace","/sources/imgs/todo.png","/pages/todolist.zul", "z-icon-list"));
+		pageMap.put("fn4",new SidebarPage("modal", "Modál" ,null,"/pages/modal-demo.zul", "z-icon-window-maximize"));
 		pageMap.put("fn5",new SidebarPage("tabbox", "Tabbox" ,null,"/pages/tabbox.zul", "z-icon-folder"));
-		pageMap.put("fn6",new SidebarPage("chart", "Chart" ,null,"/pages/chart.zul", "z-icon-signal"));
-		pageMap.put("fn7",new SidebarPage("modal", "Modál" ,null,"/pages/modal-demo.zul", "z-icon-window-maximize"));
+		pageMap.put("fn6",new SidebarPage("tree", "Tree" ,null,"/pages/tree.zul", "z-icon-sitemap"));
+		pageMap.put("fn7",new SidebarPage("chart", "Chart" ,null,"/pages/chart.zul", "z-icon-signal"));
 		pageMap.put("fn8",new SidebarPage("spreadsheet", "Spreadsheet" ,null,"/pages/spreadsheet.zul", "z-icon-table"));
 	}
 	

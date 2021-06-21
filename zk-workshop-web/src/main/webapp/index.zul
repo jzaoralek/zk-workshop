@@ -6,12 +6,16 @@
 		viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.MyViewModel')">
 			<caption sclass="fn-caption" iconSclass="z-icon-home">Home</caption>
 			<panelchildren>
-				<image src="/sources/imgs/zklogo.png" height="60px" />
-				<hlayout>
-					count:
-					<label value="@load(vm.count)" />
-				</hlayout>
-				<button label="add" onClick="@command('cmd')" />
+				<vlayout>
+					<label value="${c:l('web.application.name')}" style="font-size: 28px;" />
+					<image src="/sources/imgs/zklogo.png" height="160px;" style="margin-top: 20px;" />
+				</vlayout>
+				
+<!-- 				<hlayout> -->
+<!-- 					count: -->
+<!-- 					<label value="@load(vm.count)" /> -->
+<!-- 				</hlayout> -->
+<!-- 				<button label="add" onClick="@command('cmd')" /> -->
 					                
 			</panelchildren>
 	</panel>
