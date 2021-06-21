@@ -50,7 +50,7 @@ public class ProfileViewModel implements Serializable{
 	@NotifyChange("currentUser") //@NotifyChange annotates data changed notification after calling this method 
 	public void save(){
 		currentUser = userInfoService.updateUser(currentUser);
-		Clients.showNotification(Labels.getLabel("web.msg.info.profileUpdated"), 
+		Clients.showNotification(Labels.getLabel("web.msg.info.changesSaved"), 
 				Clients.NOTIFICATION_TYPE_INFO, 
 				null, 
 				null, 

@@ -15,8 +15,8 @@
 } 
 
 .footer {
-	background-color:#1585B1;
-	color: white;
+	background-color:#F5F5F5;
+	color: #C3C3C3;
 	padding-top: 5px;
 }
 
@@ -75,5 +75,5 @@
 }
 
 .template-south {
-	background: #1585B1;
+	background: #F5F5F5;
 }

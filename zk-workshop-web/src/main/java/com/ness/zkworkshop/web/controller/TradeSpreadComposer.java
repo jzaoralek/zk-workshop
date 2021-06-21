@@ -4,6 +4,8 @@ import io.keikai.api.*;
 import io.keikai.api.model.*;
 import io.keikai.ui.*;
 import io.keikai.ui.event.StopEditingEvent;
+
+import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.*;
 import org.zkoss.zk.ui.select.SelectorComposer;
@@ -63,14 +65,14 @@ public class TradeSpreadComposer extends SelectorComposer<Component> {
 	public void load(){
 		reload();
 		modifiedTrades.clear();
-		Clients.showNotification("Data načtena z db.");
+		Clients.showNotification(Labels.getLabel("web.msg.info.dataLoaded"));
 	}
 	
 	@Listen("onClick = #save")
 	public void save(){
 		dataService.save(modifiedTrades);
 		loadButton.setDisabled(false);
-		Clients.showNotification("Data uložena do db.");
+		Clients.showNotification(Labels.getLabel("web.msg.info.changesSaved"));
 	}
 
 	/**
