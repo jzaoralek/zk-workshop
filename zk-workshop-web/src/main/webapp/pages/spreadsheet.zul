@@ -1,0 +1,23 @@
+<?page title="${c:l('web.application.name')} | Spreadsheet" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+
+<zk>
+	<hlayout self="@{define(mainContent)}" 
+		hflex="1" vflex="1" 
+		apply="com.ness.zkworkshop.web.controller.TradeSpreadComposer">
+        <div hflex="1" vflex="1" style="padding-left:10px">
+            <!-- keep higher space for a filter popup -->
+            <spreadsheet id="ss" hflex="1" vflex="1"
+                         showFormulabar="true" 
+                         showContextMenu="true" 
+                         showToolbar="true"
+                         showSheetbar="true" />
+            <div style="margin: 10px 5px 10px 0px; text-align: right">
+                <button id="save" iconSclass="z-icon-check"
+                	label="${c:l('web.save')}" />
+                <button id="load" iconSclass="z-icon-refresh"
+                	label="${c:l('web.reload')}" disabled="true"/>
+            </div>
+        </div>
+    </hlayout>
+</zk>

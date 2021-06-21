@@ -13,5 +13,10 @@
 	<desktop-config>
 		<theme-uri>/sources/css/styles.css</theme-uri>
 	</desktop-config>
+	
+<!-- 	<library-property> -->
+<!-- 	    <name>org.zkoss.theme.preferred</name> -->
+<!-- 	    <value>breeze</value> -->
+<!-- 	</library-property> -->
 
 </zk>

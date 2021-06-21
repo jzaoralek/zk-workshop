@@ -12,7 +12,7 @@ public class UserInfoServiceImpl implements UserInfoService,Serializable{
 	protected static List<User> userList = new ArrayList<>();  
 	
 	static{
-		userList.add(new User("anonymous","1234","Anonymous","anonumous@your.com"));
+		userList.add(new User("anonymous","1234","Nepřihlášený uživatel","anonym@email.com"));
 		userList.add(new User("admin","1234","Admin","admin@your.com"));
 		userList.add(new User("zkoss","1234","ZKOSS","info@zkoss.org"));
 	}

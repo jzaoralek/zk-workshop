@@ -66,8 +66,8 @@
 						Editujete profil <label value="@load(vm.currentUser.fullName)"/>.
 					</div>
 					<hlayout>
-						<button onClick="@command('reload')" iconSclass="z-icon-refresh" label="${c:l('web.reload')}"/>
 						<button onClick="@command('save')" iconSclass="z-icon-check" label="${c:l('web.save')}"/>
+						<button onClick="@command('reload')" iconSclass="z-icon-refresh" label="${c:l('web.reload')}"/>
 					</hlayout>
 				</vlayout>
 			</panelchildren>

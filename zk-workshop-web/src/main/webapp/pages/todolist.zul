@@ -77,12 +77,12 @@
 						</rows>
 					</grid>
 					<hlayout>
-						<button onClick="@command('reloadTodo')" 
-							iconSclass="z-icon-refresh"
-							label="${c:l('web.reload')}"/>
 						<button onClick="@command('updateTodo')"
 							iconSclass="z-icon-check"
 							label="${c:l('web.save')}"/>
+						<button onClick="@command('reloadTodo')" 
+							iconSclass="z-icon-refresh"
+							label="${c:l('web.reload')}"/>
 					</hlayout>
 				</vlayout>
 			</east>

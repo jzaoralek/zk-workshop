@@ -41,6 +41,16 @@
 			<name>Asual Public Repository</name>
 			<url>http://www.asual.com/maven/content/groups/public</url>
 		</repository>
+		<repository>
+		    <id>Keikai EVAL</id>
+		    <name>Keikai Evaluation Repository</name>
+		    <url>https://mavensync.zkoss.org/eval</url>
+		</repository>
+<!-- 		<repository> -->
+<!-- 		    <id>OSE</id> -->
+<!-- 		    <name>Keikai OSE</name> -->
+<!-- 		    <url>https://mavensync.zkoss.org/maven2</url> -->
+<!-- 		</repository> -->
 	</repositories>
 
 	<dependencies>
@@ -89,6 +99,13 @@
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zuljsp</artifactId>
 			<version>2.0</version>
+		</dependency>
+		
+		<!-- Keikai -->
+		<dependency>
+		    <groupId>io.keikai</groupId>
+		    <artifactId>keikai-ex</artifactId>
+		    <version>5.6.1-Eval</version>
 		</dependency>
 
 		<!-- Addons -->

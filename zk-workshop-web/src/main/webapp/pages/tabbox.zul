@@ -4,7 +4,7 @@
 <zk>
 	<panel self="@{define(mainContent)}"
 		viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.MyViewModel')">
-			<caption sclass="fn-caption" iconSclass="z-icon-table">Tabbox</caption>
+			<caption sclass="fn-caption" iconSclass="z-icon-folder">Tabbox</caption>
 			<panelchildren>
 				<hlayout>
 					<radiogroup>
