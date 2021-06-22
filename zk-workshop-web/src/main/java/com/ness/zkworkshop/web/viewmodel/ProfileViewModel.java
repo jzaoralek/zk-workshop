@@ -29,9 +29,6 @@ public class ProfileViewModel implements Serializable{
 	public void init() {
 		UserCredential userCredential = authService.getUserCredential();
 		currentUser = userInfoService.findUser(userCredential.getAccount());
-		if(currentUser==null){
-			return;
-		}
 	}
 	
 	public User getCurrentUser(){
