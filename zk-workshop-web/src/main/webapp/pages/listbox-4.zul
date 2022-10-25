@@ -1,0 +1,35 @@
+<zk>
+	<window hflex="1" vflex="1" border="none"
+		viewModel="@id('vm') @init('zksandbox.vm.MyDatatable4VM')">
+		<!--
+		-->
+		<vlayout hflex="1" vflex="1" >
+			<data-table tableModel="${vm.tableModel}" noPaging="${true}" hflex="1" vflex="1"/>
+		</vlayout>
+		<listbox id="listbox" width="100%" nonselectableTags="" >
+	        <auxhead>
+	            <auxheader colspan="4">Quality Assurance</auxheader>
+	        </auxhead>
+	        <listhead>
+	            <listheader>
+	            	<hlayout hflex="1">
+	            		<vbox align="start" hflex="1">
+	            			Group
+	            		</vbox>
+	            		<vbox align="end" hflex="1">
+	            			<button iconSclass="z-icon-caret-down" popup="col1MenuPopup, after_end" >
+	            			</button>
+	            			<menupopup id="col1MenuPopup">
+	            				<menuitem iconSclass="z-icon-lock" label="Zamykání"/>
+	            			</menupopup>
+	            		</vbox>
+	            	</hlayout>
+	            </listheader>
+	            <listheader label="Quality" width="100px"/>
+	            <listheader label="Comment"  />
+	            <listheader label="Confirm" width="80px"/>
+	        </listhead>
+	        
+	    </listbox>
+	</window>
+</zk>

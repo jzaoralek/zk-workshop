@@ -6,7 +6,8 @@
 		<north border="none"
 			collapsible="false"
 			splittable="false"
-			sclass="template-north" >
+			sclass="template-north"
+			height="60px">
 			<include src="/pages/template/banner.zul" />
 		</north>
 		<west width="260px" border="none" 

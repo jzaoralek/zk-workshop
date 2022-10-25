@@ -1,12 +1,89 @@
 <hbox hflex="1" vflex="1" 
-	align="center"  >
-    <div width="400px">
+	align="center" pack="center" >
+    <div width="250px">
     	<a href="/" style="text-decoration: none;">
 	        <label value="${c:l('web.application.name')}" sclass="banner" />
     	</a>
     </div>
+
+    <style>
+        .z-popup-content-szp {
+            padding: 0px;
+        }
+
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #F9FCFF !important;
+            text-shadow: none !important;
+            opacity: 1;  /* Firefox */
+        }
+    </style>
+
+    <a iconSclass="z-icon-search" style="margin-left: 10px; color: #F9FCFF !important" />
+    <textbox id="search" width='550px'
+             placeholder="${c:l('web.search')}"
+             style="background: transparent; border: none; color: #F9FCFF; text-shadow: none;" />
+    <!--
+    <a href="/" style="text-decoration: none;" iconSclass="z-icon-search" sclass="banner">
+        <label value="${c:l('web.search')}" sclass="banner" />
+    </a>
+    -->
     <hbox hflex="1" vflex="1" pack="end" align="center"
+          viewModel="@id('vm') @init('zksandbox.i18n.LocaleVM')" >
+
+        <image src="@load(vm.localeSelected.img.src)"
+               width="25px"
+               style="margin-right: 5px; cursor: pointer;"
+               popup="localizationSwitchPopup, position=after_end" />
+
+        <popup id="localizationSwitchPopup" zclass="z-popup-content-szp">
+            <vlayout>
+                <listbox model="@bind(vm.locales)"
+                         selectedItem="@bind(vm.localeSelected)"
+                         onSelect="@command('changeLocaleCmd')"
+                         vflex="min" hflex="min" >
+                    <template name="model">
+                        <listitem>
+                            <listcell height="50px">
+                                <hbox align="center">
+                                    <image src="@load(each.img.src)" width="25px" style="margin-right: 5px;" />
+                                    <label value="@bind(each)"/>
+                                </hbox>
+                            </listcell>
+                        </listitem>
+                    </template>
+                </listbox>
+            </vlayout>
+        </popup>
+        <!-- Alternativni reseni zmeny lokalizace
+        <combobutton label="${vm.localeSelected}" autodrop="true" >
+            <popup zclass="z-popup-content-szp">
+                <vlayout>
+                    <listbox model="@bind(vm.locales)"
+                             selectedItem="@bind(vm.localeSelected)"
+                             onSelect="@command('changeLocaleCmd')"
+                             vflex="min" hflex="min" >
+                        <template name="model">
+                            <listitem>
+                                <listcell height="50px">
+                                    <hbox align="center">
+                                        <image src="@load(each.img.src)" width="25px" style="margin-right: 5px;" />
+                                        <label value="@bind(each)"/>
+                                    </hbox>
+                                </listcell>
+                            </listitem>
+                        </template>
+                    </listbox>
+                </vlayout>
+            </popup>
+        </combobutton>
+        -->
+    </hbox>
+
+    <hbox hflex="min" vflex="1" pack="end" align="center" style="margin-left: 5px; margin-bottom: 2px;"
     	viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.ProfileViewModel')">
-        <label value="@load(vm.currentUser.fullName)" sclass="banner"/>
+        <a iconSclass="z-icon-user" sclass="banner" popup="userMenuPopup" />
+        <popup id="userMenuPopup">
+            <label value="@load(vm.currentUser.fullName)"/>
+        </popup>
     </hbox>
 </hbox>

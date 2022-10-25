@@ -1,0 +1,36 @@
+<?link rel="stylesheet" href="/sources/css/zk-admin-bootstrap-theme.css"?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css"?>
+<?link rel="stylesheet" href="/sources/css/layout.css" ?>
+<?link rel="stylesheet" href="/sources/css/zk-bootstrap.css" ?>
+
+<zk xmlns:n="native" >
+        <bs-row>
+            <n:div sclass="col p-1">
+                <n:span class="z-label font-weight-bold">Ecommerce Dashboard</n:span>
+            </n:div>
+        </bs-row>
+        <bs-row>
+            <apply templateURI="/pages/component/stateBoard.zul"/>
+        </bs-row>
+        <bs-row style="min-height: 500px">
+            <n:div sclass="col-md-7 p-1">
+                ecommerce/revenueReport.zul
+            </n:div>
+            <n:div sclass="col-md-5 p-1">
+                ecommerce/sales.zul
+            </n:div>
+        </bs-row>
+        <bs-row>
+            <n:div sclass="col-md-5 p-1">
+                ecommerce/marketShare.zul
+            </n:div>
+            <n:div sclass="col-md-7 p-1">
+                ecommerce/import.zul
+            </n:div>
+        </bs-row>
+        <bs-row>
+            <n:div class="col-md-12 p-1">
+                ecommerce/productTable.zul
+            </n:div>
+        </bs-row>
+</zk>

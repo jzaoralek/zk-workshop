@@ -15,7 +15,7 @@ public class SidebarPageConfigImpl implements SidebarPageConfig{
 
 	HashMap<String,SidebarPage> pageMap = new LinkedHashMap<String,SidebarPage>();
 	public SidebarPageConfigImpl(){		
-		pageMap.put("fn1",new SidebarPage("home","Home","","/", "z-icon-home"));
+		pageMap.put("fn1",new SidebarPage("home",Labels.getLabel("web.dashboard"),"","/", "z-icon-home"));
 		pageMap.put("fn2",new SidebarPage("form", Labels.getLabel("web.userProfile") + " (Formulář)","/sources/imgs/profile.png","/pages/user-profile.zul", "z-icon-user"));
 		pageMap.put("fn3",new SidebarPage("todolist", Labels.getLabel("web.todoList") + " (CRUD)","/sources/imgs/todo.png","/pages/todolist.zul", "z-icon-list"));
 		pageMap.put("fn4",new SidebarPage("modal", "Modál" ,null,"/pages/modal-demo.zul", "z-icon-window-maximize"));

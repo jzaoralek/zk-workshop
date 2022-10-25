@@ -11,6 +11,9 @@
 <!-- 	</grid> -->
 
 	<!-- Dynamicky generovane menu pomoci komponenty Navbar (ZK EE) -->
-	<navbar id="navbar" orient="vertical" sclass="vertical"  
+	<navbar id="navbar"
+			orient="vertical"
+			sclass="vertical"
+			style="border: none;"
 		apply="com.ness.zkworkshop.web.controller.NavbarController" />
 </zk>

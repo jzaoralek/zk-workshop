@@ -8,7 +8,7 @@
 			<panelchildren apply="com.ness.zkworkshop.web.controller.ChartController">
 				<charts id="chart" type="line"
 					model="@init(vm.model)"
-					title="Průměrná měsíční teplota"
+					title="Průměrná teplota"
         			subtitle="Source: WorldClimate.com" />
 			</panelchildren>
 	</panel>

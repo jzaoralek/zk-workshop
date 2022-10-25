@@ -1,22 +1,150 @@
 <?page title="${c:l('web.application.name')} | Home" contentType="text/html;charset=UTF-8" ?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
 
-<zk>
+<?link rel="stylesheet" href="/sources/css/zk-admin-bootstrap-theme.css"?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css"?>
+<?link rel="stylesheet" href="/sources/css/layout.css" ?>
+<?link rel="stylesheet" href="/sources/css/zk-bootstrap.css" ?>
+
+<zk xmlns:n="native">
 	<panel self="@{define(mainContent)}"
-		viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.MyViewModel')">
-			<caption sclass="fn-caption" iconSclass="z-icon-home">Home</caption>
-			<panelchildren>
-				<vlayout>
-					<label value="${c:l('web.application.name')}" style="font-size: 28px;" />
-					<image src="/sources/imgs/zklogo.png" height="160px;" style="margin-top: 20px;" />
-				</vlayout>
-				
-<!-- 				<hlayout> -->
-<!-- 					count: -->
-<!-- 					<label value="@load(vm.count)" /> -->
-<!-- 				</hlayout> -->
-<!-- 				<button label="add" onClick="@command('cmd')" /> -->
-					                
-			</panelchildren>
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardViewModel')"
+		   vflex="1"
+		   hflex="1">
+		<caption sclass="fn-caption" label="${c:l('web.dashboard')}" iconSclass="z-icon-home">
+			<div align="center" sclass="captionButtons">
+				<button label="${c:l('web.btn.change')}"
+						iconSclass="z-icon-edit"
+						onClick="@command('editModeCmd')"
+						visible="@load(!vm.editMode)" />
+				<hlayout visible="@load(vm.editMode)">
+					<button id="buttonToAdd"
+							label="Add widget"
+							onClick="@command('addWidgetCmd')" />
+					<button label="${c:l('web.btn.save')}"
+							iconSclass="z-icon-check"
+							onClick="@command('saveCmd')" />
+					<!--
+					<button iconSclass="z-icon-caret-down" />
+					-->
+				</hlayout>
+			</div>
+		</caption>
+		<panelchildren style="overflow-y: auto; height: 100%" >
+			<bs-row style="margin-left: 3px; margin-right: 3px;">
+				<apply templateURI="/pages/component/stateBoard.zul"/>
+			</bs-row>
+			<div apply="com.ness.zkworkshop.web.controller.PortalLayoutController" >
+				<portallayout id="portalLayout" maximizedMode="whole">
+					<portalchildren style="padding: 5px" width="30%">
+						<panel id="calendar"
+							   draggable="@load(vm.editMode)"
+							   title="Kalendář"
+							   border="normal"
+							   collapsible="true"
+							   closable="false"
+							   maximizable="true"
+							   style="margin-bottom:10px;">
+							<panelchildren>
+								<calendar/>
+								<button iconSclass="z-icon-gear" />
+							</panelchildren>
+						</panel>
+						<panel id="todo"
+							   draggable="@load(vm.editMode)"
+							   onClick="@command('goToGridCmd')"
+							   title="Úkoly"
+							   height="350px"
+							   border="normal"
+							   collapsible="true"
+							   closable="@load(vm.editMode)"
+							   maximizable="true"
+							   style="margin-bottom:10px">
+							<panelchildren>
+								<vlayout hflex="1" vflex="1" viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.TodoListViewModel')" >
+									<listbox model="@bind(vm.todoListModel)" selectedItem="@bind(vm.selectedTodo)" vflex="1" style="border: none;" >
+										<listhead>
+											<listheader width="60px" />
+											<listheader/>
+										</listhead>
+										<template name="model">
+											<listitem sclass="@bind(each.complete?'complete-todo':'')" onClick="@command('goToDetailCmd')" >
+												<listcell>
+													<checkbox checked="@bind(each.complete)" onCheck="@command('completeTodo',todo=each)"/>
+												</listcell>
+												<listcell>
+													<label value="@bind(each.subject)"/>
+												</listcell>
+											</listitem>
+										</template>
+									</listbox>
+								</vlayout>
+							</panelchildren>
+						</panel>
+					</portalchildren>
+
+					<portalchildren style="padding: 5px" width="40%" >
+						<panel id="tree"
+							   draggable="@load(vm.editMode)"
+							   onClick="@command('goToTreeCmd')"
+							   height="350px" title="Hierarchie"
+							   border="normal"
+							   collapsible="true"
+							   closable="@load(vm.editMode)"
+							   maximizable="true"
+							   style="margin-bottom:10px">
+							<panelchildren viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.TreeViewModel')">
+								<tree hflex="1" model="${vm.treeModel}" visible="@load(vm.treeMode)" style="border: none;" >
+									<template name="model">
+										<treeitem>
+											<treerow>
+												<treecell label="${each.data.path}"/>
+												<treecell label="${each.data.description}"/>
+											</treerow>
+										</treeitem>
+									</template>
+								</tree>
+							</panelchildren>
+						</panel>
+					</portalchildren>
+
+					<portalchildren style="padding: 5px" width="30%">
+						<panel id="weather"
+							   draggable="@load(vm.editMode)"
+							   onClick="@command('goToWeatherCmd')"
+							   title="Počasí"
+							   border="normal"
+							   collapsible="true"
+							   closable="@load(vm.editMode)"
+							   maximizable="true"
+							   style="margin-bottom:10px;">
+							<panelchildren>
+								<panel viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ChartViewModel')">
+									<panelchildren apply="com.ness.zkworkshop.web.controller.ChartController">
+										<charts id="chart" type="line"
+												model="@init(vm.model)"
+												title="Průměrná teplota"
+												subtitle="Source: WorldClimate.com" />
+									</panelchildren>
+								</panel>
+							</panelchildren>
+						</panel>
+					</portalchildren>
+				</portallayout>
+			</div>
+
+			<!--
+            <borderlayout hflex="1" vflex="1" >
+                <center autoscroll="true" >
+
+                </center>
+                <east title="Widgets" size="20%" flex="true" collapsible="true">
+                    <div style="background:#B8D335">
+
+                    </div>
+                </east>
+            </borderlayout>
+            -->
+		</panelchildren>
 	</panel>
 </zk>

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk>
+	<library-property>
+		<name>org.zkoss.web.preferred.locale</name>
+		<value>sk</value>
+	</library-property>
+
 	<!-- Labels -->
 	<system-config>
+		<label-location>/WEB-INF/labels/labels_en.properties</label-location>
 		<label-location>/WEB-INF/labels/labels.properties</label-location>
 	</system-config>
 	
@@ -15,5 +21,9 @@
 <!-- 	    <name>org.zkoss.theme.preferred</name> -->
 <!-- 	    <value>breeze</value> -->
 <!-- 	</library-property> -->
+	<language-config>
+		<addon-uri>/WEB-INF/zk-components.xml</addon-uri>
+		<addon-uri>/WEB-INF/lang-addon.xml</addon-uri>
+	</language-config>
 
 </zk>

@@ -16,7 +16,7 @@
 	</licenses>
 	
 	<properties>
-		<zk.version>9.5.1-Eval</zk.version>
+		<zk.version>9.6.1</zk.version>
 		<zkcharts.version>3.0.3-Eval</zkcharts.version>
 		<zkcalendar.version>3.0.0</zkcalendar.version>
 		<pivottable.version>2.5.2-Eval</pivottable.version>
@@ -27,11 +27,8 @@
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 	</properties>
 
+	<!--
 	<repositories>
-		<repository>
-			<id>zk repository</id>
-			<url>https://mavensync.zkoss.org/maven2</url>
-		</repository>
 		<repository>
 			<id>ZK Evaluation</id>
 			<url>https://mavensync.zkoss.org/eval</url>
@@ -46,13 +43,41 @@
 		    <name>Keikai Evaluation Repository</name>
 		    <url>https://mavensync.zkoss.org/eval</url>
 		</repository>
-<!-- 		<repository> -->
-<!-- 		    <id>OSE</id> -->
-<!-- 		    <name>Keikai OSE</name> -->
-<!-- 		    <url>https://mavensync.zkoss.org/maven2</url> -->
-<!-- 		</repository> -->
 	</repositories>
+	-->
+	
+	<repositories>
+		<repository>
+			<id>ZK Evaluation</id>
+			<url>https://mavensync.zkoss.org/eval</url>
+		</repository>
+        <repository>
+            <id>szp-group</id>
+            <url>https://nexus.tempest.sk/repository/szp-group/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>redhat GA</id>
+            <url>https://maven.repository.redhat.com/ga/</url>
+        </repository>
 
+        <!-- You 'll need those to add OTel support -->
+        <repository>
+            <id>spring-snapshots</id>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
+    
 	<dependencies>
 		<!-- ZK -->
 		<dependency>
@@ -87,7 +112,7 @@
 			<version>${zk.version}</version>
 		</dependency>
 
-		<!-- ZK Charts-->
+		<!-- ZK Charts -->
 		<dependency>
 			<groupId>org.zkoss.chart</groupId>
 			<artifactId>zkcharts</artifactId>
@@ -108,12 +133,14 @@
 		    <version>5.6.1-Eval</version>
 		</dependency>
 
-		<!-- Addons -->
+		<!-- Addons 
 		<dependency>
 			<groupId>org.zkoss.addon</groupId>
 			<artifactId>flashchart</artifactId>
 			<version>1.0</version>
 		</dependency>
+		-->
+		<!--  
 		<dependency>
 			<groupId>org.zkoss.zkforge</groupId>
 			<artifactId>gmapsz</artifactId>
@@ -134,6 +161,7 @@
 			<artifactId>pivottable</artifactId>
  			<version>${pivottable.version}</version>
 		</dependency>
+		-->
 
 		<!-- Themes -->
 		<dependency>
@@ -175,7 +203,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- commons -->
+		<!-- Commons -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -223,6 +251,23 @@
 			<groupId>com.jhlabs</groupId>
 			<artifactId>filters</artifactId>
 			<version>2.0.235</version>
+		</dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>4.6.0</version>
 		</dependency>
 	</dependencies>
 	<build>

@@ -2,6 +2,7 @@ package com.ness.zkworkshop.web.viewmodel;
 
 import org.zkoss.bind.annotation.*;
 import org.zkoss.util.resource.Labels;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.util.Clients;
 
 import com.ness.zkworkshop.web.model.User;
@@ -25,14 +26,14 @@ public class ProfileViewModel implements Serializable{
 	//data for the view
 	private User currentUser;
 	
+	public User getCurrentUser(){
+		return currentUser;
+	}
+	
 	@Init
 	public void init() {
 		UserCredential userCredential = authService.getUserCredential();
 		currentUser = userInfoService.findUser(userCredential.getAccount());
-	}
-	
-	public User getCurrentUser(){
-		return currentUser;
 	}
 	
 	/**

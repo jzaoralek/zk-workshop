@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import com.ness.zkworkshop.web.config.SidebarPageConfig;
+import com.ness.zkworkshop.web.config.SidebarPageConfigImpl;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
@@ -14,6 +16,7 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.lang.Strings;
 import org.zkoss.util.resource.Labels;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.ListModelList;
 
@@ -27,6 +30,9 @@ public class TodoListViewModel implements Serializable{
 	
 	//services
 	TodoListService todoListService = new TodoListServiceImpl();
+
+	//config provider
+	private SidebarPageConfig pageConfig = new SidebarPageConfigImpl();
 	
 	//data for the view
 	String subject;
@@ -116,6 +122,12 @@ public class TodoListViewModel implements Serializable{
 	@Command @NotifyChange("selectedTodo")
 	public void reloadTodo(){
 		//do nothing, the selectedTodo will reload by notify change
+	}
+
+	// GoTo detail form.
+	@Command
+	public void goToDetailCmd() {
+		Executions.sendRedirect(pageConfig.getPage("fn2").getUri());
 	}
 	
 	//getter & setter for the binding of the view

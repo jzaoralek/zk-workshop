@@ -1,0 +1,6 @@
+<zk xmlns:x="xhtml">
+	<hlayout>
+		<x:i id="iconified"/>
+		<label id="textLabel"/>
+	</hlayout>
+</zk>

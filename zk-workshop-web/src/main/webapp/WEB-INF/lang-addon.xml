@@ -1,0 +1,23 @@
+<language-addon>
+	<addon-name>admin-addon</addon-name>
+	<version>1.0</version>
+	<language-name>xul/html</language-name>
+
+	<depends>zuti</depends>
+
+	<component>
+		<component-name>bs-row</component-name>
+		<extends>div</extends>
+		<property>
+			<property-name>sclass</property-name>
+			<property-value>row py-1</property-value>
+		</property>
+	</component>
+
+	<component>
+		<component-name>state-box</component-name>
+		<template-uri>/pages/component/stateBox.zul</template-uri>
+	</component>
+
+	<stylesheet href="/sources/css/state-box.css" type="text/css"/>
+</language-addon>
