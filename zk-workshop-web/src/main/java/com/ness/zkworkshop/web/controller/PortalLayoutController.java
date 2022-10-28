@@ -1,14 +1,17 @@
 package com.ness.zkworkshop.web.controller;
 
+import com.ness.zkworkshop.web.model.DashboardPanel;
 import com.ness.zkworkshop.web.util.EventQueueHelper;
+import com.ness.zkworkshop.web.viewmodel.AddWidgetModalVM;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkmax.zul.Portallayout;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.Calendar;
+import org.zkoss.zul.Include;
 import org.zkoss.zul.Panel;
 import org.zkoss.zul.Panelchildren;
 
@@ -28,7 +31,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         super.doAfterCompose(comp);
 
         EventQueueHelper.queueLookup(EventQueueHelper.SdatEventQueues.DASHBOARD_QUEUE)
-                .subscribe(EventQueueHelper.SdatEvent.ADD_WIDGET, data -> addPortalWidget());
+                .subscribe(EventQueueHelper.SdatEvent.ADD_WIDGET, data -> addWidget((DashboardPanel)data));
     }
 
     @Listen("onPortalMove = #portalLayout")
@@ -65,21 +68,28 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         }
     }
 
-    private void addPortalWidget() {
+    private void addWidget(DashboardPanel panel) {
         List<? extends Component> panelchildren = portalLayout.getChildren();
         Component firstChild = panelchildren.get(0);
 
         Panel panelToAdd = new Panel();
         // panelToAdd.setId("calendar" + System.currentTimeMillis());
-        panelToAdd.setTitle("Calendar added");
+        panelToAdd.setTitle(panel.getTitle());
         panelToAdd.setBorder("normal");
         panelToAdd.setCollapsible(true);
         panelToAdd.setClosable(true);
         panelToAdd.setMaximizable(true);
         panelToAdd.setStyle("margin-bottom:10px");
-
+        if (!"".equals(panel.getPanelUri())) {
+            panelToAdd.addEventListener(Events.ON_CLICK, event -> Executions.sendRedirect(panel.getPanelUri()));
+        }
         Panelchildren panelchilds = new Panelchildren();
-        panelchilds.appendChild(new Calendar());
+        panelchilds.setStyle("overflow-y: auto;");
+        if (panel.getType() == AddWidgetModalVM.WidgetType.DATA_GRID) {
+            panelchilds.appendChild(new Include(panel.getContentSrc()));
+        } else if (panel.getType() == AddWidgetModalVM.WidgetType.CALENDAR_SIMPLE) {
+            panelchilds.appendChild(new Calendar());
+        }
         panelToAdd.appendChild(panelchilds);
 
         firstChild.appendChild(panelToAdd);

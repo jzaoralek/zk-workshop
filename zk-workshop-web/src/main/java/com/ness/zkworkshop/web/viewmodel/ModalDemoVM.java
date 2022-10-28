@@ -7,7 +7,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
-public class ModalDemoVM {
+public class ModalDemoVM extends BaseVM {
 
 	private String modalArg;
 
@@ -17,12 +17,7 @@ public class ModalDemoVM {
 		args.put("modalArg", modalArg);
 		openModal("/pages/modal.zul", args);
 	}
-	
-	public static void openModal(String page, Map<String, Object> args) {
-		Window window = (Window) Executions.createComponents(page, null, args);
-		window.doModal();
-	}
-	
+
 	public String getModalArg() {
 		return modalArg;
 	}

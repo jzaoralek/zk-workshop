@@ -7,6 +7,28 @@
 <?link rel="stylesheet" href="/sources/css/zk-bootstrap.css" ?>
 
 <zk xmlns:n="native">
+	<style>
+		.alert-warning .z-caption-content {
+			display: flex; flex-grow: 1;
+			padding: 0px;
+		}
+
+		.alert-warning .z-caption-label {
+			margin: 0 10px;
+		}
+
+		.alert-warning .z-caption-content > .captionButtons {
+			display: inline-block;
+			flex-grow: 1;
+			text-align: right;
+			margin-right: 1px;
+		}
+
+		.caption-panel-header .z-panel-header {
+			padding: 0px;
+		}
+	</style>
+
 	<panel self="@{define(mainContent)}"
 		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardViewModel')"
 		   vflex="1"
@@ -18,20 +40,29 @@
 						onClick="@command('editModeCmd')"
 						visible="@load(!vm.editMode)" />
 				<hlayout visible="@load(vm.editMode)">
-					<button id="buttonToAdd"
-							label="Add widget"
-							onClick="@command('addWidgetCmd')" />
+					<combobutton id="buttonToAdd"
+							label="${c:l('web.addWidget')}" >
+						<menupopup>
+							<menuitem forEach="${vm.widgetTypes}" label="${each}"
+									  onClick="@command('addWidgetModalCmd', type=self.label)" >
+							</menuitem>
+						</menupopup>
+					</combobutton>
 					<button label="${c:l('web.btn.save')}"
 							iconSclass="z-icon-check"
 							onClick="@command('saveCmd')" />
-					<!--
-					<button iconSclass="z-icon-caret-down" />
-					-->
 				</hlayout>
 			</div>
 		</caption>
+
 		<panelchildren style="overflow-y: auto; height: 100%" >
-			<bs-row style="margin-left: 3px; margin-right: 3px;">
+			<!-- Editacni rezim warning -->
+			<panel visible="@load(vm.editMode)" sclass="caption-panel-header">
+				<caption iconSclass="z-icon-exclamation" sclass="alert alert-warning" >
+					<label value="${c:l('web.warn.workingInEditMode')}" />
+				</caption>
+			</panel>
+			<bs-row style="margin-left: 3px; margin-right: 5px;">
 				<apply templateURI="/pages/component/stateBoard.zul"/>
 			</bs-row>
 			<div apply="com.ness.zkworkshop.web.controller.PortalLayoutController" >
@@ -41,13 +72,47 @@
 							   draggable="@load(vm.editMode)"
 							   title="Kalendář"
 							   border="normal"
-							   collapsible="true"
+							   collapsible="@load(!vm.editMode)"
 							   closable="false"
-							   maximizable="true"
-							   style="margin-bottom:10px;">
+							   sizable="@load(vm.editMode)"
+							   maximizable="@load(!vm.editMode)"
+							   style="margin-bottom: 10px;"
+							   apply="com.ness.zkworkshop.web.controller.DashboardPanelController">
 							<panelchildren>
 								<calendar/>
-								<button iconSclass="z-icon-gear" />
+								<hbox visible="@load(vm.editMode)">
+									<button iconSclass="z-icon-ellipsis-h"
+											popup="panelSettingsPopup"
+											style="background: #F9FCFF; color: #8A8A8A;"
+											tooltiptext="${c:l('web.settings')}"/>
+									<popup id="panelSettingsPopup">
+										<vlayout>
+											<hlayout sclass="z-caption-label" >
+												<label value="${c:l('web.settings')}" />
+											</hlayout>
+											<grid hflex="min">
+												<columns>
+													<column/>
+													<column/>
+												</columns>
+												<rows>
+													<row>
+														<label value="${c:l('web.title')}" />
+														<textbox id="titleTextbox" />
+													</row>
+													<row>
+														<label value="${c:l('web.header')}" />
+														<colorbox id="colorPicker" />
+													</row>
+													<row>
+														<label value="${c:l('web.border')}" />
+														<colorbox id="borderColorPicker" />
+													</row>
+												</rows>
+											</grid>
+										</vlayout>
+									</popup>
+								</hbox>
 							</panelchildren>
 						</panel>
 						<panel id="todo"
@@ -56,42 +121,43 @@
 							   title="Úkoly"
 							   height="350px"
 							   border="normal"
-							   collapsible="true"
+							   collapsible="@load(!vm.editMode)"
 							   closable="@load(vm.editMode)"
-							   maximizable="true"
-							   style="margin-bottom:10px">
+							   sizable="@load(vm.editMode)"
+							   maximizable="@load(!vm.editMode)"
+							   style="margin-bottom:5px">
 							<panelchildren>
-								<vlayout hflex="1" vflex="1" viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.TodoListViewModel')" >
-									<listbox model="@bind(vm.todoListModel)" selectedItem="@bind(vm.selectedTodo)" vflex="1" style="border: none;" >
-										<listhead>
-											<listheader width="60px" />
-											<listheader/>
-										</listhead>
-										<template name="model">
-											<listitem sclass="@bind(each.complete?'complete-todo':'')" onClick="@command('goToDetailCmd')" >
-												<listcell>
-													<checkbox checked="@bind(each.complete)" onCheck="@command('completeTodo',todo=each)"/>
-												</listcell>
-												<listcell>
-													<label value="@bind(each.subject)"/>
-												</listcell>
-											</listitem>
-										</template>
-									</listbox>
-								</vlayout>
+								<include src="/pages/todolist-core.zul" />
 							</panelchildren>
 						</panel>
 					</portalchildren>
 
 					<portalchildren style="padding: 5px" width="40%" >
+						<panel id="subjectList"
+							   draggable="@load(vm.editMode)"
+							   title="Subjekty"
+							   onClick="@command('goToSubjektListCmd')"
+							   border="normal"
+							   collapsible="@load(!vm.editMode)"
+							   closable="@load(vm.editMode)"
+							   sizable="@load(vm.editMode)"
+							   maximizable="@load(!vm.editMode)"
+							   height="350px"
+							   style="margin-bottom:5px" >
+							<panelchildren style="overflow-y: auto;">
+								<include src="/pages/subjekt-list-core.zul" />
+							</panelchildren>
+						</panel>
+
 						<panel id="tree"
 							   draggable="@load(vm.editMode)"
 							   onClick="@command('goToTreeCmd')"
 							   height="350px" title="Hierarchie"
 							   border="normal"
-							   collapsible="true"
+							   collapsible="@load(!vm.editMode)"
 							   closable="@load(vm.editMode)"
-							   maximizable="true"
+							   sizable="@load(vm.editMode)"
+							   maximizable="@load(!vm.editMode)"
 							   style="margin-bottom:10px">
 							<panelchildren viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.TreeViewModel')">
 								<tree hflex="1" model="${vm.treeModel}" visible="@load(vm.treeMode)" style="border: none;" >
@@ -114,9 +180,10 @@
 							   onClick="@command('goToWeatherCmd')"
 							   title="Počasí"
 							   border="normal"
-							   collapsible="true"
+							   collapsible="@load(!vm.editMode)"
 							   closable="@load(vm.editMode)"
-							   maximizable="true"
+							   sizable="@load(vm.editMode)"
+							   maximizable="@load(!vm.editMode)"
 							   style="margin-bottom:10px;">
 							<panelchildren>
 								<panel viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ChartViewModel')">

@@ -9,14 +9,19 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.util.Clients;
 
-public class DashboardViewModel {
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-	//config provider
-	private SidebarPageConfig pageConfig = new SidebarPageConfigImpl();
+public class DashboardViewModel extends BaseVM {
 
-	boolean editMode;
+	private boolean editMode;
+	private String borderColor;
+	private String backgrColor;
 
 	@NotifyChange("editMode")
 	@Command
@@ -36,8 +41,10 @@ public class DashboardViewModel {
 	}
 
 	@Command
-	public void addWidgetCmd() {
-		EventQueueHelper.publish(EventQueueHelper.SdatEvent.ADD_WIDGET, null);
+	public void addWidgetModalCmd(@BindingParam("type") String type) {
+		Map<String, Object> args = new HashMap<>();
+		args.put("modalArg", type);
+		openModal("/pages/add-widget-modal.zul", args);
 	}
 
 	/**
@@ -45,6 +52,9 @@ public class DashboardViewModel {
 	 */
 	@Command
 	public void goToWeatherCmd() {
+		if (this.editMode) {
+			return;
+		}
 		redirectToPage("fn7");
 	}
 
@@ -53,7 +63,21 @@ public class DashboardViewModel {
 	 */
 	@Command
 	public void goToTreeCmd() {
+		if (this.editMode) {
+			return;
+		}
 		redirectToPage("fn6");
+	}
+
+	/**
+	 * Prechod na seznam subjektů.
+	 */
+	@Command
+	public void goToSubjektListCmd() {
+		if (this.editMode) {
+			return;
+		}
+		redirectToPage("fn9");
 	}
 
 	/**
@@ -61,7 +85,16 @@ public class DashboardViewModel {
 	 */
 	@Command
 	public void goToGridCmd() {
+		if (this.editMode) {
+			return;
+		}
 		redirectToPage("fn3");
+	}
+
+	@NotifyChange("backgrColor")
+	@Command
+	public void setBackgroundColorCmd(@BindingParam("event") InputEvent event) {
+		this.backgrColor = "margin-bottom: 5px; background: " + event.getValue();
 	}
 
 	private void redirectToPage(String pageId) {
@@ -70,5 +103,21 @@ public class DashboardViewModel {
 
 	public boolean isEditMode() {
 		return editMode;
+	}
+
+	public String getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(String borderColor) {
+		this.borderColor = borderColor;
+	}
+
+	public String getBackgrColor() {
+		return backgrColor;
+	}
+
+	public void setBackgrColor(String backgrColor) {
+		this.backgrColor = backgrColor;
 	}
 }

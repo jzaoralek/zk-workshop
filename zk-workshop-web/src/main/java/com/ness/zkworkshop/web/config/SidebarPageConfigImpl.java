@@ -23,6 +23,7 @@ public class SidebarPageConfigImpl implements SidebarPageConfig{
 		pageMap.put("fn6",new SidebarPage("tree", "Tree" ,null,"/pages/tree.zul", "z-icon-sitemap"));
 		pageMap.put("fn7",new SidebarPage("chart", "Chart" ,null,"/pages/chart.zul", "z-icon-signal"));
 		pageMap.put("fn8",new SidebarPage("spreadsheet", "Spreadsheet" ,null,"/pages/spreadsheet.zul", "z-icon-table"));
+		pageMap.put("fn9",new SidebarPage("subjectList", "Subjekty" ,null,"/pages/subjekt-list.zul", "z-icon-list"));
 	}
 	
 	public List<SidebarPage> getPages(){

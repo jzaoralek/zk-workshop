@@ -1,0 +1,11 @@
+<?page title="${c:l('web.application.name')} | ${c:l('web.subject.detail')}" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+
+<panel self="@{define(mainContent)}"
+	   viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.SubjektDetailVM')"
+	   border="none" hflex="1" vflex="1" >
+	<caption iconSclass="z-icon-list" sclass="fn-caption" label="${c:l('web.subject.detail')}"/>
+	<panelchildren>
+		<label value="@init(vm.subjekt.kod)" />
+	</panelchildren>
+</panel>

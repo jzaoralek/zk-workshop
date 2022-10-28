@@ -31,7 +31,7 @@
           viewModel="@id('vm') @init('zksandbox.i18n.LocaleVM')" >
 
         <image src="@load(vm.localeSelected.img.src)"
-               width="25px"
+               width="24px"
                style="margin-right: 5px; cursor: pointer;"
                popup="localizationSwitchPopup, position=after_end" />
 
@@ -81,9 +81,15 @@
 
     <hbox hflex="min" vflex="1" pack="end" align="center" style="margin-left: 5px; margin-bottom: 2px;"
     	viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.ProfileViewModel')">
-        <a iconSclass="z-icon-user" sclass="banner" popup="userMenuPopup" />
-        <popup id="userMenuPopup">
-            <label value="@load(vm.currentUser.fullName)"/>
-        </popup>
+        <a iconSclass="z-icon-user"
+           sclass="banner"
+           popup="userMenuPopup, position=after_end"
+           tooltiptext="@init(vm.currentUser.fullName)" />
+        <menupopup id="userMenuPopup" >
+            <menuitem iconSclass="z-icon-gear" label="Nastavení" />
+            <menuitem iconSclass="z-icon-user" label="Profil" />
+            <menuseparator/>
+            <menuitem iconSclass="z-icon-sign-out" label="Odhlásit" />
+        </menupopup>
     </hbox>
 </hbox>

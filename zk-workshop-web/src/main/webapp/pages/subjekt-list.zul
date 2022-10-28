@@ -1,0 +1,10 @@
+<?page title="${c:l('web.application.name')} | ${c:l('web.subject.list')}" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+
+<panel self="@{define(mainContent)}"
+	border="none" hflex="1" vflex="1" >
+	<caption iconSclass="z-icon-list" sclass="fn-caption" label="${c:l('web.subject.list')}"/>
+	<panelchildren>
+		<include src="/pages/subjekt-list-core.zul" />
+	</panelchildren>
+</panel>

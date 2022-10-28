@@ -1,0 +1,20 @@
+<zk>
+    <vlayout hflex="1" vflex="1" viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.TodoListViewModel')" >
+        <listbox model="@bind(vm.todoListModel)" selectedItem="@bind(vm.selectedTodo)" vflex="1" style="border: none;" >
+            <listhead>
+                <listheader width="60px" />
+                <listheader/>
+            </listhead>
+            <template name="model">
+                <listitem sclass="@bind(each.complete?'complete-todo':'')" onClick="@command('goToDetailCmd')" >
+                    <listcell>
+                        <checkbox checked="@bind(each.complete)" onCheck="@command('completeTodo',todo=each)"/>
+                    </listcell>
+                    <listcell>
+                        <label value="@bind(each.subject)"/>
+                    </listcell>
+                </listitem>
+            </template>
+        </listbox>
+    </vlayout>
+</zk>

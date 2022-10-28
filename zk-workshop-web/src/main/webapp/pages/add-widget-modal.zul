@@ -1,0 +1,46 @@
+<window id="modalDialog" title="${c:l('web.addWidget')}" border="normal" width="375px"
+    position="center,center" closable="true"
+    viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.AddWidgetModalVM')" >
+    <vlayout hflex="1">
+        <hbox>
+            <label value="Typ" />
+            <combobox model="@load(vm.widgetTypes)"
+                      selectedItem="@bind(vm.widgetTypeSelected)"
+                      onSelect="@command('changeWidgetTypeCmd')">
+                <template name="model">
+                    <comboitem label="${each}" value="${each}"/>
+                </template>
+            </combobox>
+        </hbox>
+
+        <separator/>
+
+        <listbox model="@load(vm.dashboardPanelListByType)"
+                 selectedItem="@bind(vm.dashboardPanelSelected)"
+                 multiple="false"
+                 checkmark="true"
+                 hflex="1"
+                 height="150px"
+                 style="border: none;" >
+            <listhead>
+                <listheader width="60px" />
+                <listheader/>
+            </listhead>
+            <template name="model">
+                <listitem>
+                    <listcell/>
+                    <listcell label="@load(each.title)"/>
+                </listitem>
+            </template>
+        </listbox>
+
+        <hbox pack="end" hflex="1">
+            <button label="OK"
+                    iconSclass="z-icon-check"
+                    disabled="@load(!vm.typeSupported)"
+                    onClick="@command('addWidgetCmd', modal=modalDialog)"/>
+            <button label="${c:l('web.btn.close')}"
+                onClick="modalDialog.detach()"/>
+        </hbox>
+    </vlayout>
+</window>

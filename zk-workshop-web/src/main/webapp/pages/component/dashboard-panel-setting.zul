@@ -1,0 +1,34 @@
+<zk>
+    <hbox visible="@load(vm.editMode)">
+        <button iconSclass="z-icon-gear"
+                popup="panelSettingsPopup"
+                tooltiptext="${c:l('web.settings')}"/>
+        <popup id="panelSettingsPopup">
+            <vlayout>
+                <hlayout sclass="z-caption-label" >
+                    <label value="${c:l('web.settings')}" />
+                </hlayout>
+                <grid hflex="min">
+                    <columns>
+                        <column/>
+                        <column/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="${c:l('web.title')}" />
+                            <textbox id="titleTextbox" />
+                        </row>
+                        <row>
+                            <label value="${c:l('web.header')}" />
+                            <colorbox id="colorPicker" />
+                        </row>
+                        <row>
+                            <label value="${c:l('web.border')}" />
+                            <colorbox id="borderColorPicker" />
+                        </row>
+                    </rows>
+                </grid>
+            </vlayout>
+        </popup>
+    </hbox>
+</zk>
