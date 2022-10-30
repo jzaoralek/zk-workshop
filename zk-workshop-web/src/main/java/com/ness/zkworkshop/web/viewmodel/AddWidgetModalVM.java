@@ -49,6 +49,9 @@ public class AddWidgetModalVM extends BaseVM {
         dataGridList.add(new DashboardPanel("Subjekty", "/pages/subjekt-list-core.zul", pageConfig.getPage("fn9").getUri(), WidgetType.DATA_GRID));
         dataGridList.add(new DashboardPanel("Úkoly", "/pages/todolist-core.zul", pageConfig.getPage("fn3").getUri(), WidgetType.DATA_GRID));
         dashboardPanelMap.put(WidgetType.DATA_GRID, dataGridList);
+        // MENU_ITEM
+        dashboardPanelMap.put(WidgetType.MENU_ITEM, Arrays.asList(new DashboardPanel("Subjekty", "", pageConfig.getPage("fn9").getUri(), WidgetType.MENU_ITEM)));
+
         changeWidgetTypeCmd();
     }
 
@@ -65,7 +68,8 @@ public class AddWidgetModalVM extends BaseVM {
 
     @DependsOn("widgetTypeSelected")
     public boolean isTypeSupported() {
-        return EnumSet.of(WidgetType.CALENDAR_SIMPLE, WidgetType.DATA_GRID).contains(widgetTypeSelected);
+
+        return EnumSet.of(WidgetType.CALENDAR_SIMPLE, WidgetType.DATA_GRID, WidgetType.MENU_ITEM).contains(widgetTypeSelected);
     }
 
     /**

@@ -56,6 +56,6 @@ public class DashboardPanelController extends SelectorComposer<Component> {
      * Nastaveni barvy pozadi a ohraniceni podle colorpickeru.
      */
     private void setPanelStyle() {
-        panel.setStyle("margin-bottom: 10px; background: " + colorPicker.getColor() + "; border-color: " + borderColorPicker.getColor());
+        panel.setStyle("background: " + colorPicker.getColor() + "; border-color: " + borderColorPicker.getColor());
     }
 }

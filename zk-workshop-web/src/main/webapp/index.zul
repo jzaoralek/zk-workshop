@@ -27,13 +27,19 @@
 		.caption-panel-header .z-panel-header {
 			padding: 0px;
 		}
+
+		.portal-widget-panel {
+			margin: 5px;
+			background: #F9FCFF;
+			border-color: #d9d9d9;
+		}
 	</style>
 
 	<panel self="@{define(mainContent)}"
 		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardViewModel')"
 		   vflex="1"
 		   hflex="1">
-		<caption sclass="fn-caption" label="${c:l('web.dashboard')}" iconSclass="z-icon-home">
+		<caption sclass="fn-caption" label="${c:l('web.dashboard')}" iconSclass="z-icon-home" >
 			<div align="center" sclass="captionButtons">
 				<button label="${c:l('web.btn.change')}"
 						iconSclass="z-icon-edit"
@@ -42,10 +48,12 @@
 				<hlayout visible="@load(vm.editMode)">
 					<combobutton id="buttonToAdd"
 							label="${c:l('web.addWidget')}" >
-						<menupopup>
-							<menuitem forEach="${vm.widgetTypes}" label="${each}"
-									  onClick="@command('addWidgetModalCmd', type=self.label)" >
-							</menuitem>
+						<menupopup children="@init(vm.widgetTypes)">
+							<template name="children">
+								<menuitem label="@init(each) @converter(vm.enumLabelConverter)"
+										  value="@init(each)"
+										  onClick="@command('addWidgetModalCmd', type=self.value)" />
+							</template>
 						</menupopup>
 					</combobutton>
 					<button label="${c:l('web.btn.save')}"
@@ -67,7 +75,7 @@
 			</bs-row>
 			<div apply="com.ness.zkworkshop.web.controller.PortalLayoutController" >
 				<portallayout id="portalLayout" maximizedMode="whole">
-					<portalchildren style="padding: 5px" width="30%">
+					<portalchildren width="30%">
 						<panel id="calendar"
 							   draggable="@load(vm.editMode)"
 							   title="Kalendář"
@@ -76,7 +84,7 @@
 							   closable="false"
 							   sizable="@load(vm.editMode)"
 							   maximizable="@load(!vm.editMode)"
-							   style="margin-bottom: 10px;"
+							   sclass="portal-widget-panel"
 							   apply="com.ness.zkworkshop.web.controller.DashboardPanelController">
 							<panelchildren>
 								<calendar/>
@@ -119,20 +127,21 @@
 							   draggable="@load(vm.editMode)"
 							   onClick="@command('goToGridCmd')"
 							   title="Úkoly"
-							   height="350px"
+							   height="275px"
 							   border="normal"
 							   collapsible="@load(!vm.editMode)"
 							   closable="@load(vm.editMode)"
 							   sizable="@load(vm.editMode)"
 							   maximizable="@load(!vm.editMode)"
-							   style="margin-bottom:5px">
+							   sclass="portal-widget-panel"
+							   style="marhin-top: 10px;">
 							<panelchildren>
 								<include src="/pages/todolist-core.zul" />
 							</panelchildren>
 						</panel>
 					</portalchildren>
 
-					<portalchildren style="padding: 5px" width="40%" >
+					<portalchildren width="40%" >
 						<panel id="subjectList"
 							   draggable="@load(vm.editMode)"
 							   title="Subjekty"
@@ -143,7 +152,7 @@
 							   sizable="@load(vm.editMode)"
 							   maximizable="@load(!vm.editMode)"
 							   height="350px"
-							   style="margin-bottom:5px" >
+							   sclass="portal-widget-panel" >
 							<panelchildren style="overflow-y: auto;">
 								<include src="/pages/subjekt-list-core.zul" />
 							</panelchildren>
@@ -152,13 +161,14 @@
 						<panel id="tree"
 							   draggable="@load(vm.editMode)"
 							   onClick="@command('goToTreeCmd')"
-							   height="350px" title="Hierarchie"
+							   height="175px"
+							   title="Hierarchie"
 							   border="normal"
 							   collapsible="@load(!vm.editMode)"
 							   closable="@load(vm.editMode)"
 							   sizable="@load(vm.editMode)"
 							   maximizable="@load(!vm.editMode)"
-							   style="margin-bottom:10px">
+							   sclass="portal-widget-panel">
 							<panelchildren viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.TreeViewModel')">
 								<tree hflex="1" model="${vm.treeModel}" visible="@load(vm.treeMode)" style="border: none;" >
 									<template name="model">
@@ -174,7 +184,7 @@
 						</panel>
 					</portalchildren>
 
-					<portalchildren style="padding: 5px" width="30%">
+					<portalchildren width="30%">
 						<panel id="weather"
 							   draggable="@load(vm.editMode)"
 							   onClick="@command('goToWeatherCmd')"
@@ -184,7 +194,7 @@
 							   closable="@load(vm.editMode)"
 							   sizable="@load(vm.editMode)"
 							   maximizable="@load(!vm.editMode)"
-							   style="margin-bottom:10px;">
+							   sclass="portal-widget-panel">
 							<panelchildren>
 								<panel viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ChartViewModel')">
 									<panelchildren apply="com.ness.zkworkshop.web.controller.ChartController">

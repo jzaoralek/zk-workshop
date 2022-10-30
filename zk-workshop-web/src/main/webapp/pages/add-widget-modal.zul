@@ -8,7 +8,7 @@
                       selectedItem="@bind(vm.widgetTypeSelected)"
                       onSelect="@command('changeWidgetTypeCmd')">
                 <template name="model">
-                    <comboitem label="${each}" value="${each}"/>
+                    <comboitem label="@load(each) @converter(vm.enumLabelConverter)" value="${each}"/>
                 </template>
             </combobox>
         </hbox>

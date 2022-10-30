@@ -15,8 +15,8 @@
 			minsize="300">
 			<include src="/pages/template/sidebar.zul" />
 		</west>
-		<center id="mainContent" autoscroll="true">
-			<div self="@{insert(mainContent)}" hflex="1" vflex="1">
+		<center id="mainContent" autoscroll="true" >
+			<div self="@{insert(mainContent)}" hflex="1" vflex="1" >
 			</div>
 		</center>
 		<south border="none"

@@ -80,6 +80,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         panelToAdd.setClosable(true);
         panelToAdd.setMaximizable(true);
         panelToAdd.setStyle("margin-bottom:10px");
+        panelToAdd.setSclass("portal-widget-panel");
         if (!"".equals(panel.getPanelUri())) {
             panelToAdd.addEventListener(Events.ON_CLICK, event -> Executions.sendRedirect(panel.getPanelUri()));
         }
@@ -87,11 +88,11 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         panelchilds.setStyle("overflow-y: auto;");
         if (panel.getType() == AddWidgetModalVM.WidgetType.DATA_GRID) {
             panelchilds.appendChild(new Include(panel.getContentSrc()));
+            panelToAdd.appendChild(panelchilds);
         } else if (panel.getType() == AddWidgetModalVM.WidgetType.CALENDAR_SIMPLE) {
             panelchilds.appendChild(new Calendar());
+            panelToAdd.appendChild(panelchilds);
         }
-        panelToAdd.appendChild(panelchilds);
-
         firstChild.appendChild(panelToAdd);
         // saveStatus();
     }
