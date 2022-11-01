@@ -18,9 +18,9 @@ public class AddWidgetModalVM extends BaseVM {
         CALENDAR_SIMPLE,
         MENU_ITEM,
         CHART,
-        MESSAGES,
-        NOTIFICATIONS;
+        MESSAGES;
         /*
+        NOTIFICATIONS,
         CALENDAR_EVENTS,
         SPREADSHEET,
         DETAIL,

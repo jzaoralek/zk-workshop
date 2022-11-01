@@ -59,6 +59,12 @@
 					<button label="${c:l('web.btn.save')}"
 							iconSclass="z-icon-check"
 							onClick="@command('saveCmd')" />
+					<button iconSclass="z-icon-ellipsis-v" popup="dashbordMenuPopup, position=after_end" />
+					<menupopup id="dashbordMenuPopup">
+						<menuitem label="Nový" />
+						<menuitem label="Kopírovat" />
+						<menuitem label="Přehled dashboardů" />
+					</menupopup>
 				</hlayout>
 			</div>
 		</caption>
@@ -196,6 +202,7 @@
 						-->
 					</portalchildren>
 					<portalchildren width="25%" >
+						<!--
 						<panel id="weather"
 							   draggable="@load(vm.editMode)"
 							   onClick="@command('goToWeatherCmd')"
@@ -210,6 +217,7 @@
 								<include src="/pages/chart-core.zul" />
 							</panelchildren>
 						</panel>
+						-->
 					</portalchildren>
 				</portallayout>
 			</div>
