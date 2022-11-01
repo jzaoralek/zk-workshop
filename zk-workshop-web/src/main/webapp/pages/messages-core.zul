@@ -1,0 +1,40 @@
+<zk>
+    <vlayout viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.MessageListVM')" >
+        <vlayout style="margin-top: 10px; margin-bottom: 10px; margin-left: 10px;">
+            <hbox align="center">
+                <a iconSclass="z-icon-envelope" style="text-decoration: none !important; font-size: 36px;" />
+                <label value="Nové správy" style="margin-left: 10px; font-size: 26px;" />
+            </hbox>
+            <label value="Máte 10 neprečítaných správ." />
+        </vlayout>
+        <listbox model="@bind(vm.messageList)"
+                 height="300px"
+                 style="margin-left: 5px; margin-right: 5px; margin-bottom: 10px;">
+            <auxhead>
+                <auxheader/>
+            </auxhead>
+            <listhead>
+                <listheader/>
+            </listhead>
+            <template name="model">
+                <listitem>
+                    <listcell>
+                        <vbox hflex="1">
+                            <hbox hflex="1">
+                                <vbox hflex="1">
+                                    <label value="@bind(each.from)" style="font-weight: bold;"/>
+                                </vbox>
+                                <vbox hflex="min" align="end">
+                                    <label value="@bind(each.sent)"/>
+                                </vbox>
+                            </hbox>
+                            <label value="@bind(each.subject)"/>
+                            <label value="@bind(each.text)" style="font-color: grey;"/>
+                        </vbox>
+                    </listcell>
+                </listitem>
+            </template>
+        </listbox>
+        <button label="Zobraziť všetky správy" style="margin-left: 10px;" />
+    </vlayout>
+</zk>

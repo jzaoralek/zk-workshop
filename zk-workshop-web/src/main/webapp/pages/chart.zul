@@ -2,14 +2,10 @@
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
 
 <zk>
-	<panel self="@{define(mainContent)}"
-		viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ChartViewModel')">
-			<caption sclass="fn-caption" iconSclass="z-icon-signal">Chart</caption>
-			<panelchildren apply="com.ness.zkworkshop.web.controller.ChartController">
-				<charts id="chart" type="line"
-					model="@init(vm.model)"
-					title="Průměrná teplota"
-        			subtitle="Source: WorldClimate.com" />
-			</panelchildren>
+	<panel self="@{define(mainContent)}">
+		<caption sclass="fn-caption" iconSclass="z-icon-signal">Chart</caption>
+		<panelchildren>
+			<include src="/pages/chart-core.zul" />
+		</panelchildren>
 	</panel>
 </zk>

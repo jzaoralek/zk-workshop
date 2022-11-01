@@ -1,0 +1,46 @@
+<zk>
+	<vlayout viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.TreeViewModel')">
+		<hbox>
+			<button tooltiptext="Tree" onClick="@command('switchToTreeModeCmd')" iconSclass="z-icon-sitemap" disabled="@load(vm.treeMode)"/>
+			<button tooltiptext="Grid" onClick="@command('switchToListboxModeCmd')" iconSclass="z-icon-table" disabled="@load(vm.listboxMode)"/>
+		</hbox>
+		<tree id="tree" hflex="1" model="${vm.treeModel}" visible="@load(vm.treeMode)">
+			<treecols>
+				<treecol hflex="1" label="${c:l('web.path')}" />
+				<treecol hflex="1" label="${c:l('web.description')}" />
+			</treecols>
+			<template name="model">
+				<treeitem>
+					<treerow>
+						<treecell label="${each.data.path}"/>
+						<treecell label="${each.data.description}"/>
+					</treerow>
+				</treeitem>
+			</template>
+		</tree>
+
+		<listbox model="@bind(vm.treeList)" visible="@load(vm.listboxMode)" >
+			<listhead>
+				<listheader hflex="1" label="${c:l('web.path')}" />
+				<listheader hflex="1" label="${each.data.description}"/>
+				<listheader hflex="min" label="Size"/>
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell>
+						<label value="@bind(each.path)"/>
+					</listcell>
+					<listcell>
+						<label value="@bind(each.description)"/>
+					</listcell>
+					<listcell>
+						<label value="@bind(each.size)"/>
+					</listcell>
+				</listitem>
+			</template>
+		</listbox>
+	</vlayout>
+</zk>
+
+
+

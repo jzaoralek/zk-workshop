@@ -15,14 +15,17 @@ public class AddWidgetModalVM extends BaseVM {
 
     public enum WidgetType {
         DATA_GRID,
-        CALENDAR_EVENTS,
         CALENDAR_SIMPLE,
-        SPREADSHEET,
         MENU_ITEM,
-        DETAIL,
+        CHART,
         MESSAGES,
-        NOTIFICATIONS,
+        NOTIFICATIONS;
+        /*
+        CALENDAR_EVENTS,
+        SPREADSHEET,
+        DETAIL,
         DOCUMENT;
+         */
     }
 
     private String modalArg;
@@ -48,9 +51,16 @@ public class AddWidgetModalVM extends BaseVM {
         List<DashboardPanel> dataGridList = new ArrayList<>();
         dataGridList.add(new DashboardPanel("Subjekty", "/pages/subjekt-list-core.zul", pageConfig.getPage("fn9").getUri(), WidgetType.DATA_GRID));
         dataGridList.add(new DashboardPanel("Úkoly", "/pages/todolist-core.zul", pageConfig.getPage("fn3").getUri(), WidgetType.DATA_GRID));
+        dataGridList.add(new DashboardPanel("Hierarchie", "/pages/tree-core.zul", pageConfig.getPage("fn6").getUri(), WidgetType.DATA_GRID));
         dashboardPanelMap.put(WidgetType.DATA_GRID, dataGridList);
         // MENU_ITEM
-        dashboardPanelMap.put(WidgetType.MENU_ITEM, Arrays.asList(new DashboardPanel("Subjekty", "", pageConfig.getPage("fn9").getUri(), WidgetType.MENU_ITEM)));
+        List<DashboardPanel> menuItemList = Arrays.asList(new DashboardPanel("Subjekty", "", pageConfig.getPage("fn9").getUri(), WidgetType.MENU_ITEM),
+                                                          new DashboardPanel("Úkoly", "", pageConfig.getPage("fn3").getUri(), WidgetType.MENU_ITEM));
+        dashboardPanelMap.put(WidgetType.MENU_ITEM, menuItemList);
+        // CHART
+        dashboardPanelMap.put(WidgetType.CHART, Arrays.asList(new DashboardPanel("Graf", "/pages/chart-core.zul", pageConfig.getPage("fn7").getUri(), WidgetType.CHART)));
+        // MESSAGES
+        dashboardPanelMap.put(WidgetType.MESSAGES, Arrays.asList(new DashboardPanel("Správy", "/pages/messages-core.zul", "", WidgetType.MESSAGES)));
 
         changeWidgetTypeCmd();
     }
@@ -69,7 +79,7 @@ public class AddWidgetModalVM extends BaseVM {
     @DependsOn("widgetTypeSelected")
     public boolean isTypeSupported() {
 
-        return EnumSet.of(WidgetType.CALENDAR_SIMPLE, WidgetType.DATA_GRID, WidgetType.MENU_ITEM).contains(widgetTypeSelected);
+        return EnumSet.of(WidgetType.CALENDAR_SIMPLE, WidgetType.DATA_GRID, WidgetType.MENU_ITEM, WidgetType.CHART, WidgetType.MESSAGES).contains(widgetTypeSelected);
     }
 
     /**

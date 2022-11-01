@@ -39,7 +39,7 @@
 		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardViewModel')"
 		   vflex="1"
 		   hflex="1">
-		<caption sclass="fn-caption" label="${c:l('web.dashboard')}" iconSclass="z-icon-home" >
+		<caption sclass="fn-caption" label="${c:l('web.dashboard')}" >
 			<div align="center" sclass="captionButtons">
 				<button label="${c:l('web.btn.change')}"
 						iconSclass="z-icon-edit"
@@ -66,16 +66,52 @@
 		<panelchildren style="overflow-y: auto; height: 100%" >
 			<!-- Editacni rezim warning -->
 			<panel visible="@load(vm.editMode)" sclass="caption-panel-header">
-				<caption iconSclass="z-icon-exclamation" sclass="alert alert-warning" >
+				<caption sclass="alert alert-warning" >
 					<label value="${c:l('web.warn.workingInEditMode')}" />
 				</caption>
 			</panel>
-			<bs-row style="margin-left: 3px; margin-right: 5px;">
+			<bs-row style="margin-left: 3px; margin-right: 5px;" visible="@load(!vm.editMode)">
 				<apply templateURI="/pages/component/stateBoard.zul"/>
 			</bs-row>
 			<div apply="com.ness.zkworkshop.web.controller.PortalLayoutController" >
 				<portallayout id="portalLayout" maximizedMode="whole">
-					<portalchildren width="30%">
+					<portalchildren width="25%" >
+						<!--
+						<panel id="todo"
+							   draggable="@load(vm.editMode)"
+							   onClick="@command('goToGridCmd')"
+							   title="Úkoly"
+							   height="275px"
+							   border="normal"
+							   collapsible="@load(!vm.editMode)"
+							   closable="@load(vm.editMode)"
+							   sizable="@load(vm.editMode)"
+							   maximizable="@load(!vm.editMode)"
+							   sclass="portal-widget-panel"
+							   style="marhin-top: 10px;">
+							<panelchildren style="overflow-y: auto;">
+								<include src="/pages/todolist-core.zul" />
+							</panelchildren>
+						</panel>
+						<panel id="subjectList"
+							   draggable="@load(vm.editMode)"
+							   title="Subjekty"
+							   onClick="@command('goToSubjektListCmd')"
+							   border="normal"
+							   collapsible="@load(!vm.editMode)"
+							   closable="@load(vm.editMode)"
+							   sizable="@load(vm.editMode)"
+							   maximizable="@load(!vm.editMode)"
+							   height="350px"
+							   sclass="portal-widget-panel" >
+							<panelchildren style="overflow-y: auto;">
+								<include src="/pages/subjekt-list-core.zul" />
+							</panelchildren>
+						</panel>
+						-->
+					</portalchildren>
+
+					<portalchildren width="25%" >
 						<panel id="calendar"
 							   draggable="@load(vm.editMode)"
 							   title="Kalendář"
@@ -123,41 +159,7 @@
 								</hbox>
 							</panelchildren>
 						</panel>
-						<panel id="todo"
-							   draggable="@load(vm.editMode)"
-							   onClick="@command('goToGridCmd')"
-							   title="Úkoly"
-							   height="275px"
-							   border="normal"
-							   collapsible="@load(!vm.editMode)"
-							   closable="@load(vm.editMode)"
-							   sizable="@load(vm.editMode)"
-							   maximizable="@load(!vm.editMode)"
-							   sclass="portal-widget-panel"
-							   style="marhin-top: 10px;">
-							<panelchildren>
-								<include src="/pages/todolist-core.zul" />
-							</panelchildren>
-						</panel>
-					</portalchildren>
-
-					<portalchildren width="40%" >
-						<panel id="subjectList"
-							   draggable="@load(vm.editMode)"
-							   title="Subjekty"
-							   onClick="@command('goToSubjektListCmd')"
-							   border="normal"
-							   collapsible="@load(!vm.editMode)"
-							   closable="@load(vm.editMode)"
-							   sizable="@load(vm.editMode)"
-							   maximizable="@load(!vm.editMode)"
-							   height="350px"
-							   sclass="portal-widget-panel" >
-							<panelchildren style="overflow-y: auto;">
-								<include src="/pages/subjekt-list-core.zul" />
-							</panelchildren>
-						</panel>
-
+						<!--
 						<panel id="tree"
 							   draggable="@load(vm.editMode)"
 							   onClick="@command('goToTreeCmd')"
@@ -170,21 +172,13 @@
 							   maximizable="@load(!vm.editMode)"
 							   sclass="portal-widget-panel">
 							<panelchildren viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.TreeViewModel')">
-								<tree hflex="1" model="${vm.treeModel}" visible="@load(vm.treeMode)" style="border: none;" >
-									<template name="model">
-										<treeitem>
-											<treerow>
-												<treecell label="${each.data.path}"/>
-												<treecell label="${each.data.description}"/>
-											</treerow>
-										</treeitem>
-									</template>
-								</tree>
+								<include src="/pages/tree-core.zul" />
 							</panelchildren>
 						</panel>
+						-->
 					</portalchildren>
-
-					<portalchildren width="30%">
+					<portalchildren width="25%" >
+						<!--
 						<panel id="weather"
 							   draggable="@load(vm.editMode)"
 							   onClick="@command('goToWeatherCmd')"
@@ -196,14 +190,24 @@
 							   maximizable="@load(!vm.editMode)"
 							   sclass="portal-widget-panel">
 							<panelchildren>
-								<panel viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ChartViewModel')">
-									<panelchildren apply="com.ness.zkworkshop.web.controller.ChartController">
-										<charts id="chart" type="line"
-												model="@init(vm.model)"
-												title="Průměrná teplota"
-												subtitle="Source: WorldClimate.com" />
-									</panelchildren>
-								</panel>
+								<include src="/pages/chart-core.zul" />
+							</panelchildren>
+						</panel>
+						-->
+					</portalchildren>
+					<portalchildren width="25%" >
+						<panel id="weather"
+							   draggable="@load(vm.editMode)"
+							   onClick="@command('goToWeatherCmd')"
+							   title="Počasí"
+							   border="normal"
+							   collapsible="@load(!vm.editMode)"
+							   closable="@load(vm.editMode)"
+							   sizable="@load(vm.editMode)"
+							   maximizable="@load(!vm.editMode)"
+							   sclass="portal-widget-panel">
+							<panelchildren>
+								<include src="/pages/chart-core.zul" />
 							</panelchildren>
 						</panel>
 					</portalchildren>

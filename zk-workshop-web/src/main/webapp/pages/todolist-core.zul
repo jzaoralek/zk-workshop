@@ -1,6 +1,12 @@
 <zk>
-    <vlayout hflex="1" vflex="1" viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.TodoListViewModel')" >
-        <listbox model="@bind(vm.todoListModel)" selectedItem="@bind(vm.selectedTodo)" vflex="1" style="border: none;" >
+    <vlayout viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.TodoListViewModel')" >
+        <listbox model="@bind(vm.todoListModel)"
+                 selectedItem="@bind(vm.selectedTodo)"
+                 vflex="1" >
+            <auxhead>
+                <auxheader/>
+                <auxheader/>
+            </auxhead>
             <listhead>
                 <listheader width="60px" />
                 <listheader/>

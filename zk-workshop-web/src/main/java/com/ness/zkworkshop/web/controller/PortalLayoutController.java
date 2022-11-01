@@ -16,6 +16,7 @@ import org.zkoss.zul.Panel;
 import org.zkoss.zul.Panelchildren;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 public class PortalLayoutController extends SelectorComposer<Component> {
@@ -76,9 +77,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         // panelToAdd.setId("calendar" + System.currentTimeMillis());
         panelToAdd.setTitle(panel.getTitle());
         panelToAdd.setBorder("normal");
-        panelToAdd.setCollapsible(true);
         panelToAdd.setClosable(true);
-        panelToAdd.setMaximizable(true);
         panelToAdd.setStyle("margin-bottom:10px");
         panelToAdd.setSclass("portal-widget-panel");
         if (!"".equals(panel.getPanelUri())) {
@@ -86,13 +85,25 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         }
         Panelchildren panelchilds = new Panelchildren();
         panelchilds.setStyle("overflow-y: auto;");
-        if (panel.getType() == AddWidgetModalVM.WidgetType.DATA_GRID) {
+        if (EnumSet.of(AddWidgetModalVM.WidgetType.DATA_GRID, AddWidgetModalVM.WidgetType.CHART, AddWidgetModalVM.WidgetType.MESSAGES).contains(panel.getType())) {
             panelchilds.appendChild(new Include(panel.getContentSrc()));
             panelToAdd.appendChild(panelchilds);
         } else if (panel.getType() == AddWidgetModalVM.WidgetType.CALENDAR_SIMPLE) {
             panelchilds.appendChild(new Calendar());
             panelToAdd.appendChild(panelchilds);
         }
+
+        if (panel.getType() == AddWidgetModalVM.WidgetType.MENU_ITEM) {
+            // polozlku menu nelze sbalit ani maximalizovat
+            panelToAdd.setCollapsible(false);
+            panelToAdd.setMaximizable(false);
+            // odličná default barva
+            panelToAdd.setStyle("background: #FFFFCC");
+        } else {
+            panelToAdd.setCollapsible(true);
+            panelToAdd.setMaximizable(true);
+        }
+
         firstChild.appendChild(panelToAdd);
         // saveStatus();
     }

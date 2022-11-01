@@ -1,0 +1,10 @@
+<zk>
+	<vlayout viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ChartViewModel')">
+		<vlayout apply="com.ness.zkworkshop.web.controller.ChartController">
+			<charts id="chart" type="line"
+				model="@init(vm.model)"
+				title="Průměrná teplota"
+				subtitle="Source: WorldClimate.com" />
+		</vlayout>
+	</vlayout>
+</zk>

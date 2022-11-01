@@ -2,7 +2,8 @@
 	<vlayout viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.SubjektListVM')" >
 		<listbox model="@bind(vm.subjektList)"
 				 onSelect="@command('detail')"
-				 selectedItem="@bind(vm.subjektSelected)" vflex="1" >
+				 selectedItem="@bind(vm.subjektSelected)"
+				 vflex="1" >
 			<auxhead>
 				<auxheader>
 					Kód
