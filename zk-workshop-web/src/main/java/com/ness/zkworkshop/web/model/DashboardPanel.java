@@ -1,5 +1,6 @@
 package com.ness.zkworkshop.web.model;
 
+import com.ness.zkworkshop.web.config.DashboardPanelConfig;
 import com.ness.zkworkshop.web.viewmodel.AddWidgetModalVM;
 
 public class DashboardPanel {
@@ -7,9 +8,9 @@ public class DashboardPanel {
     private String title;
     private String contentSrc;
     private String panelUri;
-    private AddWidgetModalVM.WidgetType type;
+    private DashboardPanelConfig.WidgetType type;
 
-    public DashboardPanel(String title, String contentSrc, String panelUri, AddWidgetModalVM.WidgetType type) {
+    public DashboardPanel(String title, String contentSrc, String panelUri, DashboardPanelConfig.WidgetType type) {
         this.title = title;
         this.contentSrc = contentSrc;
         this.panelUri = panelUri;
@@ -32,11 +33,11 @@ public class DashboardPanel {
         this.contentSrc = contentSrc;
     }
 
-    public AddWidgetModalVM.WidgetType getType() {
+    public DashboardPanelConfig.WidgetType getType() {
         return type;
     }
 
-    public void setType(AddWidgetModalVM.WidgetType type) {
+    public void setType(DashboardPanelConfig.WidgetType type) {
         this.type = type;
     }
 

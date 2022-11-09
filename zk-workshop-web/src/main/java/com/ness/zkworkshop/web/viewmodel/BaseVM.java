@@ -1,5 +1,6 @@
 package com.ness.zkworkshop.web.viewmodel;
 
+import com.ness.zkworkshop.web.config.DashboardPanelConfig;
 import com.ness.zkworkshop.web.config.SidebarPageConfig;
 import com.ness.zkworkshop.web.config.SidebarPageConfigImpl;
 import com.ness.zkworkshop.web.converer.EnumLabelConverter;
@@ -20,8 +21,8 @@ public abstract class BaseVM {
     //config provider
     protected SidebarPageConfig pageConfig = new SidebarPageConfigImpl();
 
-    public List<AddWidgetModalVM.WidgetType> getWidgetTypes() {
-        return Arrays.asList(AddWidgetModalVM.WidgetType.values());
+    public List<DashboardPanelConfig.WidgetType> getWidgetTypes() {
+        return Arrays.asList(DashboardPanelConfig.WidgetType.values());
     }
 
     protected static void openModal(String page, Map<String, Object> args) {

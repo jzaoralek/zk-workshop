@@ -27,6 +27,7 @@ public class DashboardViewModel extends BaseVM {
 	@Command
 	public void editModeCmd() {
 		this.editMode = true;
+		postEditModeChange();
 	}
 
 	@NotifyChange("editMode")
@@ -38,6 +39,14 @@ public class DashboardViewModel extends BaseVM {
 				null,
 				null,
 				2000);
+		postEditModeChange();
+	}
+
+	/**
+	 * ODeslani zmeny editMode do PortalLayoutController.
+	 */
+	private void postEditModeChange() {
+		EventQueueHelper.publish(EventQueueHelper.SdatEvent.EDIT_MODE, Boolean.valueOf(this.editMode));
 	}
 
 	@Command
