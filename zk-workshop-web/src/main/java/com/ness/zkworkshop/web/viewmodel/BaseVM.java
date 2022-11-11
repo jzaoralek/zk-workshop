@@ -1,13 +1,12 @@
 package com.ness.zkworkshop.web.viewmodel;
 
-import com.ness.zkworkshop.web.config.DashboardPanelConfig;
+import com.ness.zkworkshop.web.config.DashboardPanelLibrary;
 import com.ness.zkworkshop.web.config.SidebarPageConfig;
 import com.ness.zkworkshop.web.config.SidebarPageConfigImpl;
 import com.ness.zkworkshop.web.converer.EnumLabelConverter;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
@@ -21,8 +20,8 @@ public abstract class BaseVM {
     //config provider
     protected SidebarPageConfig pageConfig = new SidebarPageConfigImpl();
 
-    public List<DashboardPanelConfig.WidgetType> getWidgetTypes() {
-        return Arrays.asList(DashboardPanelConfig.WidgetType.values());
+    public List<DashboardPanelLibrary.WidgetType> getWidgetTypes() {
+        return Arrays.asList(DashboardPanelLibrary.WidgetType.values());
     }
 
     protected static void openModal(String page, Map<String, Object> args) {

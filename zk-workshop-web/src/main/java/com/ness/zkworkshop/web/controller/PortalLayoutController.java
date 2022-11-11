@@ -1,13 +1,13 @@
 package com.ness.zkworkshop.web.controller;
 
+import com.ness.zkworkshop.web.config.DashboardConfig;
 import com.ness.zkworkshop.web.config.DashboardPanelConfig;
+import com.ness.zkworkshop.web.config.DashboardPanelLibrary;
 import com.ness.zkworkshop.web.model.DashboardPanel;
 import com.ness.zkworkshop.web.util.EventQueueHelper;
-import com.ness.zkworkshop.web.viewmodel.AddWidgetModalVM;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -23,7 +23,8 @@ import java.util.List;
 
 public class PortalLayoutController extends SelectorComposer<Component> {
 
-    private DashboardPanelConfig dashboardPanelConfig = new DashboardPanelConfig();
+    private DashboardPanelLibrary dashboardPanelLibrary = new DashboardPanelLibrary();
+    private DashboardConfig dashboardConfig;
 
     @Wire
     private Portallayout portalLayout;
@@ -37,7 +38,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
 
         // pridani widgetu
         EventQueueHelper.queueLookup(EventQueueHelper.SdatEventQueues.DASHBOARD_QUEUE)
-                .subscribe(EventQueueHelper.SdatEvent.ADD_WIDGET, data -> addWidget((DashboardPanel)data));
+                .subscribe(EventQueueHelper.SdatEvent.ADD_WIDGET, data -> addWidget((DashboardPanel)data, 0));
         // prepnuti do editacniho rezimu
         EventQueueHelper.queueLookup(EventQueueHelper.SdatEventQueues.DASHBOARD_QUEUE)
                 .subscribe(EventQueueHelper.SdatEvent.EDIT_MODE, data ->  updateEditMode((Boolean)data));
@@ -47,8 +48,9 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         this.editMode = editMode;
         portalLayout.setMaximizedMode("whole");
 
-        // TODO: konfigurace dashboardu uživatele
-        int cols = 4;
+        this.dashboardConfig = initDashboardConfig();
+        // sloupce dashboardu
+        int cols = this.dashboardConfig.getCols();
         String colWdth = 100/cols+"%";
 
         Portalchildren portalChildren = null;
@@ -59,8 +61,21 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         }
 
         // TODO: konfigurace dashboardu uzivatele
-        addWidget(dashboardPanelConfig.getDashboardPanelMap().get(DashboardPanelConfig.WidgetType.CALENDAR_SIMPLE).get(0));
-        addWidget(dashboardPanelConfig.getDashboardPanelMap().get(DashboardPanelConfig.WidgetType.DATA_GRID).get(1));
+        for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
+            // TODO: doresit dashboard index row
+            panelConfig.getDashRow();
+            addWidget(dashboardPanelLibrary.getDashboardPanelMap().get(panelConfig.getWidgetType()).get(panelConfig.getWidgetIndex()),
+                    panelConfig.getDashCol());
+        }
+    }
+
+    private DashboardConfig initDashboardConfig() {
+        // TODO: ziskat konfiguraci z databaze
+        List<DashboardPanelConfig> panelConfigList = new ArrayList<>();
+        panelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0));
+        panelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0));
+
+        return new DashboardConfig(4, panelConfigList);
     }
 
     @Listen("onPortalMove = #portalLayout")
@@ -97,9 +112,9 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         }
     }
 
-    private void addWidget(DashboardPanel panel) {
+    private void addWidget(DashboardPanel panel, int dashboardCol) {
         List<? extends Component> panelchildren = portalLayout.getChildren();
-        Component firstChild = panelchildren.get(0);
+        Component firstChild = panelchildren.get(dashboardCol);
 
         Panel panelToAdd = new Panel();
         panelToAdd.setTitle(panel.getTitle());
@@ -112,15 +127,15 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         }
         Panelchildren panelchilds = new Panelchildren();
         panelchilds.setStyle("overflow-y: auto;");
-        if (EnumSet.of(DashboardPanelConfig.WidgetType.DATA_GRID, DashboardPanelConfig.WidgetType.CHART, DashboardPanelConfig.WidgetType.MESSAGES).contains(panel.getType())) {
+        if (EnumSet.of(DashboardPanelLibrary.WidgetType.DATA_GRID, DashboardPanelLibrary.WidgetType.CHART, DashboardPanelLibrary.WidgetType.MESSAGES).contains(panel.getType())) {
             panelchilds.appendChild(new Include(panel.getContentSrc()));
             panelToAdd.appendChild(panelchilds);
-        } else if (panel.getType() == DashboardPanelConfig.WidgetType.CALENDAR_SIMPLE) {
+        } else if (panel.getType() == DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE) {
             panelchilds.appendChild(new Calendar());
             panelToAdd.appendChild(panelchilds);
         }
 
-        if (panel.getType() == DashboardPanelConfig.WidgetType.MENU_ITEM) {
+        if (panel.getType() == DashboardPanelLibrary.WidgetType.MENU_ITEM) {
             // polozlku menu nelze sbalit ani maximalizovat
             panelToAdd.setCollapsible(false);
             panelToAdd.setMaximizable(false);

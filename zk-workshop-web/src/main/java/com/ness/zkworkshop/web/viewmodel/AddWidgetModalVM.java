@@ -1,6 +1,6 @@
 package com.ness.zkworkshop.web.viewmodel;
 
-import com.ness.zkworkshop.web.config.DashboardPanelConfig;
+import com.ness.zkworkshop.web.config.DashboardPanelLibrary;
 import com.ness.zkworkshop.web.model.DashboardPanel;
 import com.ness.zkworkshop.web.util.EventQueueHelper;
 import org.zkoss.bind.annotation.BindingParam;
@@ -9,22 +9,21 @@ import org.zkoss.bind.annotation.DependsOn;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
-import com.ness.zkworkshop.web.config.DashboardPanelConfig;
 
 import java.util.*;
 
 public class AddWidgetModalVM extends BaseVM {
 
     private String modalArg;
-    private DashboardPanelConfig.WidgetType widgetTypeSelected;
-    private Map<DashboardPanelConfig.WidgetType, List<DashboardPanel>> dashboardPanelMap;
+    private DashboardPanelLibrary.WidgetType widgetTypeSelected;
+    private Map<DashboardPanelLibrary.WidgetType, List<DashboardPanel>> dashboardPanelMap;
     private DashboardPanel dashboardPanelSelected;
-    private DashboardPanelConfig dashboardPanelConfig = new DashboardPanelConfig();
+    private DashboardPanelLibrary dashboardPanelConfig = new DashboardPanelLibrary();
 
     @Init
     public void init() {
         modalArg = (String)Executions.getCurrent().getArg().get("modalArg");
-        widgetTypeSelected = DashboardPanelConfig.WidgetType.valueOf(modalArg);
+        widgetTypeSelected = DashboardPanelLibrary.WidgetType.valueOf(modalArg);
         dashboardPanelMap = dashboardPanelConfig.getDashboardPanelMap();
         changeWidgetTypeCmd();
     }
@@ -42,11 +41,11 @@ public class AddWidgetModalVM extends BaseVM {
 
     @DependsOn("widgetTypeSelected")
     public boolean isTypeSupported() {
-        return EnumSet.of(DashboardPanelConfig.WidgetType.CALENDAR_SIMPLE,
-                    DashboardPanelConfig.WidgetType.DATA_GRID,
-                    DashboardPanelConfig.WidgetType.MENU_ITEM,
-                    DashboardPanelConfig.WidgetType.CHART,
-                    DashboardPanelConfig.WidgetType.MESSAGES).contains(widgetTypeSelected);
+        return EnumSet.of(DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE,
+                    DashboardPanelLibrary.WidgetType.DATA_GRID,
+                    DashboardPanelLibrary.WidgetType.MENU_ITEM,
+                    DashboardPanelLibrary.WidgetType.CHART,
+                    DashboardPanelLibrary.WidgetType.MESSAGES).contains(widgetTypeSelected);
     }
 
     /**
@@ -62,11 +61,11 @@ public class AddWidgetModalVM extends BaseVM {
         return modalArg;
     }
 
-    public DashboardPanelConfig.WidgetType getWidgetTypeSelected() {
+    public DashboardPanelLibrary.WidgetType getWidgetTypeSelected() {
         return widgetTypeSelected;
     }
 
-    public void setWidgetTypeSelected(DashboardPanelConfig.WidgetType widgetTypeSelected) {
+    public void setWidgetTypeSelected(DashboardPanelLibrary.WidgetType widgetTypeSelected) {
         this.widgetTypeSelected = widgetTypeSelected;
     }
 
