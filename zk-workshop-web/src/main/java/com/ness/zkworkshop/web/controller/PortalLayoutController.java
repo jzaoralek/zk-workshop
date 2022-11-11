@@ -34,7 +34,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
-        init((Boolean)editMode);
+        init();
 
         // pridani widgetu
         EventQueueHelper.queueLookup(EventQueueHelper.SdatEventQueues.DASHBOARD_QUEUE)
@@ -44,8 +44,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
                 .subscribe(EventQueueHelper.SdatEvent.EDIT_MODE, data ->  updateEditMode((Boolean)data));
     }
 
-    private void init(Boolean editMode) {
-        this.editMode = editMode;
+    private void init() {
         portalLayout.setMaximizedMode("whole");
 
         this.dashboardConfig = initDashboardConfig();
@@ -70,12 +69,17 @@ public class PortalLayoutController extends SelectorComposer<Component> {
     }
 
     private DashboardConfig initDashboardConfig() {
-        // TODO: ziskat konfiguraci z databaze
-        List<DashboardPanelConfig> panelConfigList = new ArrayList<>();
-        panelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0));
-        panelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0));
+        DashboardConfig dashboardConfig = (DashboardConfig)Executions.getCurrent().getSession().getAttribute("dashboardConfig");
+        if (dashboardConfig == null) {
+            // TODO: ziskat konfiguraci z databaze
+            List<DashboardPanelConfig> panelConfigList = new ArrayList<>();
+            panelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0));
+            panelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0));
+            dashboardConfig = new DashboardConfig(4, panelConfigList);
+            Executions.getCurrent().getSession().setAttribute("dashboardConfig", dashboardConfig);
+        }
 
-        return new DashboardConfig(4, panelConfigList);
+        return dashboardConfig;
     }
 
     @Listen("onPortalMove = #portalLayout")
