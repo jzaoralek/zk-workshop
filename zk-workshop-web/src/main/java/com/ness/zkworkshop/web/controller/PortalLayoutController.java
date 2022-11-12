@@ -8,11 +8,13 @@ import com.ness.zkworkshop.web.util.EventQueueHelper;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkex.zul.Colorbox;
+import org.zkoss.zkmax.ui.event.PortalDropEvent;
 import org.zkoss.zkmax.zul.Portalchildren;
 import org.zkoss.zkmax.zul.Portallayout;
 import org.zkoss.zul.*;
@@ -27,6 +29,8 @@ public class PortalLayoutController extends SelectorComposer<Component> {
     private DashboardConfig dashboardConfig;
 
     private static final String DASHBOARD_CONFIG = "dashboardConfig";
+    private static final String WIDGET_TYPE = "widgetType";
+    private static final String WIDGET_INDEX = "widgetIndex";
 
     @Wire
     private Portallayout portalLayout;
@@ -61,7 +65,6 @@ public class PortalLayoutController extends SelectorComposer<Component> {
             portalLayout.appendChild(portalChildren);
         }
 
-        // TODO: konfigurace dashboardu uzivatele
         for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
             // TODO: doresit dashboard index row
             panelConfig.getDashRow();
@@ -97,43 +100,32 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         Executions.getCurrent().getSession().setAttribute(DASHBOARD_CONFIG, dashboardConfig);
     }
 
-    @Listen("onPortalMove = #portalLayout")
-    public void saveStatus() {
-        System.out.println("onPortalDrop()");
-        /*
-        int i = 0;
-        for (Component portalChild : portalLayout.getChildren()) {
-            List<String> portletIds = new ArrayList<String>();
-            for (Component portlet : portalChild.getChildren())
-                portletIds.add(portlet.getId());
-            Executions.getCurrent().getSession().setAttribute("PortalChildren" + i++, portletIds);
-        }
-        */
-    }
-
+    /**
+     * Premisteni panelu na jinou pozici.
+     * @param event
+     */
     @Listen("onPortalDrop = #portalLayout")
-    public void dropStatus() {
-        System.out.println("onPortalDrop()");
-    }
+    public void dropStatus(PortalDropEvent event) {
+        int dashCol = event.getDroppedColumnIndex();
+        int dashRow = event.getDroppedIndex();
 
-    @Listen("onCreate = #portalLayout")
-    public void initStatus() {
-        /*
-        List<? extends Component> panelchildren = portalLayout.getChildren();
-        for (int i = 0; i < panelchildren.size(); i++) {
-            List<String> panelIds = (List<String>) Executions.getCurrent().getSession().getAttribute("PortalChildren" + i);
-            if (panelIds != null) {
-                for (String panelId : panelIds) {
-                    Panel newPanel = (Panel)portalLayout.getFellow(panelId);
-                    if (panelchildren.size() > 0)
-                        panelchildren.get(i).insertBefore(newPanel, panelchildren.get(0));
-                    else
-                        newPanel.setParent(panelchildren.get(i));
+        Panel panel = event.getDragged();
+        // Hodnoty 'widgetType' a 'widgetIndex' se nastavuji v addWidget pro dany panel.
+        DashboardPanelLibrary.WidgetType widgetType = DashboardPanelLibrary.WidgetType.valueOf(panel.getClientAttribute(WIDGET_TYPE));
+        Integer widgetIndex = Integer.valueOf(panel.getClientAttribute(WIDGET_INDEX));
 
-                }
+        DashboardPanelConfig movedDashboardPanelConfig = null;
+        for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
+            if (panelConfig.getWidgetType() == widgetType
+                    && panelConfig.getWidgetIndex() == widgetIndex) {
+                // aktualizace umisteni panelu
+                panelConfig.setDashCol(dashCol);
+                panelConfig.setDashRow(dashRow);
+                break;
             }
         }
-        */
+
+        storeDashboardConfig();
     }
 
     /**
@@ -166,6 +158,10 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         Component dashboardCol = panelchildren.get(dashboardColIdx);
 
         Panel panelToAdd = new Panel();
+        // Identifikator panelu, pouziti pripresouvani v dropStatus()
+        panelToAdd.setClientAttribute(WIDGET_TYPE, panel.getType().name());
+        panelToAdd.setClientAttribute(WIDGET_INDEX, String.valueOf(widgetIdx));
+
         panelToAdd.setTitle(panel.getTitle());
         panelToAdd.setBorder("normal");
         panelToAdd.setStyle("margin-bottom:10px");
@@ -198,8 +194,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         // Editacni rezim.
         updateEditModePanel(panelToAdd, editMode);
 
-        // Event listeners
-        // odebrani panelu
+        // Event listener pro odebrani panelu
         panelToAdd.addEventListener(Events.ON_CLOSE, event -> removeWidget(panelToAdd, panel, widgetIdx));
 
         dashboardCol.appendChild(panelToAdd);
@@ -312,6 +307,11 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         }
     }
 
+    /**
+     * Nastaveni editacniho rezimu panelu.
+     * @param panel
+     * @param editMode
+     */
     private void updateEditModePanel(Panel panel, boolean editMode) {
         panel.setDraggable(String.valueOf(editMode));
         panel.setCollapsible(!editMode);
@@ -325,5 +325,38 @@ public class PortalLayoutController extends SelectorComposer<Component> {
                 lastChild.setVisible(editMode);
             }
         }
+    }
+
+    @Listen("onPortalMove = #portalLayout")
+    public void saveStatus() {
+        /*
+        int i = 0;
+        for (Component portalChild : portalLayout.getChildren()) {
+            List<String> portletIds = new ArrayList<String>();
+            for (Component portlet : portalChild.getChildren())
+                portletIds.add(portlet.getId());
+            Executions.getCurrent().getSession().setAttribute("PortalChildren" + i++, portletIds);
+        }
+        */
+    }
+
+    @Listen("onCreate = #portalLayout")
+    public void initStatus() {
+        /*
+        List<? extends Component> panelchildren = portalLayout.getChildren();
+        for (int i = 0; i < panelchildren.size(); i++) {
+            List<String> panelIds = (List<String>) Executions.getCurrent().getSession().getAttribute("PortalChildren" + i);
+            if (panelIds != null) {
+                for (String panelId : panelIds) {
+                    Panel newPanel = (Panel)portalLayout.getFellow(panelId);
+                    if (panelchildren.size() > 0)
+                        panelchildren.get(i).insertBefore(newPanel, panelchildren.get(0));
+                    else
+                        newPanel.setParent(panelchildren.get(i));
+
+                }
+            }
+        }
+        */
     }
 }
