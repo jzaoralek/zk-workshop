@@ -26,6 +26,7 @@ public class DashboardConfig {
         if (panelConfigList == null) {
             return;
         }
+        panelConfigList.remove(config);
     }
 
     public int getCols() {

@@ -18,13 +18,13 @@ public class AddWidgetModalVM extends BaseVM {
     private DashboardPanelLibrary.WidgetType widgetTypeSelected;
     private Map<DashboardPanelLibrary.WidgetType, List<DashboardPanel>> dashboardPanelMap;
     private DashboardPanel dashboardPanelSelected;
-    private DashboardPanelLibrary dashboardPanelConfig = new DashboardPanelLibrary();
+    private DashboardPanelLibrary dashboardPanelLibrary = new DashboardPanelLibrary();
 
     @Init
     public void init() {
         modalArg = (String)Executions.getCurrent().getArg().get("modalArg");
         widgetTypeSelected = DashboardPanelLibrary.WidgetType.valueOf(modalArg);
-        dashboardPanelMap = dashboardPanelConfig.getDashboardPanelMap();
+        dashboardPanelMap = dashboardPanelLibrary.getDashboardPanelMap();
         changeWidgetTypeCmd();
     }
 

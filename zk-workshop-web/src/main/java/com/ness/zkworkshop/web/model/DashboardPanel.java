@@ -4,16 +4,22 @@ import com.ness.zkworkshop.web.config.DashboardPanelLibrary;
 
 public class DashboardPanel {
 
+    private final long id;
     private String title;
     private String contentSrc;
     private String panelUri;
     private DashboardPanelLibrary.WidgetType type;
 
-    public DashboardPanel(String title, String contentSrc, String panelUri, DashboardPanelLibrary.WidgetType type) {
+    public DashboardPanel(long id, String title, String contentSrc, String panelUri, DashboardPanelLibrary.WidgetType type) {
+        this.id = id;
         this.title = title;
         this.contentSrc = contentSrc;
         this.panelUri = panelUri;
         this.type = type;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getTitle() {

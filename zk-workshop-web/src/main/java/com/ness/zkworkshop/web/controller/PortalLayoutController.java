@@ -26,6 +26,8 @@ public class PortalLayoutController extends SelectorComposer<Component> {
     private DashboardPanelLibrary dashboardPanelLibrary = new DashboardPanelLibrary();
     private DashboardConfig dashboardConfig;
 
+    private static final String DASHBOARD_CONFIG = "dashboardConfig";
+
     @Wire
     private Portallayout portalLayout;
 
@@ -38,7 +40,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
 
         // pridani widgetu
         EventQueueHelper.queueLookup(EventQueueHelper.SdatEventQueues.DASHBOARD_QUEUE)
-                .subscribe(EventQueueHelper.SdatEvent.ADD_WIDGET, data -> addWidget((DashboardPanel)data, 0));
+                .subscribe(EventQueueHelper.SdatEvent.ADD_WIDGET, data -> addNewWidget((DashboardPanel)data));
         // prepnuti do editacniho rezimu
         EventQueueHelper.queueLookup(EventQueueHelper.SdatEventQueues.DASHBOARD_QUEUE)
                 .subscribe(EventQueueHelper.SdatEvent.EDIT_MODE, data ->  updateEditMode((Boolean)data));
@@ -64,26 +66,41 @@ public class PortalLayoutController extends SelectorComposer<Component> {
             // TODO: doresit dashboard index row
             panelConfig.getDashRow();
             addWidget(dashboardPanelLibrary.getDashboardPanelMap().get(panelConfig.getWidgetType()).get(panelConfig.getWidgetIndex()),
-                    panelConfig.getDashCol());
+                    panelConfig.getDashCol(),
+                    panelConfig.getWidgetIndex());
         }
     }
 
     private DashboardConfig initDashboardConfig() {
-        DashboardConfig dashboardConfig = (DashboardConfig)Executions.getCurrent().getSession().getAttribute("dashboardConfig");
+        DashboardConfig dashboardConfig = getDashboardConfig();
         if (dashboardConfig == null) {
             // TODO: ziskat konfiguraci z databaze
             List<DashboardPanelConfig> panelConfigList = new ArrayList<>();
             panelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0));
             panelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0));
             dashboardConfig = new DashboardConfig(4, panelConfigList);
-            Executions.getCurrent().getSession().setAttribute("dashboardConfig", dashboardConfig);
+            storeDashboardConfig();
         }
 
         return dashboardConfig;
     }
 
+    /**
+     * Ziskani DashboardConfig ze session.
+     * @return
+     */
+    private DashboardConfig getDashboardConfig() {
+        return (DashboardConfig)Executions.getCurrent().getSession().getAttribute(DASHBOARD_CONFIG);
+    }
+
+    private void storeDashboardConfig() {
+        Executions.getCurrent().getSession().setAttribute(DASHBOARD_CONFIG, dashboardConfig);
+    }
+
     @Listen("onPortalMove = #portalLayout")
     public void saveStatus() {
+        System.out.println("onPortalDrop()");
+        /*
         int i = 0;
         for (Component portalChild : portalLayout.getChildren()) {
             List<String> portletIds = new ArrayList<String>();
@@ -91,6 +108,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
                 portletIds.add(portlet.getId());
             Executions.getCurrent().getSession().setAttribute("PortalChildren" + i++, portletIds);
         }
+        */
     }
 
     @Listen("onPortalDrop = #portalLayout")
@@ -100,6 +118,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
 
     @Listen("onCreate = #portalLayout")
     public void initStatus() {
+        /*
         List<? extends Component> panelchildren = portalLayout.getChildren();
         for (int i = 0; i < panelchildren.size(); i++) {
             List<String> panelIds = (List<String>) Executions.getCurrent().getSession().getAttribute("PortalChildren" + i);
@@ -114,11 +133,37 @@ public class PortalLayoutController extends SelectorComposer<Component> {
                 }
             }
         }
+        */
     }
 
-    private void addWidget(DashboardPanel panel, int dashboardCol) {
+    /**
+     * Pridani noveho widgetu uzivatelem.
+     * Do prvniho sloupce na posledni pozici.
+     * Ulozeni do dashboardConfig.
+     * @param panel
+     */
+    private void addNewWidget(DashboardPanel panel) {
+        // prvni sloupec
+        int dashCol = 0;
+        int widgetIdx = dashboardPanelLibrary.getDashWidgetIdx(panel);
+        int dashRow = addWidget(panel, dashCol, widgetIdx);
+
+        // store added widget to config
+        DashboardPanelConfig dashboardPanelConfig = new DashboardPanelConfig(dashCol, dashRow, panel.getType(), widgetIdx);
+        this.dashboardConfig.addPanelConfig(dashboardPanelConfig);
+        storeDashboardConfig();
+    }
+
+    /**
+     * Pridani widgetu na dashboard.
+     * @param panel
+     * @param dashboardColIdx
+     * @param widgetIdx
+     * @return pozice widgetu ve slupci.
+     */
+    private int addWidget(DashboardPanel panel, int dashboardColIdx, int widgetIdx) {
         List<? extends Component> panelchildren = portalLayout.getChildren();
-        Component firstChild = panelchildren.get(dashboardCol);
+        Component dashboardCol = panelchildren.get(dashboardColIdx);
 
         Panel panelToAdd = new Panel();
         panelToAdd.setTitle(panel.getTitle());
@@ -148,22 +193,39 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         }
 
         // Add customization button.
-        addCustTools(panelchilds, firstChild, panelToAdd);
+        addCustTools(panelchilds, panelToAdd);
 
         // Editacni rezim.
         updateEditModePanel(panelToAdd, editMode);
 
+        // Event listeners
+        // odebrani panelu
+        panelToAdd.addEventListener(Events.ON_CLOSE, event -> removeWidget(panelToAdd, panel, widgetIdx));
+
+        dashboardCol.appendChild(panelToAdd);
+
+        return dashboardCol.getChildren().size() - 1;
         // saveStatus();
+    }
+
+    private void removeWidget(Panel panel, DashboardPanel dashboardPanel, int widgetIdx) {
+        DashboardPanelConfig panelCfgToRemove = null;
+        for (DashboardPanelConfig panelCfg : this.dashboardConfig.getPanelConfigList()) {
+            if (panelCfg.getWidgetType() == dashboardPanel.getType()
+                    && panelCfg.getWidgetIndex() == widgetIdx) {
+                panelCfgToRemove = panelCfg;
+            }
+        }
+        this.dashboardConfig.removePanelConfig(panelCfgToRemove);
+        storeDashboardConfig();
     }
 
     /**
      * Pridani tlacitka s popupem pro customizaci panelu.
      * @param panelchilds
-     * @param firstChild
      * @param panelToAdd
      */
     private void addCustTools(Panelchildren panelchilds,
-                              Component firstChild,
                               Panel panelToAdd) {
         Hbox panelCustHbox = new Hbox();
         panelCustHbox.setVisible(editMode);
@@ -229,8 +291,6 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         panelCustHbox.appendChild(panelCustBtn);
 
         panelchilds.appendChild(panelCustHbox);
-
-        firstChild.appendChild(panelToAdd);
     }
 
     /**
