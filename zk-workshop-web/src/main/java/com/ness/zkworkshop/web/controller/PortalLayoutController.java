@@ -18,10 +18,9 @@ import org.zkoss.zkmax.ui.event.PortalDropEvent;
 import org.zkoss.zkmax.zul.Portalchildren;
 import org.zkoss.zkmax.zul.Portallayout;
 import org.zkoss.zul.*;
+import org.zkoss.zul.Calendar;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 
 public class PortalLayoutController extends SelectorComposer<Component> {
 
@@ -96,7 +95,42 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         return (DashboardConfig)Executions.getCurrent().getSession().getAttribute(DASHBOARD_CONFIG);
     }
 
+    /**
+     * Vraci DashboardPanelConfig na zaklade Panel.
+     * @param panel
+     * @return
+     */
+    private DashboardPanelConfig getDashPanelCfg(Panel panel) {
+        DashboardPanelLibrary.WidgetType widgetType = DashboardPanelLibrary.WidgetType.valueOf(panel.getClientAttribute(WIDGET_TYPE));
+        Integer widgetIndex = Integer.valueOf(panel.getClientAttribute(WIDGET_INDEX));
+
+        for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
+            if (panelConfig.getWidgetType() == widgetType
+                    && panelConfig.getWidgetIndex() == widgetIndex) {
+                return panelConfig;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Aktualizace dashboardConfig podle skutecneho stavu, serazeni List<DashboardPanelConfig> podle sloupcu a radku a ulozeni dashboardConfig do session.
+     */
     private void storeDashboardConfig() {
+        if (dashboardConfig != null && dashboardConfig.getPanelConfigList() != null) {
+            // serazeni podle sloupcu a radku, aby po reloadu v init() byly ve stejnem poradi
+            Collections.sort(dashboardConfig.getPanelConfigList(), Comparator.comparing(DashboardPanelConfig::getDashCol)
+                    .thenComparing(DashboardPanelConfig::getDashRow));
+        }
+
+        if (dashboardConfig != null && dashboardConfig.getPanelConfigList() != null) {
+            for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
+                System.out.println("Col: " + panelConfig.getDashCol() + ", Row: " + panelConfig.getDashRow() + ", type: " + panelConfig.getWidgetType());
+            }
+        }
+
+        // ulozeni do session
         Executions.getCurrent().getSession().setAttribute(DASHBOARD_CONFIG, dashboardConfig);
     }
 
@@ -109,19 +143,48 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         int dashCol = event.getDroppedColumnIndex();
         int dashRow = event.getDroppedIndex();
 
-        Panel panel = event.getDragged();
-        // Hodnoty 'widgetType' a 'widgetIndex' se nastavuji v addWidget pro dany panel.
-        DashboardPanelLibrary.WidgetType widgetType = DashboardPanelLibrary.WidgetType.valueOf(panel.getClientAttribute(WIDGET_TYPE));
-        Integer widgetIndex = Integer.valueOf(panel.getClientAttribute(WIDGET_INDEX));
+        int dashColOrig = event.getDraggedColumnIndex();
+        int dashRowOrig = event.getDraggedIndex();
 
-        DashboardPanelConfig movedDashboardPanelConfig = null;
-        for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
-            if (panelConfig.getWidgetType() == widgetType
-                    && panelConfig.getWidgetIndex() == widgetIndex) {
-                // aktualizace umisteni panelu
-                panelConfig.setDashCol(dashCol);
-                panelConfig.setDashRow(dashRow);
-                break;
+        Panel panel = event.getDragged();
+        DashboardPanelConfig movedDashPnlCfg = getDashPanelCfg(panel);
+        // aktualizace umisteni prenaseneho panelu
+        movedDashPnlCfg.setDashCol(dashCol);
+        movedDashPnlCfg.setDashRow(dashRow);
+
+        /* Aktualizace indexu panelu. */
+        if (dashColOrig != dashCol) {
+            // Presun mezi sloupci.
+            for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
+                if (panelConfig != movedDashPnlCfg && panelConfig.getDashCol() == dashCol) {
+                    if (panelConfig.getDashRow() >= dashRow) {
+                        // zvyseni indexu panelu pod prenesenym panelem
+                        panelConfig.setDashRow(panelConfig.getDashRow() + 1);
+                    }
+                }
+            }
+        } else {
+            // Presun v jednom sloupci.
+            if (dashRowOrig < dashRow) {
+                // Presun dolu
+                for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
+                    if (panelConfig != movedDashPnlCfg && panelConfig.getDashCol() == dashCol) {
+                        if (panelConfig.getDashRow() <= dashRow && panelConfig.getDashRow() > dashRowOrig) {
+                            // zvyseni indexu panelu pod prenesenym panelem
+                            panelConfig.setDashRow(panelConfig.getDashRow() - 1);
+                        }
+                    }
+                }
+            } else {
+                // Presun nahoru
+                for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
+                    if (panelConfig != movedDashPnlCfg && panelConfig.getDashCol() == dashCol) {
+                        if (panelConfig.getDashRow() >= dashRow && panelConfig.getDashRow() < dashRowOrig) {
+                            // zvyseni indexu panelu pod prenesenym panelem
+                            panelConfig.setDashRow(panelConfig.getDashRow() + 1);
+                        }
+                    }
+                }
             }
         }
 
@@ -212,6 +275,17 @@ public class PortalLayoutController extends SelectorComposer<Component> {
             }
         }
         this.dashboardConfig.removePanelConfig(panelCfgToRemove);
+
+        // po odstraneni zmensit vsem pod panelem index
+        for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
+            if (panelConfig.getDashCol() == panelCfgToRemove.getDashCol()) {
+                if (panelConfig.getDashRow() > panelCfgToRemove.getDashRow()) {
+                    // zvyseni indexu panelu pod prenesenym panelem
+                    panelConfig.setDashRow(panelConfig.getDashRow() - 1);
+                }
+            }
+        }
+
         storeDashboardConfig();
     }
 
@@ -325,38 +399,5 @@ public class PortalLayoutController extends SelectorComposer<Component> {
                 lastChild.setVisible(editMode);
             }
         }
-    }
-
-    @Listen("onPortalMove = #portalLayout")
-    public void saveStatus() {
-        /*
-        int i = 0;
-        for (Component portalChild : portalLayout.getChildren()) {
-            List<String> portletIds = new ArrayList<String>();
-            for (Component portlet : portalChild.getChildren())
-                portletIds.add(portlet.getId());
-            Executions.getCurrent().getSession().setAttribute("PortalChildren" + i++, portletIds);
-        }
-        */
-    }
-
-    @Listen("onCreate = #portalLayout")
-    public void initStatus() {
-        /*
-        List<? extends Component> panelchildren = portalLayout.getChildren();
-        for (int i = 0; i < panelchildren.size(); i++) {
-            List<String> panelIds = (List<String>) Executions.getCurrent().getSession().getAttribute("PortalChildren" + i);
-            if (panelIds != null) {
-                for (String panelId : panelIds) {
-                    Panel newPanel = (Panel)portalLayout.getFellow(panelId);
-                    if (panelchildren.size() > 0)
-                        panelchildren.get(i).insertBefore(newPanel, panelchildren.get(0));
-                    else
-                        newPanel.setParent(panelchildren.get(i));
-
-                }
-            }
-        }
-        */
     }
 }

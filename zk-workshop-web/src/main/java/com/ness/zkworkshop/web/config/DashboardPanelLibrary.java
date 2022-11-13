@@ -56,7 +56,6 @@ public final class DashboardPanelLibrary {
     public int getDashWidgetIdx(DashboardPanel panel) {
         List<DashboardPanel> panelForTypeList = dashboardPanelMap.get(panel.getType());
         for (DashboardPanel dashPanel : panelForTypeList) {
-            // TODO: nevhodna identifikace na zaklade panelUri, nemusi byt naplneno nebo unikatni
             if (dashPanel.getId() == panel.getId()) {
                 return panelForTypeList.indexOf(dashPanel);
             }
