@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Konfigurace dashboardu.
+ * Konfigurace dashboardu obsahujici pocet sloupcu a seznam panelu.
  */
 public class DashboardConfig {
     private final int cols;

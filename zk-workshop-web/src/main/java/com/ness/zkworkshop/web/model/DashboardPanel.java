@@ -2,6 +2,10 @@ package com.ness.zkworkshop.web.model;
 
 import com.ness.zkworkshop.web.config.DashboardPanelLibrary;
 
+/**
+ * Objekt obsahujici zakladni informace o panelu.
+ * Pouziti v DashboardPanelLibrary a v pridavani noveho panelu.
+ */
 public class DashboardPanel {
 
     private final long id;

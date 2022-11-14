@@ -5,7 +5,7 @@ import com.ness.zkworkshop.web.model.DashboardPanel;
 import java.util.*;
 
 /**
- * Seznam panelu dashboardu.
+ * Knihovna panelu pro pridani na dashboard.
  * Pouziti pro init nastaveni a pridavani panelu.
  */
 public final class DashboardPanelLibrary {

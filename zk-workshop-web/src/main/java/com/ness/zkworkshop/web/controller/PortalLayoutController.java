@@ -13,6 +13,8 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zk.ui.util.Notification;
 import org.zkoss.zkex.zul.Colorbox;
 import org.zkoss.zkmax.ui.event.PortalDropEvent;
 import org.zkoss.zkmax.zul.Portalchildren;
@@ -65,14 +67,17 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         }
 
         for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
-            // TODO: doresit dashboard index row
-            panelConfig.getDashRow();
             addWidget(dashboardPanelLibrary.getDashboardPanelMap().get(panelConfig.getWidgetType()).get(panelConfig.getWidgetIndex()),
                     panelConfig.getDashCol(),
                     panelConfig.getWidgetIndex());
         }
     }
 
+    /**
+     * Init konfigurace dashboardu.
+     * Z DB, session.
+     * @return
+     */
     private DashboardConfig initDashboardConfig() {
         DashboardConfig dashboardConfig = getDashboardConfig();
         if (dashboardConfig == null) {
@@ -96,7 +101,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
     }
 
     /**
-     * Vraci DashboardPanelConfig na zaklade Panel.
+     * Vraci DashboardPanelConfig na zaklade Panel z konfigurace..
      * @param panel
      * @return
      */
@@ -104,6 +109,16 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         DashboardPanelLibrary.WidgetType widgetType = DashboardPanelLibrary.WidgetType.valueOf(panel.getClientAttribute(WIDGET_TYPE));
         Integer widgetIndex = Integer.valueOf(panel.getClientAttribute(WIDGET_INDEX));
 
+        return getDashPanelCfg(widgetType, widgetIndex);
+    }
+
+    /**
+     * Vraci DashboardPanelConfig z konfigurace na zaklade vstupnich argumentu.
+     * @param widgetType
+     * @param widgetIndex
+     * @return
+     */
+    private DashboardPanelConfig getDashPanelCfg(DashboardPanelLibrary.WidgetType widgetType, Integer widgetIndex) {
         for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
             if (panelConfig.getWidgetType() == widgetType
                     && panelConfig.getWidgetIndex() == widgetIndex) {
@@ -124,11 +139,13 @@ public class PortalLayoutController extends SelectorComposer<Component> {
                     .thenComparing(DashboardPanelConfig::getDashRow));
         }
 
+        /*
         if (dashboardConfig != null && dashboardConfig.getPanelConfigList() != null) {
             for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
                 System.out.println("Col: " + panelConfig.getDashCol() + ", Row: " + panelConfig.getDashRow() + ", type: " + panelConfig.getWidgetType());
             }
         }
+        */
 
         // ulozeni do session
         Executions.getCurrent().getSession().setAttribute(DASHBOARD_CONFIG, dashboardConfig);
@@ -201,6 +218,13 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         // prvni sloupec
         int dashCol = 0;
         int widgetIdx = dashboardPanelLibrary.getDashWidgetIdx(panel);
+        // kontrola zda-li pridavany panel jiz neni na dashboardu
+        if (getDashPanelCfg(panel.getType(), widgetIdx) != null) {
+            Clients.showNotification("Widget '" + panel.getTitle() + "' již dashboard obsahuje.",
+                                    Clients.NOTIFICATION_TYPE_WARNING, null, null, 5000,true);
+            return;
+        }
+
         int dashRow = addWidget(panel, dashCol, widgetIdx);
 
         // store added widget to config
@@ -266,6 +290,12 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         // saveStatus();
     }
 
+    /**
+     * Odebrani widgetu z dashboardu.
+     * @param panel
+     * @param dashboardPanel
+     * @param widgetIdx
+     */
     private void removeWidget(Panel panel, DashboardPanel dashboardPanel, int widgetIdx) {
         DashboardPanelConfig panelCfgToRemove = null;
         for (DashboardPanelConfig panelCfg : this.dashboardConfig.getPanelConfigList()) {
@@ -369,6 +399,11 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         panel.setStyle("background: " + backgrColor + "; border-color: " + borderColor);
     }
 
+    /**
+     * Aktualizace editacniho rezimu.
+     * Povoluje odpovidajici akce.
+     * @param editMode
+     */
     private void updateEditMode(boolean editMode) {
         this.editMode = editMode;
         List<? extends Component> panelchildren = portalLayout.getChildren();
