@@ -66,8 +66,12 @@ public class PortalLayoutController extends SelectorComposer<Component> {
             portalLayout.appendChild(portalChildren);
         }
 
+        DashboardPanel dashPnl = null;
         for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
-            addWidget(dashboardPanelLibrary.getDashboardPanelMap().get(panelConfig.getWidgetType()).get(panelConfig.getWidgetIndex()),
+            dashPnl = dashboardPanelLibrary.getDashboardPanelMap().get(panelConfig.getWidgetType()).get(panelConfig.getWidgetIndex());
+            dashPnl.setTitle(panelConfig.getTitle());
+            dashPnl.setStyle(panelConfig.getStyle());
+            addWidget(dashPnl,
                     panelConfig.getDashCol(),
                     panelConfig.getWidgetIndex());
         }
@@ -83,8 +87,8 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         if (dashboardConfig == null) {
             // TODO: ziskat konfiguraci z databaze
             List<DashboardPanelConfig> panelConfigList = new ArrayList<>();
-            panelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0));
-            panelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0));
+            panelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0, "Kalendář", "margin-bottom:10px"));
+            panelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0, "Správy", "margin-bottom:10px") );
             dashboardConfig = new DashboardConfig(4, panelConfigList);
             storeDashboardConfig();
         }
@@ -228,7 +232,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         int dashRow = addWidget(panel, dashCol, widgetIdx);
 
         // store added widget to config
-        DashboardPanelConfig dashboardPanelConfig = new DashboardPanelConfig(dashCol, dashRow, panel.getType(), widgetIdx);
+        DashboardPanelConfig dashboardPanelConfig = new DashboardPanelConfig(dashCol, dashRow, panel.getType(), widgetIdx, panel.getTitle(), panel.getStyle());
         this.dashboardConfig.addPanelConfig(dashboardPanelConfig);
         storeDashboardConfig();
     }
@@ -251,7 +255,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
 
         panelToAdd.setTitle(panel.getTitle());
         panelToAdd.setBorder("normal");
-        panelToAdd.setStyle("margin-bottom:10px");
+        panelToAdd.setStyle(panel.getStyle());
         panelToAdd.setSclass("portal-widget-panel");
 
         if (!"".equals(panel.getPanelUri())) {
@@ -356,8 +360,8 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         Row titleRow = new Row();
         titleRow.appendChild(new Label(Labels.getLabel("web.title")));
         Textbox titleRowTxt = new Textbox(panelToAdd.getTitle());
-        titleRowTxt.addEventListener(Events.ON_CHANGE, event -> panelToAdd.setTitle(titleRowTxt.getValue()));
-        titleRowTxt.addEventListener(Events.ON_OK, event -> panelToAdd.setTitle(titleRowTxt.getValue()));
+        titleRowTxt.addEventListener(Events.ON_CHANGE, event -> setPanelTitle(panelToAdd, titleRowTxt.getValue()));
+        titleRowTxt.addEventListener(Events.ON_OK, event -> setPanelTitle(panelToAdd, titleRowTxt.getValue()));
         titleRow.appendChild(titleRowTxt);
         rows.appendChild(titleRow);
 
@@ -396,7 +400,25 @@ public class PortalLayoutController extends SelectorComposer<Component> {
      * Nastaveni barvy pozadi a ohraniceni podle colorpickeru.
      */
     private void setPanelStyle(Panel panel, String backgrColor, String borderColor) {
-        panel.setStyle("background: " + backgrColor + "; border-color: " + borderColor);
+        String style = "background: " + backgrColor + " !important; border-color: " + borderColor + " !important;";
+        panel.setStyle(style);
+        // ulozeni do panel config
+        DashboardPanelConfig panelCfgToUpdate = getDashPanelCfg(panel);
+        panelCfgToUpdate.setStyle(style);
+
+        storeDashboardConfig();
+    }
+
+    /**
+     * Nastaveni title panelu.
+     */
+    private void setPanelTitle(Panel panel, String title) {
+        panel.setTitle(title);
+        // ulozeni do panel config
+        DashboardPanelConfig panelCfgToUpdate = getDashPanelCfg(panel);
+        panelCfgToUpdate.setTitle(title);
+
+        storeDashboardConfig();
     }
 
     /**

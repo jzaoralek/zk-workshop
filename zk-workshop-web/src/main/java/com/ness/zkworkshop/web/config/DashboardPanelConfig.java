@@ -8,16 +8,22 @@ public class DashboardPanelConfig {
     private int dashCol;
     /** Radek dashboardu kde je umísten panel. */
     private int dashRow;
+    /** Nadpis panelu */
+    private String title;
+    /** Styl panelu */
+    private String style;
     /** Typ panelu dashboardu. */
     private DashboardPanelLibrary.WidgetType widgetType;
     /** Poradi panelu v ramci typu panelu dashboardu. */
     private int widgetIndex;
 
-    public DashboardPanelConfig(int dashCol, int dashRow, DashboardPanelLibrary.WidgetType widgetType, int widgetIndex) {
+    public DashboardPanelConfig(int dashCol, int dashRow, DashboardPanelLibrary.WidgetType widgetType, int widgetIndex, String title, String style) {
         this.dashCol = dashCol;
         this.dashRow = dashRow;
         this.widgetType = widgetType;
         this.widgetIndex = widgetIndex;
+        this.title = title;
+        this.style = style;
     }
 
     public int getDashCol() {
@@ -34,6 +40,22 @@ public class DashboardPanelConfig {
 
     public void setDashRow(int dashRow) {
         this.dashRow = dashRow;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
     }
 
     public DashboardPanelLibrary.WidgetType getWidgetType() {

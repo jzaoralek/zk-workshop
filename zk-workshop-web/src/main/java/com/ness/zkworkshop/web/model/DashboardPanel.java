@@ -10,6 +10,7 @@ public class DashboardPanel {
 
     private final long id;
     private String title;
+    private String style;
     private String contentSrc;
     private String panelUri;
     private DashboardPanelLibrary.WidgetType type;
@@ -32,6 +33,14 @@ public class DashboardPanel {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
     }
 
     public String getContentSrc() {
