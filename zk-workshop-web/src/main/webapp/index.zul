@@ -33,187 +33,251 @@
 			background: #F9FCFF;
 			border-color: #d9d9d9;
 		}
+
+		.z-panel-head {
+			background: none;
+		}
+
+		.z-panel-header {
+			background: none;
+		}
+
+		.dashBackground {
+			background-image: url('./sources/imgs/home_bgr.png');
+		}
+
 	</style>
 
-	<panel self="@{define(mainContent)}"
-		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardViewModel')"
-		   vflex="1"
-		   hflex="1">
-		<caption sclass="fn-caption" label="${c:l('web.dashboard')}" >
-			<div align="center" sclass="captionButtons">
-				<button label="${c:l('web.btn.change')}"
-						iconSclass="z-icon-edit"
-						onClick="@command('editModeCmd')"
-						visible="@load(!vm.editMode)" />
-				<hlayout visible="@load(vm.editMode)">
-					<combobutton id="buttonToAdd"
-							label="${c:l('web.addWidget')}" >
-						<menupopup children="@init(vm.widgetTypes)">
-							<template name="children">
-								<menuitem label="@init(each) @converter(vm.enumLabelConverter)"
-										  value="@init(each)"
-										  onClick="@command('addWidgetModalCmd', type=self.value)" />
-							</template>
-						</menupopup>
-					</combobutton>
-					<button label="${c:l('web.btn.save')}"
-							iconSclass="z-icon-check"
-							onClick="@command('saveCmd')" />
-					<button iconSclass="z-icon-ellipsis-v" popup="dashbordMenuPopup, position=after_end" />
-					<menupopup id="dashbordMenuPopup">
-						<menuitem label="Nový" />
-						<menuitem label="Kopírovat" />
-						<menuitem label="Přehled dashboardů" />
-					</menupopup>
-				</hlayout>
-			</div>
-		</caption>
+	<window self="@{define(mainContent)}" hflex="1" vflex="1"
+			contentSclass="winBg">
 
-		<panelchildren style="overflow-y: auto; height: 100%" >
-			<!-- Editacni rezim warning -->
-			<panel visible="@load(vm.editMode)" sclass="caption-panel-header">
-				<caption sclass="alert alert-warning" >
+		<!-- background: #0053A1; -->
+		<panel viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardViewModel')"
+			   vflex="1"
+			   hflex="1"
+				>
+
+			<!--
+			<caption sclass="fn-caption" label="${c:l('web.dashboard')}"
+					 style="font-size: 20px;" >
+				<div align="center" sclass="captionButtons" >
+
+
+				</div>
+			</caption>
+			-->
+			<panelchildren style="overflow-y: auto; height: 100%;" sclass="dashBackground" >
+				<div hflex="1" style="margin-top: 40px; margin-left: 40px; margin-right: 40px; margin-bottom: 10px;" >
+					<hbox hflex="1" style="background: yellow;" height="40px" align="center">
+						<vbox hflex="1" style="margin-left: 20px;">
+							<label value="${c:l('web.dashboard')}" style="font-size: 20px;" />
+						</vbox>
+						<vbox hflex="2" align="end" style="margin-right: 20px;">
+							<button label="${c:l('web.btn.change')}"
+									iconSclass="z-icon-edit"
+									onClick="@command('editModeCmd')"
+									visible="@load(!vm.editMode)" />
+							<hlayout visible="@load(vm.editMode)">
+								<combobutton id="buttonToAdd"
+											 label="${c:l('web.addWidget')}" >
+									<menupopup children="@init(vm.widgetTypes)">
+										<template name="children">
+											<menuitem label="@init(each) @converter(vm.enumLabelConverter)"
+													  value="@init(each)"
+													  onClick="@command('addWidgetModalCmd', type=self.value)" />
+										</template>
+									</menupopup>
+								</combobutton>
+								<button label="${c:l('web.btn.save')}"
+										iconSclass="z-icon-check"
+										onClick="@command('saveCmd')" />
+								<button iconSclass="z-icon-ellipsis-v" popup="dashbordMenuPopup, position=after_end" />
+								<menupopup id="dashbordMenuPopup">
+									<menuitem label="Nový" />
+									<menuitem label="Kopírovat" />
+									<menuitem label="Přehled dashboardů" />
+								</menupopup>
+							</hlayout>
+						</vbox>
+					</hbox>
+				</div>
+
+				<!-- Editacni rezim warning -->
+				<div visible="@load(vm.editMode)" sclass="alert alert-warning" style="margin-top: 20px; margin-left: 40px; margin-right: 40px;" >
 					<label value="${c:l('web.warn.workingInEditMode')}" />
-				</caption>
-			</panel>
-			<bs-row style="margin-left: 3px; margin-right: 5px;" visible="@load(!vm.editMode)">
-				<apply templateURI="/pages/component/stateBoard.zul"/>
-			</bs-row>
-			<div apply="com.ness.zkworkshop.web.controller.PortalLayoutController" >
-				<!-- Obsah je dynamicky vygenerovany v PortalLayoutController -->
-				<portallayout id="portalLayout"/>
-			</div>
+				</div>
+				<!--
+				<bs-row style="margin-left: 3px; margin-right: 5px;" visible="@load(!vm.editMode)">
+					<apply templateURI="/pages/component/stateBoard.zul"/>
+				</bs-row>
+				-->
+				<div apply="com.ness.zkworkshop.web.controller.PortalLayoutController" style="margin-left: 40px; margin-right: 40px;" >
+					<!-- Obsah je dynamicky vygenerovany v PortalLayoutController -->
+					<portallayout id="portalLayout"/>
 
-			<!--
-						<panel id="subjectList"
-							   draggable="@load(vm.editMode)"
-							   title="Subjekty"
-							   onClick="@command('goToSubjektListCmd')"
-							   border="normal"
-							   collapsible="@load(!vm.editMode)"
-							   closable="@load(vm.editMode)"
-							   sizable="@load(vm.editMode)"
-							   maximizable="@load(!vm.editMode)"
-							   height="350px"
-							   sclass="portal-widget-panel" >
-							<panelchildren style="overflow-y: auto;">
-								<include src="/pages/subjekt-list-core.zul" />
-							</panelchildren>
-						</panel>
-						-->
-			<!--
-						<panel id="tree"
-							   draggable="@load(vm.editMode)"
-							   onClick="@command('goToTreeCmd')"
-							   height="175px"
-							   title="Hierarchie"
-							   border="normal"
-							   collapsible="@load(!vm.editMode)"
-							   closable="@load(vm.editMode)"
-							   sizable="@load(vm.editMode)"
-							   maximizable="@load(!vm.editMode)"
-							   sclass="portal-widget-panel">
-							<panelchildren viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.TreeViewModel')">
-								<include src="/pages/tree-core.zul" />
-							</panelchildren>
-						</panel>
-						-->
-			<!--
-						<panel id="weather"
-							   draggable="@load(vm.editMode)"
-							   onClick="@command('goToWeatherCmd')"
-							   title="Počasí"
-							   border="normal"
-							   collapsible="@load(!vm.editMode)"
-							   closable="@load(vm.editMode)"
-							   sizable="@load(vm.editMode)"
-							   maximizable="@load(!vm.editMode)"
-							   sclass="portal-widget-panel">
-							<panelchildren>
-								<include src="/pages/chart-core.zul" />
-							</panelchildren>
-						</panel>
-						-->
-			<!--
-						<panel id="weather"
-							   draggable="@load(vm.editMode)"
-							   onClick="@command('goToWeatherCmd')"
-							   title="Počasí"
-							   border="normal"
-							   collapsible="@load(!vm.editMode)"
-							   closable="@load(vm.editMode)"
-							   sizable="@load(vm.editMode)"
-							   maximizable="@load(!vm.editMode)"
-							   sclass="portal-widget-panel">
-							<panelchildren>
-								<include src="/pages/chart-core.zul" />
-							</panelchildren>
-						</panel>
-						-->
-			<!--
-						<panel id="calendar"
-							   draggable="@load(vm.editMode)"
-							   title="Kalendář"
-							   border="normal"
-							   collapsible="@load(!vm.editMode)"
-							   closable="false"
-							   sizable="@load(vm.editMode)"
-							   maximizable="@load(!vm.editMode)"
-							   sclass="portal-widget-panel"
-							   apply="com.ness.zkworkshop.web.controller.DashboardPanelController">
-							<panelchildren>
-								<calendar/>
-								<hbox visible="@load(vm.editMode)">
-									<button iconSclass="z-icon-ellipsis-h"
-											popup="panelSettingsPopup"
-											style="background: #F9FCFF; color: #8A8A8A;"
-											tooltiptext="${c:l('web.settings')}"/>
-									<popup id="panelSettingsPopup">
-										<vlayout>
-											<hlayout sclass="z-caption-label" >
-												<label value="${c:l('web.settings')}" />
-											</hlayout>
-											<grid hflex="min">
-												<columns>
-													<column/>
-													<column/>
-												</columns>
-												<rows>
-													<row>
-														<label value="${c:l('web.title')}" />
-														<textbox id="titleTextbox" />
-													</row>
-													<row>
-														<label value="${c:l('web.header')}" />
-														<colorbox id="colorPicker" />
-													</row>
-													<row>
-														<label value="${c:l('web.border')}" />
-														<colorbox id="borderColorPicker" />
-													</row>
-												</rows>
-											</grid>
-										</vlayout>
-									</popup>
-								</hbox>
-							</panelchildren>
-						</panel>
-						<panel id="todo"
-							   draggable="@load(vm.editMode)"
-							   onClick="@command('goToGridCmd')"
-							   title="Úkoly"
-							   border="normal"
-							   collapsible="@load(!vm.editMode)"
-							   closable="@load(vm.editMode)"
-							   sizable="@load(vm.editMode)"
-							   maximizable="@load(!vm.editMode)"
-							   sclass="portal-widget-panel"
-							   style="marhin-top: 10px;">
-							<panelchildren style="overflow-y: auto;">
-								<include src="/pages/todolist-core.zul" />
-							</panelchildren>
-						</panel>
-						-->
-		</panelchildren>
-	</panel>
+					<portallayout if="false">
+						<portalchildren hflex="1">
+							<panel id="todo"
+								   hflex="1"
+								   draggable="@load(vm.editMode)"
+								   onClick="@command('goToGridCmd')"
+								   border="normal"
+								   collapsible="@load(!vm.editMode)"
+								   closable="@load(vm.editMode)"
+								   sizable="@load(vm.editMode)"
+								   maximizable="@load(!vm.editMode)"
+								   sclass="portal-widget-panel"
+								   style="margin-top: 10px;">
+								<caption label="Výkazy" image="/sources/imgs/doc.png" />
+								<panelchildren style="overflow-y: auto;">
+									<!--
+									<include src="/pages/todolist-core.zul" />
+									<vlayout style="white-space: nowrap; margin-left: 30px; margin-top: 20px;">
+										<a href="/pages/todolist-core.zul" label="Vzory výkazů" />
+										<a href="/pages/todolist-core.zul" label="Medzivýkazové kontroly" />
+										<a href="/pages/todolist-core.zul" label="Plánovanie" />
+										<a href="/pages/todolist-core.zul" label="Výber dát" />
+										<a href="/pages/todolist-core.zul" label="Projektovanie vzorov" />
+									</vlayout>
+									-->
+								</panelchildren>
+							</panel>
+						</portalchildren>
+					</portallayout>
+				</div>
+
+				<!--
+							<panel id="subjectList"
+								   draggable="@load(vm.editMode)"
+								   title="Subjekty"
+								   onClick="@command('goToSubjektListCmd')"
+								   border="normal"
+								   collapsible="@load(!vm.editMode)"
+								   closable="@load(vm.editMode)"
+								   sizable="@load(vm.editMode)"
+								   maximizable="@load(!vm.editMode)"
+								   height="350px"
+								   sclass="portal-widget-panel" >
+								<panelchildren style="overflow-y: auto;">
+									<include src="/pages/subjekt-list-core.zul" />
+								</panelchildren>
+							</panel>
+							-->
+				<!--
+							<panel id="tree"
+								   draggable="@load(vm.editMode)"
+								   onClick="@command('goToTreeCmd')"
+								   height="175px"
+								   title="Hierarchie"
+								   border="normal"
+								   collapsible="@load(!vm.editMode)"
+								   closable="@load(vm.editMode)"
+								   sizable="@load(vm.editMode)"
+								   maximizable="@load(!vm.editMode)"
+								   sclass="portal-widget-panel">
+								<panelchildren viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.TreeViewModel')">
+									<include src="/pages/tree-core.zul" />
+								</panelchildren>
+							</panel>
+							-->
+				<!--
+							<panel id="weather"
+								   draggable="@load(vm.editMode)"
+								   onClick="@command('goToWeatherCmd')"
+								   title="Počasí"
+								   border="normal"
+								   collapsible="@load(!vm.editMode)"
+								   closable="@load(vm.editMode)"
+								   sizable="@load(vm.editMode)"
+								   maximizable="@load(!vm.editMode)"
+								   sclass="portal-widget-panel">
+								<panelchildren>
+									<include src="/pages/chart-core.zul" />
+								</panelchildren>
+							</panel>
+							-->
+				<!--
+							<panel id="weather"
+								   draggable="@load(vm.editMode)"
+								   onClick="@command('goToWeatherCmd')"
+								   title="Počasí"
+								   border="normal"
+								   collapsible="@load(!vm.editMode)"
+								   closable="@load(vm.editMode)"
+								   sizable="@load(vm.editMode)"
+								   maximizable="@load(!vm.editMode)"
+								   sclass="portal-widget-panel">
+								<panelchildren>
+									<include src="/pages/chart-core.zul" />
+								</panelchildren>
+							</panel>
+							-->
+				<!--
+							<panel id="calendar"
+								   draggable="@load(vm.editMode)"
+								   title="Kalendář"
+								   border="normal"
+								   collapsible="@load(!vm.editMode)"
+								   closable="false"
+								   sizable="@load(vm.editMode)"
+								   maximizable="@load(!vm.editMode)"
+								   sclass="portal-widget-panel"
+								   apply="com.ness.zkworkshop.web.controller.DashboardPanelController">
+								<panelchildren>
+									<calendar/>
+									<hbox visible="@load(vm.editMode)">
+										<button iconSclass="z-icon-ellipsis-h"
+												popup="panelSettingsPopup"
+												style="background: #F9FCFF; color: #8A8A8A;"
+												tooltiptext="${c:l('web.settings')}"/>
+										<popup id="panelSettingsPopup">
+											<vlayout>
+												<hlayout sclass="z-caption-label" >
+													<label value="${c:l('web.settings')}" />
+												</hlayout>
+												<grid hflex="min">
+													<columns>
+														<column/>
+														<column/>
+													</columns>
+													<rows>
+														<row>
+															<label value="${c:l('web.title')}" />
+															<textbox id="titleTextbox" />
+														</row>
+														<row>
+															<label value="${c:l('web.header')}" />
+															<colorbox id="colorPicker" />
+														</row>
+														<row>
+															<label value="${c:l('web.border')}" />
+															<colorbox id="borderColorPicker" />
+														</row>
+													</rows>
+												</grid>
+											</vlayout>
+										</popup>
+									</hbox>
+								</panelchildren>
+							</panel>
+							<panel id="todo"
+								   draggable="@load(vm.editMode)"
+								   onClick="@command('goToGridCmd')"
+								   title="Úkoly"
+								   border="normal"
+								   collapsible="@load(!vm.editMode)"
+								   closable="@load(vm.editMode)"
+								   sizable="@load(vm.editMode)"
+								   maximizable="@load(!vm.editMode)"
+								   sclass="portal-widget-panel"
+								   style="marhin-top: 10px;">
+								<panelchildren style="overflow-y: auto;">
+									<include src="/pages/todolist-core.zul" />
+								</panelchildren>
+							</panel>
+							-->
+			</panelchildren>
+		</panel>
+
+	</window>
 </zk>

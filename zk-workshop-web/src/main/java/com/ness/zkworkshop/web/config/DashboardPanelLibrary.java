@@ -16,6 +16,7 @@ public final class DashboardPanelLibrary {
         DATA_GRID,
         CALENDAR_SIMPLE,
         MENU_ITEM,
+        MODULE,
         CHART,
         MESSAGES
         /*
@@ -36,21 +37,23 @@ public final class DashboardPanelLibrary {
     private void initDashboardPanels() {
         dashboardPanelMap = new HashMap<>();
         // CALENDAR_SIMPLE
-        dashboardPanelMap.put(WidgetType.CALENDAR_SIMPLE, Arrays.asList(new DashboardPanel(1, "Kalendář", "", "", WidgetType.CALENDAR_SIMPLE)));
+        dashboardPanelMap.put(WidgetType.CALENDAR_SIMPLE, Arrays.asList(new DashboardPanel(1, "Kalendář", "", "", "", WidgetType.CALENDAR_SIMPLE)));
         // DATA_GRID
         List<DashboardPanel> dataGridList = new ArrayList<>();
-        dataGridList.add(new DashboardPanel(1, "Subjekty", "/pages/subjekt-list-core.zul", pageConfig.getPage("fn9").getUri(), WidgetType.DATA_GRID));
-        dataGridList.add(new DashboardPanel(2, "Úkoly", "/pages/todolist-core.zul", pageConfig.getPage("fn3").getUri(), WidgetType.DATA_GRID));
-        dataGridList.add(new DashboardPanel(3, "Hierarchie", "/pages/tree-core.zul", pageConfig.getPage("fn6").getUri(), WidgetType.DATA_GRID));
+        dataGridList.add(new DashboardPanel(1, "Subjekty", "/pages/subjekt-list-core.zul", "", pageConfig.getPage("fn9").getUri(), WidgetType.DATA_GRID));
+        dataGridList.add(new DashboardPanel(2, "Úkoly", "/pages/todolist-core.zul", "", pageConfig.getPage("fn3").getUri(), WidgetType.DATA_GRID));
+        dataGridList.add(new DashboardPanel(3, "Hierarchie", "/pages/tree-core.zul", "", pageConfig.getPage("fn6").getUri(), WidgetType.DATA_GRID));
         dashboardPanelMap.put(WidgetType.DATA_GRID, dataGridList);
         // MENU_ITEM
-        List<DashboardPanel> menuItemList = Arrays.asList(new DashboardPanel(1,"Subjekty", "", pageConfig.getPage("fn9").getUri(), WidgetType.MENU_ITEM),
-                new DashboardPanel(2,"Úkoly", "", pageConfig.getPage("fn3").getUri(), WidgetType.MENU_ITEM));
+        List<DashboardPanel> menuItemList = Arrays.asList(new DashboardPanel(1,"Subjekty", "", "", pageConfig.getPage("fn9").getUri(), WidgetType.MENU_ITEM),
+                new DashboardPanel(2,"Úkoly", "", pageConfig.getPage("fn3").getUri(), "", WidgetType.MENU_ITEM));
         dashboardPanelMap.put(WidgetType.MENU_ITEM, menuItemList);
         // CHART
-        dashboardPanelMap.put(WidgetType.CHART, Arrays.asList(new DashboardPanel(1, "Graf", "/pages/chart-core.zul", pageConfig.getPage("fn7").getUri(), WidgetType.CHART)));
+        dashboardPanelMap.put(WidgetType.CHART, Arrays.asList(new DashboardPanel(1, "Graf", "/pages/chart-core.zul", pageConfig.getPage("fn7").getUri(), "", WidgetType.CHART)));
         // MESSAGES
-        dashboardPanelMap.put(WidgetType.MESSAGES, Arrays.asList(new DashboardPanel(1, "Správy", "/pages/messages-core.zul", "", WidgetType.MESSAGES)));
+        dashboardPanelMap.put(WidgetType.MESSAGES, Arrays.asList(new DashboardPanel(1, "Správy", "/pages/messages-core.zul", "", "", WidgetType.MESSAGES)));
+        // MODULE
+        dashboardPanelMap.put(WidgetType.MODULE, Arrays.asList(new DashboardPanel(1, "Výkazy", "/pages/module-vykazy.zul", "", "/sources/imgs/doc.png", WidgetType.MODULE)));
     }
 
     public int getDashWidgetIdx(DashboardPanel panel) {

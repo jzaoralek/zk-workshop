@@ -13,13 +13,15 @@ public class DashboardPanel {
     private String style;
     private String contentSrc;
     private String panelUri;
+    private String imgUri;
     private DashboardPanelLibrary.WidgetType type;
 
-    public DashboardPanel(long id, String title, String contentSrc, String panelUri, DashboardPanelLibrary.WidgetType type) {
+    public DashboardPanel(long id, String title, String contentSrc, String panelUri, String imgUri, DashboardPanelLibrary.WidgetType type) {
         this.id = id;
         this.title = title;
         this.contentSrc = contentSrc;
         this.panelUri = panelUri;
+        this.imgUri = imgUri;
         this.type = type;
     }
 
@@ -61,6 +63,10 @@ public class DashboardPanel {
 
     public String getPanelUri() {
         return panelUri;
+    }
+
+    public String getImgUri() {
+        return imgUri;
     }
 
     public void setPanelUri(String panelUri) {

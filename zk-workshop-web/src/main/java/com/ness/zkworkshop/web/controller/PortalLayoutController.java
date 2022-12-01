@@ -253,17 +253,27 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         panelToAdd.setClientAttribute(WIDGET_TYPE, panel.getType().name());
         panelToAdd.setClientAttribute(WIDGET_INDEX, String.valueOf(widgetIdx));
 
-        panelToAdd.setTitle(panel.getTitle());
+        //panelToAdd.setTitle(panel.getTitle());
         panelToAdd.setBorder("normal");
         panelToAdd.setStyle(panel.getStyle());
         panelToAdd.setSclass("portal-widget-panel");
+
+        // caption
+        Caption caption = new Caption(panel.getTitle());
+        if (!"".equals(panel.getImgUri())) {
+            caption.setImage(panel.getImgUri());
+        }
+        panelToAdd.appendChild(caption);
 
         if (!"".equals(panel.getPanelUri())) {
             // panelToAdd.addEventListener(Events.ON_CLICK, event -> Executions.sendRedirect(panel.getPanelUri()));
         }
         Panelchildren panelchilds = new Panelchildren();
         panelchilds.setStyle("overflow-y: auto;");
-        if (EnumSet.of(DashboardPanelLibrary.WidgetType.DATA_GRID, DashboardPanelLibrary.WidgetType.CHART, DashboardPanelLibrary.WidgetType.MESSAGES).contains(panel.getType())) {
+        if (EnumSet.of(DashboardPanelLibrary.WidgetType.DATA_GRID,
+                        DashboardPanelLibrary.WidgetType.CHART,
+                        DashboardPanelLibrary.WidgetType.MESSAGES,
+                        DashboardPanelLibrary.WidgetType.MODULE).contains(panel.getType())) {
             panelchilds.appendChild(new Include(panel.getContentSrc()));
             panelToAdd.appendChild(panelchilds);
         } else if (panel.getType() == DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE) {

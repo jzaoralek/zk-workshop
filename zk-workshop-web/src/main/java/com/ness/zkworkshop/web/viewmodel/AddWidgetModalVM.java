@@ -45,7 +45,8 @@ public class AddWidgetModalVM extends BaseVM {
                     DashboardPanelLibrary.WidgetType.DATA_GRID,
                     DashboardPanelLibrary.WidgetType.MENU_ITEM,
                     DashboardPanelLibrary.WidgetType.CHART,
-                    DashboardPanelLibrary.WidgetType.MESSAGES).contains(widgetTypeSelected);
+                    DashboardPanelLibrary.WidgetType.MESSAGES,
+                    DashboardPanelLibrary.WidgetType.MODULE).contains(widgetTypeSelected);
     }
 
     /**
