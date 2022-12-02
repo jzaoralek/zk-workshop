@@ -7,10 +7,12 @@ import java.util.List;
  * Konfigurace dashboardu obsahujici pocet sloupcu a seznam panelu.
  */
 public class DashboardConfig {
+    private final String name;
     private final int cols;
     private List<DashboardPanelConfig> panelConfigList;
 
-    public DashboardConfig(int cols, List<DashboardPanelConfig> panelConfigList) {
+    public DashboardConfig(String name, int cols, List<DashboardPanelConfig> panelConfigList) {
+        this.name = name;
         this.cols = cols;
         this.panelConfigList = panelConfigList;
     }

@@ -4,17 +4,18 @@ import com.ness.zkworkshop.web.config.DashboardConfig;
 import com.ness.zkworkshop.web.config.DashboardPanelConfig;
 import com.ness.zkworkshop.web.config.DashboardPanelLibrary;
 import com.ness.zkworkshop.web.model.DashboardPanel;
+import com.ness.zkworkshop.web.service.DashboardService;
+import com.ness.zkworkshop.web.service.DashboardServiceImpl;
 import com.ness.zkworkshop.web.util.EventQueueHelper;
+import com.ness.zkworkshop.web.util.WebUtils;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
-import org.zkoss.zk.ui.util.Notification;
 import org.zkoss.zkex.zul.Colorbox;
 import org.zkoss.zkmax.ui.event.PortalDropEvent;
 import org.zkoss.zkmax.zul.Portalchildren;
@@ -29,32 +30,34 @@ public class PortalLayoutController extends SelectorComposer<Component> {
     private DashboardPanelLibrary dashboardPanelLibrary = new DashboardPanelLibrary();
     private DashboardConfig dashboardConfig;
 
-    private static final String DASHBOARD_CONFIG = "dashboardConfig";
     private static final String WIDGET_TYPE = "widgetType";
     private static final String WIDGET_INDEX = "widgetIndex";
+
+    private DashboardService dashboardService = new DashboardServiceImpl();
 
     @Wire
     private Portallayout portalLayout;
 
     private boolean editMode;
+    private Long dashboardId;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         init();
 
-        // pridani widgetu
+        // event listener pridani widgetu
         EventQueueHelper.queueLookup(EventQueueHelper.SdatEventQueues.DASHBOARD_QUEUE)
                 .subscribe(EventQueueHelper.SdatEvent.ADD_WIDGET, data -> addNewWidget((DashboardPanel)data));
-        // prepnuti do editacniho rezimu
+        // event listener prepnuti do editacniho rezimu
         EventQueueHelper.queueLookup(EventQueueHelper.SdatEventQueues.DASHBOARD_QUEUE)
                 .subscribe(EventQueueHelper.SdatEvent.EDIT_MODE, data ->  updateEditMode((Boolean)data));
     }
 
     private void init() {
         portalLayout.setMaximizedMode("whole");
-
-        this.dashboardConfig = initDashboardConfig();
+        this.dashboardId = getRequestDashboardId();
+        this.dashboardConfig = dashboardService.getDashboard(dashboardId);
         // sloupce dashboardu
         int cols = this.dashboardConfig.getCols();
         String colWdth = 100/cols+"%";
@@ -77,31 +80,12 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         }
     }
 
-    /**
-     * Init konfigurace dashboardu.
-     * Z DB, session.
-     * @return
-     */
-    private DashboardConfig initDashboardConfig() {
-        DashboardConfig dashboardConfig = getDashboardConfig();
-        if (dashboardConfig == null) {
-            // TODO: ziskat konfiguraci z databaze
-            List<DashboardPanelConfig> panelConfigList = new ArrayList<>();
-            panelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0, "Kalendář", "margin-bottom:10px"));
-            panelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0, "Správy", "margin-bottom:10px") );
-            dashboardConfig = new DashboardConfig(4, panelConfigList);
-            storeDashboardConfig();
+    private Long getRequestDashboardId() {
+        String dashboardId = WebUtils.getRequestParameter("dashboardId");
+        if (dashboardId != null && !"".equals(dashboardId)) {
+            return Long.valueOf(dashboardId);
         }
-
-        return dashboardConfig;
-    }
-
-    /**
-     * Ziskani DashboardConfig ze session.
-     * @return
-     */
-    private DashboardConfig getDashboardConfig() {
-        return (DashboardConfig)Executions.getCurrent().getSession().getAttribute(DASHBOARD_CONFIG);
+        return DashboardServiceImpl.DEFAULT_DASHBOARD_ID;
     }
 
     /**
@@ -142,17 +126,8 @@ public class PortalLayoutController extends SelectorComposer<Component> {
             Collections.sort(dashboardConfig.getPanelConfigList(), Comparator.comparing(DashboardPanelConfig::getDashCol)
                     .thenComparing(DashboardPanelConfig::getDashRow));
         }
-
-        /*
-        if (dashboardConfig != null && dashboardConfig.getPanelConfigList() != null) {
-            for (DashboardPanelConfig panelConfig : dashboardConfig.getPanelConfigList()) {
-                System.out.println("Col: " + panelConfig.getDashCol() + ", Row: " + panelConfig.getDashRow() + ", type: " + panelConfig.getWidgetType());
-            }
-        }
-        */
-
         // ulozeni do session
-        Executions.getCurrent().getSession().setAttribute(DASHBOARD_CONFIG, dashboardConfig);
+        dashboardService.updateDashboard(dashboardId, dashboardConfig);
     }
 
     /**
