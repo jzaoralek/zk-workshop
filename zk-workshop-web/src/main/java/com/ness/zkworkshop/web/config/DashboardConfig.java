@@ -1,5 +1,7 @@
 package com.ness.zkworkshop.web.config;
 
+import com.ness.zkworkshop.web.service.DashboardServiceSessionImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +9,13 @@ import java.util.List;
  * Konfigurace dashboardu obsahujici pocet sloupcu a seznam panelu.
  */
 public class DashboardConfig {
+    private final Long id;
     private final String name;
     private final int cols;
     private List<DashboardPanelConfig> panelConfigList;
 
-    public DashboardConfig(String name, int cols, List<DashboardPanelConfig> panelConfigList) {
+    public DashboardConfig(Long id, String name, int cols, List<DashboardPanelConfig> panelConfigList) {
+        this.id = id;
         this.name = name;
         this.cols = cols;
         this.panelConfigList = panelConfigList;
@@ -29,6 +33,18 @@ public class DashboardConfig {
             return;
         }
         panelConfigList.remove(config);
+    }
+
+    public boolean isDefault() {
+        return id == DashboardServiceSessionImpl.DEFAULT_DASHBOARD_ID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getCols() {

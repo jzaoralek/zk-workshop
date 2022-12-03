@@ -1,0 +1,31 @@
+<window id="modalDialog" title="Všechny dashboardy" border="normal" width="475px"
+        position="center,center" closable="true"
+        viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardListVM')" >
+    <vlayout hflex="1" style="padding: 5px;">
+        <listbox model="@load(vm.dashboardConfigList)"
+                 hflex="1"
+                 height="150px"
+                 emptyMessage="Nemáte žádný vlastní dashboard." >
+            <listhead>
+                <listheader/>
+                <listheader hflex="min"/>
+            </listhead>
+            <template name="model">
+                <listitem>
+                    <listcell>
+                        <a onClick="@command('goToDashboardCmd', item=each)" label="@load(each.name)" />
+                    </listcell>
+                    <listcell>
+                        <button label="Odstranit" onClick="@command('deleteDashboardCmd', item=each)" if="${!each.isDefault()}"/>
+                    </listcell>
+                </listitem>
+            </template>
+        </listbox>
+
+        <hbox pack="end" hflex="1">
+            <button label="${c:l('web.btn.close')}"
+                    onClick="modalDialog.detach()"/>
+        </hbox>
+
+    </vlayout>
+</window>

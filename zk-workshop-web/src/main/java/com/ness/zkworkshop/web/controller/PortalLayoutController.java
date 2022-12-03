@@ -5,12 +5,12 @@ import com.ness.zkworkshop.web.config.DashboardPanelConfig;
 import com.ness.zkworkshop.web.config.DashboardPanelLibrary;
 import com.ness.zkworkshop.web.model.DashboardPanel;
 import com.ness.zkworkshop.web.service.DashboardService;
-import com.ness.zkworkshop.web.service.DashboardServiceImpl;
+import com.ness.zkworkshop.web.service.DashboardServiceSessionImpl;
+import com.ness.zkworkshop.web.util.DashboardUtils;
 import com.ness.zkworkshop.web.util.EventQueueHelper;
 import com.ness.zkworkshop.web.util.WebUtils;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -33,7 +33,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
     private static final String WIDGET_TYPE = "widgetType";
     private static final String WIDGET_INDEX = "widgetIndex";
 
-    private DashboardService dashboardService = new DashboardServiceImpl();
+    private DashboardService dashboardService = new DashboardServiceSessionImpl();
 
     @Wire
     private Portallayout portalLayout;
@@ -56,7 +56,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
 
     private void init() {
         portalLayout.setMaximizedMode("whole");
-        this.dashboardId = getRequestDashboardId();
+        this.dashboardId = DashboardUtils.getRequestDashboardId();
         this.dashboardConfig = dashboardService.getDashboard(dashboardId);
         // sloupce dashboardu
         int cols = this.dashboardConfig.getCols();
@@ -78,14 +78,6 @@ public class PortalLayoutController extends SelectorComposer<Component> {
                     panelConfig.getDashCol(),
                     panelConfig.getWidgetIndex());
         }
-    }
-
-    private Long getRequestDashboardId() {
-        String dashboardId = WebUtils.getRequestParameter("dashboardId");
-        if (dashboardId != null && !"".equals(dashboardId)) {
-            return Long.valueOf(dashboardId);
-        }
-        return DashboardServiceImpl.DEFAULT_DASHBOARD_ID;
     }
 
     /**

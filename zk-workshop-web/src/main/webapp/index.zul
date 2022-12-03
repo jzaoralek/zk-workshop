@@ -72,7 +72,7 @@
 						<vbox hflex="1" style="margin-left: 20px;">
 							<label value="${c:l('web.dashboard')}" style="font-size: 20px;" />
 						</vbox>
-						<vbox hflex="2" align="end" style="margin-right: 20px;">
+						<hbox hflex="2" pack="end" style="margin-right: 20px;">
 							<button label="${c:l('web.btn.change')}"
 									iconSclass="z-icon-edit"
 									onClick="@command('editModeCmd')"
@@ -91,14 +91,19 @@
 								<button label="${c:l('web.btn.save')}"
 										iconSclass="z-icon-check"
 										onClick="@command('saveCmd')" />
-								<button iconSclass="z-icon-ellipsis-v" popup="dashbordMenuPopup, position=after_end" />
-								<menupopup id="dashbordMenuPopup">
-									<menuitem label="Nový" />
-									<menuitem label="Kopírovat" />
-									<menuitem label="Přehled dashboardů" />
-								</menupopup>
 							</hlayout>
-						</vbox>
+							<button iconSclass="z-icon-ellipsis-v" popup="dashbordMenuPopup, position=after_end" />
+							<menupopup id="dashbordMenuPopup">
+								<menuitem label="${vm.dashboardSelected.name}" disabled="true" />
+								<menuseparator />
+								<menuitem label="Vytvořit dashboard" />
+								<menuitem label="Přejmenovat" if="${!vm.dashboardSelected.isDefault()}" />
+								<menuitem label="Kopírovat" />
+								<menuitem label="Odstranit" onClick="@command('deleteDashboardCmd')" if="${!vm.dashboardSelected.isDefault()}" />
+								<menuseparator />
+								<menuitem label="Všechny dashboardy" onClick="@command('widgetListModalCmd')" />
+							</menupopup>
+						</hbox>
 					</hbox>
 				</div>
 
@@ -114,36 +119,6 @@
 				<div apply="com.ness.zkworkshop.web.controller.PortalLayoutController" style="margin-left: 40px; margin-right: 40px;" >
 					<!-- Obsah je dynamicky vygenerovany v PortalLayoutController -->
 					<portallayout id="portalLayout"/>
-
-					<portallayout if="false">
-						<portalchildren hflex="1">
-							<panel id="todo"
-								   hflex="1"
-								   draggable="@load(vm.editMode)"
-								   onClick="@command('goToGridCmd')"
-								   border="normal"
-								   collapsible="@load(!vm.editMode)"
-								   closable="@load(vm.editMode)"
-								   sizable="@load(vm.editMode)"
-								   maximizable="@load(!vm.editMode)"
-								   sclass="portal-widget-panel"
-								   style="margin-top: 10px;">
-								<caption label="Výkazy" image="/sources/imgs/doc.png" />
-								<panelchildren style="overflow-y: auto;">
-									<!--
-									<include src="/pages/todolist-core.zul" />
-									<vlayout style="white-space: nowrap; margin-left: 30px; margin-top: 20px;">
-										<a href="/pages/todolist-core.zul" label="Vzory výkazů" />
-										<a href="/pages/todolist-core.zul" label="Medzivýkazové kontroly" />
-										<a href="/pages/todolist-core.zul" label="Plánovanie" />
-										<a href="/pages/todolist-core.zul" label="Výber dát" />
-										<a href="/pages/todolist-core.zul" label="Projektovanie vzorov" />
-									</vlayout>
-									-->
-								</panelchildren>
-							</panel>
-						</portalchildren>
-					</portallayout>
 				</div>
 
 				<!--
