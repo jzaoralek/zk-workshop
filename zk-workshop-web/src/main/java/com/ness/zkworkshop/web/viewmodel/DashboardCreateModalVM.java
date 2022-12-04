@@ -40,22 +40,20 @@ public class DashboardCreateModalVM extends BaseVM {
 
     @Command
     public void createCmd(@BindingParam("modal") Window modal) {
-        DashboardConfig dashboardToCreate = null;
+        Long newDashboardId = null;
         if (!copyMode) {
             // vytvareni noveho dashboardu
-            dashboardToCreate = new DashboardConfig(2L, name, cols, new ArrayList<DashboardPanelConfig>());
+            newDashboardId = dashboardService.createDashboard(name, cols, new ArrayList<DashboardPanelConfig>());
         } else {
             // rezim kopirovani dashboardu
-            dashboardToCreate = new DashboardConfig(2L, name, dashboardSrc.getCols(), dashboardSrc.getPanelConfigList());
+            newDashboardId = dashboardService.createDashboard(name, dashboardSrc.getCols(), dashboardSrc.copyPanelConfigList());
         }
 
-        long newDashboardId = dashboardService.createDashboard(dashboardToCreate);
         Clients.showNotification(Labels.getLabel("web.msg.info.changesSaved"),
                 Clients.NOTIFICATION_TYPE_INFO,
                 null,
                 null,
                 2000);
-        // closeModalCmd(modal);
 
         // redirect to new dashboard
         Executions.sendRedirect("index.zul?dashboardId=" + newDashboardId);

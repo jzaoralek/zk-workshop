@@ -26,6 +26,15 @@ public class DashboardPanelConfig {
         this.style = style;
     }
 
+    public DashboardPanelConfig(DashboardPanelConfig dashboardPanelConfig) {
+        this.dashCol = dashboardPanelConfig.getDashCol();
+        this.dashRow = dashboardPanelConfig.getDashRow();
+        this.widgetType = dashboardPanelConfig.getWidgetType();
+        this.widgetIndex = dashboardPanelConfig.getWidgetIndex();
+        this.title = dashboardPanelConfig.getTitle();
+        this.style = dashboardPanelConfig.getStyle();
+    }
+
     public int getDashCol() {
         return dashCol;
     }

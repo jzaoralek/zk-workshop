@@ -70,7 +70,7 @@
 				<div hflex="1" style="margin-top: 40px; margin-left: 40px; margin-right: 40px; margin-bottom: 10px;" >
 					<hbox hflex="1" style="background: yellow;" height="40px" align="center">
 						<vbox hflex="1" style="margin-left: 20px;">
-							<label value="${c:l('web.dashboard')}" style="font-size: 20px;" />
+							<label value="${vm.dashboardSelected.name}" style="font-size: 20px;" />
 						</vbox>
 						<hbox hflex="2" pack="end" style="margin-right: 20px;">
 							<button label="${c:l('web.btn.change')}"
@@ -94,10 +94,8 @@
 							</hlayout>
 							<button iconSclass="z-icon-ellipsis-v" popup="dashbordMenuPopup, position=after_end" />
 							<menupopup id="dashbordMenuPopup">
-								<menuitem label="${vm.dashboardSelected.name}" disabled="true" />
-								<menuseparator />
 								<menuitem label="Nový" onClick="@command('createDashboardCmd')" />
-								<menuitem label="Přejmenovat" if="${!vm.dashboardSelected.isDefault()}" />
+								<menuitem label="Přejmenovat" onClick="@command('renameDashboardCmd')" if="${!vm.dashboardSelected.isDefault()}" />
 								<menuitem label="Kopírovat" onClick="@command('createDashboardCmd', copyMode=true)" />
 								<menuitem label="Odstranit" onClick="@command('deleteDashboardCmd')" if="${!vm.dashboardSelected.isDefault()}" />
 								<menuseparator />

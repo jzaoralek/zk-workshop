@@ -80,6 +80,13 @@ public class DashboardViewModel extends BaseVM {
 	}
 
 	@Command
+	public void renameDashboardCmd() {
+		Map<String, Object> args = new HashMap<>();
+		args.put("dashboardSrc", dashboardSelected);
+		openModal("/pages/dashboard-rename.zul", args);
+	}
+
+	@Command
 	public void deleteDashboardCmd() {
 		if (dashboardSelected.isDefault()) {
 			Clients.alert("Výchozí dashbord nelze odstranit.");

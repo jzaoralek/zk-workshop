@@ -5,10 +5,7 @@ import com.ness.zkworkshop.web.config.DashboardPanelConfig;
 import com.ness.zkworkshop.web.config.DashboardPanelLibrary;
 import org.zkoss.zk.ui.Executions;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Service pro nacitani CRUD v session.
@@ -26,11 +23,7 @@ public class DashboardServiceSessionImpl implements DashboardService {
             List<DashboardPanelConfig> defDashPanelConfigList = new ArrayList<>();
             defDashPanelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0, "Kalendář", "margin-bottom:10px"));
             defDashPanelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0, "Správy", "margin-bottom:10px") );
-            dashCfgMap.put(0L, new DashboardConfig(DEFAULT_DASHBOARD_ID, "Výchozí", 4, defDashPanelConfigList));
-
-            List<DashboardPanelConfig> custDashPanelConfigList = new ArrayList<>();
-            custDashPanelConfigList.add(new DashboardPanelConfig(2, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0, "Správy", "margin-bottom:10px") );
-            dashCfgMap.put(1L, new DashboardConfig(1L, "Custom", 3, custDashPanelConfigList));
+            dashCfgMap.put(0L, new DashboardConfig(DEFAULT_DASHBOARD_ID, "Výchozí dashboard", 4, defDashPanelConfigList));
 
             storeDashboardCfgMapToSession(dashCfgMap);
         }
@@ -61,10 +54,19 @@ public class DashboardServiceSessionImpl implements DashboardService {
     }
 
     @Override
-    public Long createDashboard(DashboardConfig dashCfg) {
+    public Long createDashboard(String name, int cols, List<DashboardPanelConfig> panelConfigList) {
         Map<Long, DashboardConfig> dashCfgMap = getDashboardCfgMapSession();
-        dashCfgMap.put(dashCfg.getId(), dashCfg);
-        return dashCfg.getId();
+        // generovani noveho ID
+        Optional<Long> maxIdOpt = dashCfgMap.keySet().stream().max(Long::compareTo);
+        Long newId = null;
+        if (maxIdOpt.isPresent()) {
+            newId = maxIdOpt.get() + 1;
+            dashCfgMap.put(newId, new DashboardConfig(newId, name, cols, panelConfigList));
+            storeDashboardCfgMapToSession(dashCfgMap);
+            return newId;
+        }
+
+        return -1L;
     }
 
     @Override
