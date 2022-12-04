@@ -62,7 +62,9 @@ public class DashboardServiceSessionImpl implements DashboardService {
 
     @Override
     public Long createDashboard(DashboardConfig dashCfg) {
-        return null;
+        Map<Long, DashboardConfig> dashCfgMap = getDashboardCfgMapSession();
+        dashCfgMap.put(dashCfg.getId(), dashCfg);
+        return dashCfg.getId();
     }
 
     @Override

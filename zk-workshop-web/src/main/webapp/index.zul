@@ -96,9 +96,9 @@
 							<menupopup id="dashbordMenuPopup">
 								<menuitem label="${vm.dashboardSelected.name}" disabled="true" />
 								<menuseparator />
-								<menuitem label="Vytvořit dashboard" />
+								<menuitem label="Nový" onClick="@command('createDashboardCmd')" />
 								<menuitem label="Přejmenovat" if="${!vm.dashboardSelected.isDefault()}" />
-								<menuitem label="Kopírovat" />
+								<menuitem label="Kopírovat" onClick="@command('createDashboardCmd', copyMode=true)" />
 								<menuitem label="Odstranit" onClick="@command('deleteDashboardCmd')" if="${!vm.dashboardSelected.isDefault()}" />
 								<menuseparator />
 								<menuitem label="Všechny dashboardy" onClick="@command('widgetListModalCmd')" />

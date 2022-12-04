@@ -1,0 +1,26 @@
+<window id="modalDialog" title="@init(vm.title)" border="normal" width="475px"
+        position="center,center" closable="true"
+        viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardCreateModalVM')" >
+    <vlayout hflex="1" style="padding: 5px;">
+        <hbox hflex="1">
+            <vlayout width="100px;">
+                <label value="Název" />
+            </vlayout>
+            <textbox value="@bind(vm.name)" hflex="1" constraint="no empty" />
+        </hbox>
+        <hbox>
+            <vlayout width="100px;">
+                <label value="Počet sloupců" width="150px" />
+            </vlayout>
+            <spinner value="@bind(vm.cols)" constraint="no empty,min 1, max 10" width="min" maxlength="2" disabled="@init(vm.copyMode)" />
+        </hbox>
+
+        <hbox pack="end" hflex="1">
+            <button label="OK"
+                    onClick="@command('createCmd', modal=modalDialog))"/>
+            <button label="${c:l('web.btn.close')}"
+                    onClick="modalDialog.detach()"/>
+        </hbox>
+
+    </vlayout>
+</window>

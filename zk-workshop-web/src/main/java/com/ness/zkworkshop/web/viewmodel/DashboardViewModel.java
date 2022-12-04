@@ -70,6 +70,16 @@ public class DashboardViewModel extends BaseVM {
 	}
 
 	@Command
+	public void createDashboardCmd(@BindingParam("copyMode") Boolean copyMode) {
+		Map<String, Object> args = new HashMap<>();
+		if (copyMode != null && copyMode) {
+			args.put("dashboardSrc", dashboardSelected);
+
+		}
+		openModal("/pages/dashboard-create.zul", args);
+	}
+
+	@Command
 	public void deleteDashboardCmd() {
 		if (dashboardSelected.isDefault()) {
 			Clients.alert("Výchozí dashbord nelze odstranit.");
