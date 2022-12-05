@@ -15,6 +15,7 @@ import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.util.Clients;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DashboardViewModel extends BaseVM {
@@ -25,10 +26,12 @@ public class DashboardViewModel extends BaseVM {
 	private String borderColor;
 	private String backgrColor;
 	private DashboardConfig dashboardSelected;
+	private List<DashboardConfig> dashboardList;
 
 	@Init
 	public void init() {
 		this.dashboardSelected = dashboardService.getDashboard(DashboardUtils.getRequestDashboardId());
+		this.dashboardList = dashboardService.getDashboardAll();
 	}
 
 	@NotifyChange("editMode")
@@ -79,6 +82,15 @@ public class DashboardViewModel extends BaseVM {
 		openModal("/pages/dashboard-create.zul", args);
 	}
 
+	/**
+	 * Prechod na dashboard.
+	 * @param id
+	 */
+	@Command
+	public void goToDashboardCmd(@BindingParam("item") Long id) {
+		Executions.sendRedirect("index.zul?dashboardId=" + id);
+	}
+
 	@Command
 	public void renameDashboardCmd() {
 		Map<String, Object> args = new HashMap<>();
@@ -93,6 +105,11 @@ public class DashboardViewModel extends BaseVM {
 			return;
 		}
 		DashboardUtils.deleteDashboard(dashboardSelected, dashboardService, this::redirectToDefault);
+	}
+
+	@Command
+	public void renameCmd() {
+		dashboardService.updateDashboard(dashboardSelected.getId(), dashboardSelected);
 	}
 
 	private void redirectToDefault() {
@@ -151,6 +168,10 @@ public class DashboardViewModel extends BaseVM {
 
 	public DashboardConfig getDashboardSelected() {
 		return dashboardSelected;
+	}
+
+	public List<DashboardConfig> getDashboardList() {
+		return dashboardList;
 	}
 
 	private void redirectToPage(String pageId) {
