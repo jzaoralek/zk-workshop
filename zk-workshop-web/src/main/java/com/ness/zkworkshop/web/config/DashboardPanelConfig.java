@@ -16,14 +16,17 @@ public class DashboardPanelConfig {
     private DashboardPanelLibrary.WidgetType widgetType;
     /** Poradi panelu v ramci typu panelu dashboardu. */
     private int widgetIndex;
+    /** Odstranitelnost panelu dashboardu. */
+    private boolean removable;
 
-    public DashboardPanelConfig(int dashCol, int dashRow, DashboardPanelLibrary.WidgetType widgetType, int widgetIndex, String title, String style) {
+    public DashboardPanelConfig(int dashCol, int dashRow, DashboardPanelLibrary.WidgetType widgetType, int widgetIndex, String title, String style, boolean removable) {
         this.dashCol = dashCol;
         this.dashRow = dashRow;
         this.widgetType = widgetType;
         this.widgetIndex = widgetIndex;
         this.title = title;
         this.style = style;
+        this.removable = removable;
     }
 
     public DashboardPanelConfig(DashboardPanelConfig dashboardPanelConfig) {
@@ -33,6 +36,7 @@ public class DashboardPanelConfig {
         this.widgetIndex = dashboardPanelConfig.getWidgetIndex();
         this.title = dashboardPanelConfig.getTitle();
         this.style = dashboardPanelConfig.getStyle();
+        this.removable = dashboardPanelConfig.isRemovable();
     }
 
     public int getDashCol() {
@@ -81,5 +85,13 @@ public class DashboardPanelConfig {
 
     public void setWidgetIndex(int widgetIndex) {
         this.widgetIndex = widgetIndex;
+    }
+
+    public boolean isRemovable() {
+        return removable;
+    }
+
+    public void setRemovable(boolean removable) {
+        this.removable = removable;
     }
 }

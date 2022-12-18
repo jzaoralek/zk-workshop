@@ -65,6 +65,11 @@
 			</tabpanels>
 		</tabbox>
 
+		<listbox mold="select" width="44px" >
+			<listitem label="Ano" value="true" selected="true" />
+			<listitem label="Ne" value="false" />
+		</listbox>
+
 		<!-- background: #0053A1; -->
 		<panel viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardViewModel')"
 			   vflex="1"

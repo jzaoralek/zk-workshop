@@ -15,6 +15,7 @@ public class DashboardPanel {
     private String panelUri;
     private String imgUri;
     private DashboardPanelLibrary.WidgetType type;
+    private boolean removable;
 
     public DashboardPanel(long id, String title, String contentSrc, String panelUri, String imgUri, DashboardPanelLibrary.WidgetType type) {
         this.id = id;
@@ -71,5 +72,13 @@ public class DashboardPanel {
 
     public void setPanelUri(String panelUri) {
         this.panelUri = panelUri;
+    }
+
+    public boolean isRemovable() {
+        return removable;
+    }
+
+    public void setRemovable(boolean removable) {
+        this.removable = removable;
     }
 }

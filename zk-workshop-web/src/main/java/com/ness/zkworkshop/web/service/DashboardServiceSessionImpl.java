@@ -21,8 +21,8 @@ public class DashboardServiceSessionImpl implements DashboardService {
         if (dashCfgMapObj == null) {
             Map<Long, DashboardConfig> dashCfgMap = new HashMap<>();
             List<DashboardPanelConfig> defDashPanelConfigList = new ArrayList<>();
-            defDashPanelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0, "Kalendář", "margin-bottom:10px"));
-            defDashPanelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0, "Správy", "margin-bottom:10px") );
+            defDashPanelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0, "Kalendář", "margin-bottom:10px", false));
+            defDashPanelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0, "Správy", "margin-bottom:10px", false) );
             dashCfgMap.put(0L, new DashboardConfig(DEFAULT_DASHBOARD_ID, "Výchozí dashboard", 4, defDashPanelConfigList));
 
             storeDashboardCfgMapToSession(dashCfgMap);

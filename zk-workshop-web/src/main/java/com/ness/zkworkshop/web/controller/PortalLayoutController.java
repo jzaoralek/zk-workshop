@@ -32,6 +32,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
 
     private static final String WIDGET_TYPE = "widgetType";
     private static final String WIDGET_INDEX = "widgetIndex";
+    private static final String WIDGET_REMOVABLE = "widgetRemovable";
 
     private DashboardService dashboardService = new DashboardServiceSessionImpl();
 
@@ -74,6 +75,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
             dashPnl = dashboardPanelLibrary.getDashboardPanelMap().get(panelConfig.getWidgetType()).get(panelConfig.getWidgetIndex());
             dashPnl.setTitle(panelConfig.getTitle());
             dashPnl.setStyle(panelConfig.getStyle());
+            dashPnl.setRemovable(panelConfig.isRemovable());
             addWidget(dashPnl,
                     panelConfig.getDashCol(),
                     panelConfig.getWidgetIndex());
@@ -199,7 +201,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         int dashRow = addWidget(panel, dashCol, widgetIdx);
 
         // store added widget to config
-        DashboardPanelConfig dashboardPanelConfig = new DashboardPanelConfig(dashCol, dashRow, panel.getType(), widgetIdx, panel.getTitle(), panel.getStyle());
+        DashboardPanelConfig dashboardPanelConfig = new DashboardPanelConfig(dashCol, dashRow, panel.getType(), widgetIdx, panel.getTitle(), panel.getStyle(), panel.isRemovable());
         this.dashboardConfig.addPanelConfig(dashboardPanelConfig);
         storeDashboardConfig();
     }
@@ -219,6 +221,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         // Identifikator panelu, pouziti pripresouvani v dropStatus()
         panelToAdd.setClientAttribute(WIDGET_TYPE, panel.getType().name());
         panelToAdd.setClientAttribute(WIDGET_INDEX, String.valueOf(widgetIdx));
+        panelToAdd.setClientAttribute(WIDGET_REMOVABLE, String.valueOf(panel.isRemovable()));
 
         //panelToAdd.setTitle(panel.getTitle());
         panelToAdd.setBorder("normal");
@@ -362,6 +365,30 @@ public class PortalLayoutController extends SelectorComposer<Component> {
 
         rows.appendChild(borderColorRow);
 
+        // Removability
+        Row removabilityRow = new Row();
+        removabilityRow.appendChild(new Label(Labels.getLabel("web.removable")));
+        Listbox removableListbox = new Listbox();
+        removableListbox.setMold("select");
+        removableListbox.setWidth("50px");
+        Listitem itemYes = new Listitem();
+        itemYes.setLabel("Ano");
+        itemYes.setValue(true);
+        Listitem itemNo = new Listitem();
+        itemNo.setLabel("Ne");
+        itemNo.setValue(false);
+
+        if (Boolean.valueOf(panelToAdd.getClientAttribute(WIDGET_REMOVABLE))) {
+            itemYes.setSelected(true);
+        } else {
+            itemNo.setSelected(true);
+        }
+        removableListbox.appendChild(itemYes);
+        removableListbox.appendChild(itemNo);
+        removableListbox.addEventListener(Events.ON_SELECT, event -> setPanelRemovable(panelToAdd, itemYes.isSelected()));
+        removabilityRow.appendChild(removableListbox);
+        rows.appendChild(removabilityRow);
+
         panelCustSettingsGrid.appendChild(rows);
         panelCustPopupVlayout.appendChild(panelCustSettingsGrid);
         panelCustPopup.appendChild(panelCustPopupVlayout);
@@ -382,6 +409,17 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         // ulozeni do panel config
         DashboardPanelConfig panelCfgToUpdate = getDashPanelCfg(panel);
         panelCfgToUpdate.setStyle(style);
+
+        storeDashboardConfig();
+    }
+
+    /**
+     * Nastaveni odstranitelnosti panelu.
+     */
+    private void setPanelRemovable(Panel panel, boolean value) {
+        // ulozeni do panel config
+        DashboardPanelConfig panelCfgToUpdate = getDashPanelCfg(panel);
+        panelCfgToUpdate.setRemovable(value);
 
         storeDashboardConfig();
     }
@@ -425,7 +463,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         panel.setCollapsible(!editMode);
         panel.setSizable(editMode);
         panel.setMaximizable(!editMode);
-        panel.setClosable(editMode);
+        panel.setClosable(editMode && Boolean.valueOf(panel.getClientAttribute(WIDGET_REMOVABLE)));
         // tlacitko pro customizaci
         if (panel.getPanelchildren() != null) {
             Component lastChild = panel.getPanelchildren().getLastChild();
