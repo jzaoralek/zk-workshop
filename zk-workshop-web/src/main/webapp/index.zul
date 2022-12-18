@@ -51,6 +51,20 @@
 	<window self="@{define(mainContent)}" hflex="1" vflex="1"
 			contentSclass="winBg">
 
+		<tabbox id="navMenuTabBox"
+				hflex="1">
+			<tabs>
+				<tab label="Dashboard"/>
+			</tabs>
+			<tabpanels hflex="1">
+				<tabpanel hflex="1">
+					<hbox pack="stretch" style="padding:0" hflex="1" >
+						<toolbar id="dashboardIntToolbar" hflex="10" apply="com.ness.zkworkshop.web.controller.NavmenuDashboardController" />
+					</hbox>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+
 		<!-- background: #0053A1; -->
 		<panel viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardViewModel')"
 			   vflex="1"
@@ -100,8 +114,10 @@
 								<menuitem label="Odstranit" onClick="@command('deleteDashboardCmd')" if="${!vm.dashboardSelected.isDefault()}" />
 								<menuseparator />
 								<menu label="Všechny dashboardy">
-									<menupopup>
-										<menuitem forEach="${vm.dashboardList}" label="${each.name}" style="${each.id}" onClick="@command('goToDashboardCmd',item=self.style)" />
+									<menupopup children="@load(vm.dashboardList)">
+										<template name="children">
+											<menuitem label="@load(each.name)" style="@load(each.id)" onClick="@command('goToDashboardCmd',item=self.style)" />
+										</template>
 									</menupopup>
 								</menu>
 							</menupopup>

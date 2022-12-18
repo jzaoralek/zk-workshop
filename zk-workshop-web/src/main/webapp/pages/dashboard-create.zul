@@ -17,7 +17,7 @@
 
         <hbox pack="end" hflex="1">
             <button label="OK"
-                    onClick="@command('createCmd', modal=modalDialog))"/>
+                    onClick="@command('createCmd', modal=modalDialog)"/>
             <button label="${c:l('web.btn.close')}"
                     onClick="modalDialog.detach()"/>
         </hbox>

@@ -110,6 +110,7 @@ public class DashboardViewModel extends BaseVM {
 	@Command
 	public void renameCmd() {
 		dashboardService.updateDashboard(dashboardSelected.getId(), dashboardSelected);
+		EventQueueHelper.publish(EventQueueHelper.SdatEvent.DASHBOARD_RENAME, dashboardSelected);
 	}
 
 	private void redirectToDefault() {

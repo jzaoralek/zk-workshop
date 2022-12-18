@@ -12,7 +12,8 @@ public final class EventQueueHelper {
 
 	public enum SdatEvent {
 		ADD_WIDGET(SdatEventQueues.DASHBOARD_QUEUE),
-		EDIT_MODE(SdatEventQueues.DASHBOARD_QUEUE);
+		EDIT_MODE(SdatEventQueues.DASHBOARD_QUEUE),
+		DASHBOARD_RENAME(SdatEventQueues.DASHBOARD_QUEUE);
 
 		private SdatEventQueues parentQueue;
 
