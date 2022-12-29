@@ -46,7 +46,10 @@ public class DashboardCreateModalVM extends BaseVM {
             newDashboardId = dashboardService.createDashboard(name, cols, new ArrayList<DashboardPanelConfig>());
         } else {
             // rezim kopirovani dashboardu
-            newDashboardId = dashboardService.createDashboard(name, dashboardSrc.getCols(), dashboardSrc.copyPanelConfigList());
+            // panely defaultne odstranitelne
+            List<DashboardPanelConfig> copyPnlCfgList = dashboardSrc.copyPanelConfigList();
+            copyPnlCfgList.forEach(i -> i.setRemovable(true));
+            newDashboardId = dashboardService.createDashboard(name, dashboardSrc.getCols(), copyPnlCfgList);
         }
 
         Clients.showNotification(Labels.getLabel("web.msg.info.changesSaved"),
