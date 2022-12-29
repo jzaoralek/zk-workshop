@@ -203,6 +203,10 @@ public class PortalLayoutController extends SelectorComposer<Component> {
             return;
         }
 
+        // Pridavany widget odstranitelny pokud je pridavany uzivatelem,
+        // v admin rezimu defaultne neodstrnitelny.
+        panel.setRemovable(!adminMode);
+
         int dashRow = addWidget(panel, dashCol, widgetIdx);
 
         // store added widget to config
@@ -370,29 +374,31 @@ public class PortalLayoutController extends SelectorComposer<Component> {
 
         rows.appendChild(borderColorRow);
 
-        // Removability
-        Row removabilityRow = new Row();
-        removabilityRow.appendChild(new Label(Labels.getLabel("web.removable")));
-        Listbox removableListbox = new Listbox();
-        removableListbox.setMold("select");
-        removableListbox.setWidth("50px");
-        Listitem itemYes = new Listitem();
-        itemYes.setLabel("Ano");
-        itemYes.setValue(true);
-        Listitem itemNo = new Listitem();
-        itemNo.setLabel("Ne");
-        itemNo.setValue(false);
+        // Removability - jen v admin režimu
+        if (adminMode) {
+            Row removabilityRow = new Row();
+            removabilityRow.appendChild(new Label(Labels.getLabel("web.removable")));
+            Listbox removableListbox = new Listbox();
+            removableListbox.setMold("select");
+            removableListbox.setWidth("50px");
+            Listitem itemYes = new Listitem();
+            itemYes.setLabel("Ano");
+            itemYes.setValue(true);
+            Listitem itemNo = new Listitem();
+            itemNo.setLabel("Ne");
+            itemNo.setValue(false);
 
-        if (Boolean.valueOf(panelToAdd.getClientAttribute(WIDGET_REMOVABLE))) {
-            itemYes.setSelected(true);
-        } else {
-            itemNo.setSelected(true);
+            if (Boolean.valueOf(panelToAdd.getClientAttribute(WIDGET_REMOVABLE))) {
+                itemYes.setSelected(true);
+            } else {
+                itemNo.setSelected(true);
+            }
+            removableListbox.appendChild(itemYes);
+            removableListbox.appendChild(itemNo);
+            removableListbox.addEventListener(Events.ON_SELECT, event -> setPanelRemovable(panelToAdd, itemYes.isSelected()));
+            removabilityRow.appendChild(removableListbox);
+            rows.appendChild(removabilityRow);
         }
-        removableListbox.appendChild(itemYes);
-        removableListbox.appendChild(itemNo);
-        removableListbox.addEventListener(Events.ON_SELECT, event -> setPanelRemovable(panelToAdd, itemYes.isSelected()));
-        removabilityRow.appendChild(removableListbox);
-        rows.appendChild(removabilityRow);
 
         panelCustSettingsGrid.appendChild(rows);
         panelCustPopupVlayout.appendChild(panelCustSettingsGrid);
@@ -468,7 +474,13 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         panel.setCollapsible(!editMode);
         panel.setSizable(editMode);
         panel.setMaximizable(!editMode);
-        panel.setClosable(editMode && Boolean.valueOf(panel.getClientAttribute(WIDGET_REMOVABLE)));
+        if (adminMode) {
+            // admin - povoleno odstranit vzdy v editacnim rezimu
+            panel.setClosable(editMode);
+        } else {
+            // uzivatel - muze odstranit v editacnim rezimu, jen pokud je povoleno
+            panel.setClosable(editMode && Boolean.valueOf(panel.getClientAttribute(WIDGET_REMOVABLE)));
+        }
         // tlacitko pro customizaci
         if (panel.getPanelchildren() != null) {
             Component lastChild = panel.getPanelchildren().getLastChild();
