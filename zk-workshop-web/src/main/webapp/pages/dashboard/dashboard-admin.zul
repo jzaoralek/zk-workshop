@@ -7,5 +7,5 @@
 <?link rel="stylesheet" href="/sources/css/zk-bootstrap.css" ?>
 
 <zk xmlns:n="native">
-	<include src="/pages/dashboard/dashboard-core.zul" admin="false" />
+    <include src="/pages/dashboard/dashboard-core.zul" admin="true" />
 </zk>

@@ -27,9 +27,11 @@ public class DashboardViewModel extends BaseVM {
 	private String backgrColor;
 	private DashboardConfig dashboardSelected;
 	private List<DashboardConfig> dashboardList;
+	private Boolean adminMode;
 
 	@Init
-	public void init() {
+	public void init(@BindingParam("adminMode") Boolean adminMode) {
+		this.adminMode = adminMode;
 		this.dashboardSelected = dashboardService.getDashboard(DashboardUtils.getRequestDashboardId());
 		this.dashboardList = dashboardService.getDashboardAll();
 	}

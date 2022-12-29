@@ -55,16 +55,19 @@ public class NavmenuDashboardController extends SelectorComposer<Component> {
             }
             toolbarBtn.setId(dashCfg.getId().toString());
             toolbarBtn.setLabel(dashCfg.getName());
-            toolbarBtn.addEventListener(Events.ON_CLICK, event -> Executions.sendRedirect("index.zul?dashboardId=" + dashCfg.getId()));
+            toolbarBtn.addEventListener(Events.ON_CLICK, event -> Executions.sendRedirect("/index.zul?dashboardId=" + dashCfg.getId()));
             dashboardIntToolbar.appendChild(toolbarBtn);
             // pokud vice nez jeden dashboard, umistime za odkaz na default oddelovac at odlisime custom dashboardy
             if (dashCfg.isDefault() && dashboardList.size() > 1) {
                 dashboardIntToolbar.appendChild(buildSeparatorLbl());
             }
-
-            // dashboardIntToolbar.setStyle("white-space: nowrap; padding-top: 6px; padding-bottom: 6px;");
-            // dashboardIntToolbar.setHeight("36px");
         }
+
+        Button dashboardAdminBtn = new Toolbarbutton();
+        dashboardAdminBtn.setLabel("Dashboard - admin");
+        dashboardAdminBtn.addEventListener(Events.ON_CLICK, event -> Executions.sendRedirect("/pages/dashboard/dashboard-admin.zul"));
+        dashboardIntToolbar.appendChild(dashboardAdminBtn);
+
     }
 
     private Label buildSeparatorLbl() {

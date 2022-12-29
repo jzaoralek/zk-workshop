@@ -41,6 +41,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
 
     private boolean editMode;
     private Long dashboardId;
+    private boolean adminMode;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -56,6 +57,10 @@ public class PortalLayoutController extends SelectorComposer<Component> {
     }
 
     private void init() {
+        String adminModeStr = (String)portalLayout.getAttribute("adminMode");
+        if (adminModeStr != null && !"".equals(adminModeStr)) {
+            adminMode = Boolean.parseBoolean(adminModeStr);
+        }
         portalLayout.setMaximizedMode("whole");
         this.dashboardId = DashboardUtils.getRequestDashboardId();
         this.dashboardConfig = dashboardService.getDashboard(dashboardId);
