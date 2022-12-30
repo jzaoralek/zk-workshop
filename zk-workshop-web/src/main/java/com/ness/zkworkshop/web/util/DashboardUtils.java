@@ -28,15 +28,16 @@ public final class DashboardUtils {
      * @param dashboardConfig
      * @param dashboardService
      * @param postDeleteAction
+     * @param type
      */
-    public static void deleteDashboard(DashboardConfig dashboardConfig, DashboardService dashboardService, Runnable postDeleteAction) {
+    public static void deleteDashboard(DashboardConfig dashboardConfig, DashboardService dashboardService, Runnable postDeleteAction, DashboardServiceSessionImpl.DashboardType type) {
         Messagebox.show("Opravdu si přejete odstranit dashboard " + dashboardConfig.getName() + "?",
                 "Potvrzení", Messagebox.OK | Messagebox.CANCEL,
                 Messagebox.QUESTION,
                 new org.zkoss.zk.ui.event.EventListener(){
                     public void onEvent(Event e){
                         if(Messagebox.ON_OK.equals(e.getName())){
-                            dashboardService.deleteDashboard(dashboardConfig.getId());
+                            dashboardService.deleteDashboard(dashboardConfig.getId(), type);
                             if (postDeleteAction != null) {
                                 postDeleteAction.run();
                             }

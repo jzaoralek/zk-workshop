@@ -6,6 +6,6 @@
 <?link rel="stylesheet" href="/sources/css/layout.css" ?>
 <?link rel="stylesheet" href="/sources/css/zk-bootstrap.css" ?>
 
-<zk xmlns:n="native">
-    <include src="/pages/dashboard/dashboard-core.zul" admin="true" />
+<zk>
+    <include src="/pages/dashboard/dashboard-core.zul" admin="true" dashboardType="INT" />
 </zk>

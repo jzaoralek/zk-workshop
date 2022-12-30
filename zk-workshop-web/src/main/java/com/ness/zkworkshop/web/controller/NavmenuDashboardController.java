@@ -42,7 +42,8 @@ public class NavmenuDashboardController extends SelectorComposer<Component> {
      * Iniciace odkazu na dashboardy.
      */
     private void init() {
-        List<DashboardConfig> dashboardList = dashboardService.getDashboardAll();
+        // TODO: (JZ), dynamicky nastavit podle portalu
+        List<DashboardConfig> dashboardList = dashboardService.getDashboardAll(DashboardServiceSessionImpl.DashboardType.INT);
         String dashboardIdReqParam = WebUtils.getRequestParameter("dashboardId");
         Button toolbarBtn;
 

@@ -27,6 +27,7 @@ public class DashboardCreateModalVM extends BaseVM {
     /** Dashboard ke kopirovani. */
     private DashboardConfig dashboardSrc;
     private boolean copyMode;
+    private DashboardServiceSessionImpl.DashboardType dashboardType;
 
     @Init
     public void init() {
@@ -36,6 +37,9 @@ public class DashboardCreateModalVM extends BaseVM {
             cols = dashboardSrc.getCols();
             copyMode = true;
         }
+
+        Object dashboardTypeObj = Executions.getCurrent().getArg().get("dashboardType");
+        dashboardType = dashboardTypeObj != null ? (DashboardServiceSessionImpl.DashboardType)dashboardTypeObj : DashboardServiceSessionImpl.DashboardType.INT;
     }
 
     @Command
@@ -43,13 +47,13 @@ public class DashboardCreateModalVM extends BaseVM {
         Long newDashboardId = null;
         if (!copyMode) {
             // vytvareni noveho dashboardu
-            newDashboardId = dashboardService.createDashboard(name, cols, new ArrayList<DashboardPanelConfig>());
+            newDashboardId = dashboardService.createDashboard(name, cols, new ArrayList<DashboardPanelConfig>(), dashboardType);
         } else {
             // rezim kopirovani dashboardu
             // panely defaultne odstranitelne
             List<DashboardPanelConfig> copyPnlCfgList = dashboardSrc.copyPanelConfigList();
             copyPnlCfgList.forEach(i -> i.setRemovable(true));
-            newDashboardId = dashboardService.createDashboard(name, dashboardSrc.getCols(), copyPnlCfgList);
+            newDashboardId = dashboardService.createDashboard(name, dashboardSrc.getCols(), copyPnlCfgList, dashboardType);
         }
 
         Clients.showNotification(Labels.getLabel("web.msg.info.changesSaved"),
@@ -59,7 +63,7 @@ public class DashboardCreateModalVM extends BaseVM {
                 2000);
 
         // redirect to new dashboard
-        Executions.sendRedirect("index.zul?dashboardId=" + newDashboardId);
+        Executions.sendRedirect("/index.zul?dashboardId=" + newDashboardId);
     }
 
     public String getTitle() {

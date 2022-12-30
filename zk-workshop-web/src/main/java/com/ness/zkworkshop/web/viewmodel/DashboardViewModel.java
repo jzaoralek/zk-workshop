@@ -28,12 +28,14 @@ public class DashboardViewModel extends BaseVM {
 	private DashboardConfig dashboardSelected;
 	private List<DashboardConfig> dashboardList;
 	private Boolean adminMode;
+	private DashboardServiceSessionImpl.DashboardType dashboardType;
 
 	@Init
-	public void init(@BindingParam("adminMode") Boolean adminMode) {
+	public void init(@BindingParam("adminMode") Boolean adminMode, @BindingParam("dashboardType") String type) {
 		this.adminMode = adminMode;
-		this.dashboardSelected = dashboardService.getDashboard(DashboardUtils.getRequestDashboardId());
-		this.dashboardList = dashboardService.getDashboardAll();
+		this.dashboardType = type != null ? DashboardServiceSessionImpl.DashboardType.valueOf(type) : DashboardServiceSessionImpl.DashboardType.INT;
+		this.dashboardSelected = dashboardService.getDashboard(DashboardUtils.getRequestDashboardId(), this.dashboardType);
+		this.dashboardList = dashboardService.getDashboardAll(this.dashboardType);
 	}
 
 	@NotifyChange("editMode")
@@ -81,6 +83,9 @@ public class DashboardViewModel extends BaseVM {
 			args.put("dashboardSrc", dashboardSelected);
 
 		}
+
+		args.put("dashboardType", dashboardType);
+
 		openModal("/pages/dashboard-create.zul", args);
 	}
 
@@ -106,12 +111,12 @@ public class DashboardViewModel extends BaseVM {
 			Clients.alert("Výchozí dashbord nelze odstranit.");
 			return;
 		}
-		DashboardUtils.deleteDashboard(dashboardSelected, dashboardService, this::redirectToDefault);
+		DashboardUtils.deleteDashboard(dashboardSelected, dashboardService, this::redirectToDefault, this.dashboardType);
 	}
 
 	@Command
 	public void renameCmd() {
-		dashboardService.updateDashboard(dashboardSelected.getId(), dashboardSelected);
+		dashboardService.updateDashboard(dashboardSelected.getId(), dashboardSelected, this.dashboardType);
 		EventQueueHelper.publish(EventQueueHelper.SdatEvent.DASHBOARD_RENAME, dashboardSelected);
 	}
 

@@ -12,9 +12,9 @@ public interface DashboardService {
      * @param dashboardId
      * @return
      */
-    DashboardConfig getDashboard(Long dashboardId);
-    List<DashboardConfig> getDashboardAll();
-    Long createDashboard(String name, int cols, List<DashboardPanelConfig> panelConfigList);
-    void updateDashboard(Long dashboardId, DashboardConfig dashCfg);
-    void deleteDashboard(Long dashboardId);
+    DashboardConfig getDashboard(Long dashboardId, DashboardServiceSessionImpl.DashboardType type);
+    List<DashboardConfig> getDashboardAll(DashboardServiceSessionImpl.DashboardType type);
+    Long createDashboard(String name, int cols, List<DashboardPanelConfig> panelConfigList, DashboardServiceSessionImpl.DashboardType type);
+    void updateDashboard(Long dashboardId, DashboardConfig dashCfg, DashboardServiceSessionImpl.DashboardType type);
+    void deleteDashboard(Long dashboardId, DashboardServiceSessionImpl.DashboardType type);
 }

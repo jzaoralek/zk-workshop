@@ -42,6 +42,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
     private boolean editMode;
     private Long dashboardId;
     private boolean adminMode;
+    private DashboardServiceSessionImpl.DashboardType dashboardType;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -57,13 +58,23 @@ public class PortalLayoutController extends SelectorComposer<Component> {
     }
 
     private void init() {
+        // admin mode
         String adminModeStr = (String)portalLayout.getAttribute("adminMode");
         if (adminModeStr != null && !"".equals(adminModeStr)) {
             adminMode = Boolean.parseBoolean(adminModeStr);
         }
+
+        // dashboard type (INT | ZBER)
+        String dashboardTypeStr = (String)portalLayout.getAttribute("dashboardType");
+        if (dashboardTypeStr != null && !"".equals(dashboardTypeStr)) {
+            dashboardType = DashboardServiceSessionImpl.DashboardType.valueOf(dashboardTypeStr);
+        } else {
+            dashboardType = DashboardServiceSessionImpl.DashboardType.INT;
+        }
+
         portalLayout.setMaximizedMode("whole");
         this.dashboardId = DashboardUtils.getRequestDashboardId();
-        this.dashboardConfig = dashboardService.getDashboard(dashboardId);
+        this.dashboardConfig = dashboardService.getDashboard(dashboardId, dashboardType);
         // sloupce dashboardu
         int cols = this.dashboardConfig.getCols();
         String colWdth = 100/cols+"%";
@@ -126,7 +137,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
                     .thenComparing(DashboardPanelConfig::getDashRow));
         }
         // ulozeni do session
-        dashboardService.updateDashboard(dashboardId, dashboardConfig);
+        dashboardService.updateDashboard(dashboardId, dashboardConfig, dashboardType);
     }
 
     /**

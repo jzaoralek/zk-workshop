@@ -1,6 +1,7 @@
 <zk xmlns:n="native">
 
     <custom-attributes admin="${arg.admin}" />
+    <custom-attributes dashboardType="${arg.dashboardType}" />
 
     <style>
         .alert-warning .z-caption-content {
@@ -61,7 +62,7 @@
             </tabpanels>
         </tabbox>
 
-        <panel viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardViewModel', adminMode=admin)"
+        <panel viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.DashboardViewModel', adminMode=admin, dashboardType=dashboardType)"
                vflex="1"
                hflex="1" >
 
@@ -132,6 +133,7 @@
                     <!-- Obsah je dynamicky vygenerovany v PortalLayoutController -->
                     <portallayout id="portalLayout">
                         <custom-attributes adminMode="${admin}" />
+                        <custom-attributes dashboardType="${dashboardType}" />
                     </portallayout>
                 </div>
 
