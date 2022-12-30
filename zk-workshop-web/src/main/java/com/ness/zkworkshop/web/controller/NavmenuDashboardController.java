@@ -84,9 +84,9 @@ public class NavmenuDashboardController extends SelectorComposer<Component> {
      */
     private void renameDashboard(DashboardConfig dashboardSelected) {
         for (Component toolbarChild : dashboardIntToolbar.getChildren()) {
-            if (toolbarChild instanceof Toolbarbutton
-                    && ((Toolbarbutton)toolbarChild).getId().equals(dashboardSelected.getId().toString())) {
-                ((Toolbarbutton)toolbarChild).setLabel(dashboardSelected.getName());
+            if (toolbarChild instanceof Button
+                    && ((Button)toolbarChild).getId().equals(dashboardSelected.getId().toString())) {
+                ((Button)toolbarChild).setLabel(dashboardSelected.getName());
             }
         }
     }
