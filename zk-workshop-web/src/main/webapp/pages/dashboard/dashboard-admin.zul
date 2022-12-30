@@ -7,5 +7,20 @@
 <?link rel="stylesheet" href="/sources/css/zk-bootstrap.css" ?>
 
 <zk>
-    <include src="/pages/dashboard/dashboard-core.zul" admin="true" dashboardType="INT" />
+    <window self="@{define(mainContent)}" hflex="1" vflex="1">
+        <tabbox id="tb" vflex="1" >
+            <tabs id="tabs">
+                <tab id="int" label="INT" />
+                <tab id="zber" label="ZBER" />
+            </tabs>
+            <tabpanels>
+                <tabpanel>
+                    <include src="/pages/dashboard/dashboard-core.zul" admin="true" dashboardType="INT" />
+                </tabpanel>
+                <tabpanel>
+                    <include src="/pages/dashboard/dashboard-core.zul" admin="true" dashboardType="ZBER" />
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+    </window>
 </zk>

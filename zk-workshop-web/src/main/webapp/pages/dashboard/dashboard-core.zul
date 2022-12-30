@@ -44,10 +44,6 @@
 
     </style>
 
-    <window self="@{define(mainContent)}" hflex="1" vflex="1"
-            contentSclass="winBg">
-
-        <label value="Admin mode: ${admin}" />
         <tabbox id="navMenuTabBox"
                 hflex="1">
             <tabs>
@@ -269,6 +265,4 @@
                             -->
             </panelchildren>
         </panel>
-
-    </window>
 </zk>

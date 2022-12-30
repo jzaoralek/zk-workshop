@@ -7,5 +7,7 @@
 <?link rel="stylesheet" href="/sources/css/zk-bootstrap.css" ?>
 
 <zk>
-	<include src="/pages/dashboard/dashboard-core.zul" admin="false" dashboardType="INT" />
+	<window self="@{define(mainContent)}" hflex="1" vflex="1">
+		<include src="/pages/dashboard/dashboard-core.zul" admin="false" dashboardType="INT" />
+	</window>
 </zk>
