@@ -68,6 +68,7 @@ public class DashboardViewModel extends BaseVM {
 	public void addWidgetModalCmd(@BindingParam("type") String type) {
 		Map<String, Object> args = new HashMap<>();
 		args.put("modalArg", type);
+		args.put("dashboardType", dashboardType.name());
 		openModal("/pages/add-widget-modal.zul", args);
 	}
 

@@ -9,6 +9,7 @@ import com.ness.zkworkshop.web.service.DashboardServiceSessionImpl;
 import com.ness.zkworkshop.web.util.DashboardUtils;
 import com.ness.zkworkshop.web.util.EventQueueHelper;
 import com.ness.zkworkshop.web.util.WebUtils;
+import org.javatuples.Pair;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
@@ -51,7 +52,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
 
         // event listener pridani widgetu
         EventQueueHelper.queueLookup(EventQueueHelper.SdatEventQueues.DASHBOARD_QUEUE)
-                .subscribe(EventQueueHelper.SdatEvent.ADD_WIDGET, data -> addNewWidget((DashboardPanel)data));
+                .subscribe(EventQueueHelper.SdatEvent.ADD_WIDGET, data -> addNewWidget((Pair<DashboardPanel, DashboardServiceSessionImpl.DashboardType>)data));
         // event listener prepnuti do editacniho rezimu
         EventQueueHelper.queueLookup(EventQueueHelper.SdatEventQueues.DASHBOARD_QUEUE)
                 .subscribe(EventQueueHelper.SdatEvent.EDIT_MODE, data ->  updateEditMode((Boolean)data));
@@ -201,11 +202,16 @@ public class PortalLayoutController extends SelectorComposer<Component> {
      * Pridani noveho widgetu uzivatelem.
      * Do prvniho sloupce na posledni pozici.
      * Ulozeni do dashboardConfig.
-     * @param panel
+     * @param panelTypePair
      */
-    private void addNewWidget(DashboardPanel panel) {
+    private void addNewWidget(Pair<DashboardPanel, DashboardServiceSessionImpl.DashboardType> panelTypePair) {
+        // kontrola shodnosti dashboardType
+        if (panelTypePair.getValue1() != this.dashboardType) {
+            return;
+        }
         // prvni sloupec
         int dashCol = 0;
+        DashboardPanel panel = panelTypePair.getValue0();
         int widgetIdx = dashboardPanelLibrary.getDashWidgetIdx(panel);
         // kontrola zda-li pridavany panel jiz neni na dashboardu
         if (getDashPanelCfg(panel.getType(), widgetIdx) != null) {

@@ -2,7 +2,9 @@ package com.ness.zkworkshop.web.viewmodel;
 
 import com.ness.zkworkshop.web.config.DashboardPanelLibrary;
 import com.ness.zkworkshop.web.model.DashboardPanel;
+import com.ness.zkworkshop.web.service.DashboardServiceSessionImpl;
 import com.ness.zkworkshop.web.util.EventQueueHelper;
+import org.javatuples.Pair;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.DependsOn;
@@ -19,11 +21,13 @@ public class AddWidgetModalVM extends BaseVM {
     private Map<DashboardPanelLibrary.WidgetType, List<DashboardPanel>> dashboardPanelMap;
     private DashboardPanel dashboardPanelSelected;
     private DashboardPanelLibrary dashboardPanelLibrary = new DashboardPanelLibrary();
+    private DashboardServiceSessionImpl.DashboardType dashboardType;
 
     @Init
     public void init() {
         modalArg = (String)Executions.getCurrent().getArg().get("modalArg");
         widgetTypeSelected = DashboardPanelLibrary.WidgetType.valueOf(modalArg);
+        dashboardType = DashboardServiceSessionImpl.DashboardType.valueOf((String)Executions.getCurrent().getArg().get("dashboardType"));
         dashboardPanelMap = dashboardPanelLibrary.getDashboardPanelMap();
         changeWidgetTypeCmd();
     }
@@ -35,7 +39,7 @@ public class AddWidgetModalVM extends BaseVM {
 
     @Command
     public void addWidgetCmd(@BindingParam("modal") Window modal) {
-        EventQueueHelper.publish(EventQueueHelper.SdatEvent.ADD_WIDGET, dashboardPanelSelected);
+        EventQueueHelper.publish(EventQueueHelper.SdatEvent.ADD_WIDGET, Pair.with(dashboardPanelSelected, dashboardType));
         closeModalCmd(modal);
     }
 
