@@ -121,6 +121,16 @@ public class DashboardViewModel extends BaseVM {
 		EventQueueHelper.publish(EventQueueHelper.SdatEvent.DASHBOARD_RENAME, dashboardSelected);
 	}
 
+	/**
+	 * Editovatelnost nazvu dashboardu,
+	 * buď admin rezim a nebo pokud se nejdedna o default dashboard.
+	 *
+	 * @return
+	 */
+	public boolean isDashboardNameEditable() {
+		return this.adminMode || !this.dashboardSelected.isDefault();
+	}
+
 	private void redirectToDefault() {
 		Executions.sendRedirect("index.zul?dashboardId=" + DashboardServiceSessionImpl.DEFAULT_DASHBOARD_ID);
 	}
