@@ -75,8 +75,8 @@
                 <div hflex="1" style="margin-top: 40px; margin-left: 40px; margin-right: 40px; margin-bottom: 10px;" >
                     <hbox hflex="1" style="background: yellow;" height="40px" align="center">
                         <vbox hflex="1" style="margin-left: 20px;">
-                            <label value="${vm.dashboardSelected.name}" style="font-size: 20px;" if="${!vm.dashboardNameEditable}" />
-                            <textbox id="dashboardNameTxt" value="@bind(vm.dashboardSelected.name)" onOK="@command('renameCmd')" inplace="true" hflex="1" style="font-size: 20px;" if="${vm.dashboardNameEditable}" />
+                            <label value="@load(vm.dashboardSelected.name)" style="font-size: 20px;" visible="@load(!vm.dashboardNameEditable or !vm.editMode)" />
+                            <textbox id="dashboardNameTxt" value="@bind(vm.dashboardSelected.name)" onOK="@command('renameCmd')" inplace="true" hflex="1" style="font-size: 20px;" visible="@load(vm.dashboardNameEditable and vm.editMode)" />
                         </vbox>
                         <hbox hflex="2" pack="end" style="margin-right: 20px;">
                             <button label="${c:l('web.btn.change')}"
