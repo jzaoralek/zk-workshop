@@ -29,6 +29,7 @@ public class DashboardViewModel extends BaseVM {
 	private List<DashboardConfig> dashboardList;
 	private Boolean adminMode;
 	private DashboardServiceSessionImpl.DashboardType dashboardType;
+	private boolean defaultPresent;
 
 	@Init
 	public void init(@BindingParam("adminMode") Boolean adminMode, @BindingParam("dashboardType") String type) {
@@ -36,6 +37,7 @@ public class DashboardViewModel extends BaseVM {
 		this.dashboardType = type != null ? DashboardServiceSessionImpl.DashboardType.valueOf(type) : DashboardServiceSessionImpl.DashboardType.INT;
 		this.dashboardSelected = dashboardService.getDashboard(DashboardUtils.getRequestDashboardId(), this.dashboardType);
 		this.dashboardList = dashboardService.getDashboardAll(this.dashboardType);
+		this.defaultPresent = dashboardService.isDefaultPresent(this.dashboardType);
 	}
 
 	@NotifyChange("editMode")
@@ -86,6 +88,8 @@ public class DashboardViewModel extends BaseVM {
 		}
 
 		args.put("dashboardType", dashboardType);
+		// zalozeni default dashboardu
+		args.put("adminMode", adminMode);
 
 		openModal("/pages/dashboard-create.zul", args);
 	}
@@ -108,10 +112,12 @@ public class DashboardViewModel extends BaseVM {
 
 	@Command
 	public void deleteDashboardCmd() {
+		/*
 		if (dashboardSelected.isDefault()) {
 			Clients.alert("Výchozí dashbord nelze odstranit.");
 			return;
 		}
+		*/
 		DashboardUtils.deleteDashboard(dashboardSelected, dashboardService, this::redirectToDefault, this.dashboardType);
 	}
 
@@ -131,8 +137,26 @@ public class DashboardViewModel extends BaseVM {
 		return this.adminMode || !this.dashboardSelected.isDefault();
 	}
 
+	public boolean isDefaultPresent() {
+		return defaultPresent;
+	}
+
+	/**
+	 * Zjisteni zda-li dashboard na zaklade ID existuje, vraci false jen pokud neexisuje default dashboard.
+	 * @return
+	 */
+	public boolean isDashboardPresent() {
+		return this.dashboardSelected != null;
+	}
+
 	private void redirectToDefault() {
-		Executions.sendRedirect("index.zul?dashboardId=" + DashboardServiceSessionImpl.DEFAULT_DASHBOARD_ID);
+		if (adminMode) {
+			// odstraneni default dashboardu, pouze reload
+			Executions.sendRedirect("");
+		} else {
+			// odstraneni custom dashboardu, redirect na default
+			Executions.sendRedirect("index.zul?dashboardId=" + DashboardServiceSessionImpl.DEFAULT_DASHBOARD_ID);
+		}
 	}
 
 	/**

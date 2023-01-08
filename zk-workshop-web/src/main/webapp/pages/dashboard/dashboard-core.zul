@@ -97,12 +97,17 @@
                                 <button label="${c:l('web.btn.save')}"
                                         iconSclass="z-icon-check"
                                         onClick="@command('saveCmd')" />
+                                <button label="Odstranit"
+                                        if="${admin}"
+                                        visible="${vm.dashboardPresent}"
+                                        iconSclass="z-icon-trash"
+                                        onClick="@command('deleteDashboardCmd')" />
                             </hlayout>
-                            <button iconSclass="z-icon-ellipsis-v" popup="dashbordMenuPopup, position=after_end" />
-                            <menupopup id="dashbordMenuPopup">
+                            <button iconSclass="z-icon-ellipsis-v" if="${!admin}" popup="dashbordMenuPopup, position=after_end" />
+                            <menupopup id="dashbordMenuPopup" if="${!admin}">
                                 <menuitem label="Nový" onClick="@command('createDashboardCmd')" />
                                 <menuitem label="Kopírovat" onClick="@command('createDashboardCmd', copyMode=true)" />
-                                <menuitem label="Odstranit" onClick="@command('deleteDashboardCmd')" if="${!vm.dashboardSelected.isDefault()}" />
+                                <menuitem label="Odstranit" onClick="@command('deleteDashboardCmd')" />
                                 <menuseparator />
                                 <menu label="Všechny dashboardy">
                                     <menupopup children="@load(vm.dashboardList)">
@@ -125,12 +130,22 @@
                     <apply templateURI="/pages/component/stateBoard.zul"/>
                 </bs-row>
                 -->
-                <div apply="com.ness.zkworkshop.web.controller.PortalLayoutController" style="margin-left: 40px; margin-right: 40px;" >
+                <div apply="com.ness.zkworkshop.web.controller.PortalLayoutController"
+                     style="margin-left: 40px; margin-right: 40px;"
+                     if="${vm.dashboardPresent}">
                     <!-- Obsah je dynamicky vygenerovany v PortalLayoutController -->
                     <portallayout id="portalLayout">
                         <custom-attributes adminMode="${admin}" />
                         <custom-attributes dashboardType="${dashboardType}" />
                     </portallayout>
+                </div>
+
+                <div if="${!vm.dashboardPresent}">
+                    <!-- Default layout neexistuje, zalozeni. -->
+                    <vlayout>
+                        <label value="Dashboard není definován" />
+                        <button label="Založit" onClick="@command('createDashboardCmd')" />
+                    </vlayout>
                 </div>
 
                 <!--

@@ -28,6 +28,8 @@ public class DashboardCreateModalVM extends BaseVM {
     private DashboardConfig dashboardSrc;
     private boolean copyMode;
     private DashboardServiceSessionImpl.DashboardType dashboardType;
+    /** Zalozeni default dashboardu. */
+    private Boolean adminMode;
 
     @Init
     public void init() {
@@ -40,14 +42,22 @@ public class DashboardCreateModalVM extends BaseVM {
 
         Object dashboardTypeObj = Executions.getCurrent().getArg().get("dashboardType");
         dashboardType = dashboardTypeObj != null ? (DashboardServiceSessionImpl.DashboardType)dashboardTypeObj : DashboardServiceSessionImpl.DashboardType.INT;
+
+        Object adminModeObj = Executions.getCurrent().getArg().get("adminMode");
+        adminMode = adminModeObj != null ? (Boolean)adminModeObj : false;
     }
 
     @Command
     public void createCmd(@BindingParam("modal") Window modal) {
         Long newDashboardId = null;
         if (!copyMode) {
-            // vytvareni noveho dashboardu
-            newDashboardId = dashboardService.createDashboard(name, cols, new ArrayList<DashboardPanelConfig>(), dashboardType);
+            if (!adminMode) {
+                // vytvareni noveho custom dashboardu
+                newDashboardId = dashboardService.createDashboard(name, cols, new ArrayList<DashboardPanelConfig>(), dashboardType);
+            } else {
+                // zalozeni default dashboardu
+                newDashboardId = dashboardService.createDefaultDashboard(name, cols, new ArrayList<DashboardPanelConfig>(), dashboardType);
+            }
         } else {
             // rezim kopirovani dashboardu
             // panely defaultne odstranitelne
@@ -62,8 +72,13 @@ public class DashboardCreateModalVM extends BaseVM {
                 null,
                 2000);
 
-        // redirect to new dashboard
-        Executions.sendRedirect("/index.zul?dashboardId=" + newDashboardId);
+        if (!adminMode) {
+            // redirect to new dashboard
+            Executions.sendRedirect("/index.zul?dashboardId=" + newDashboardId);
+        } else {
+            // vytvoreni default dashboardum pouze reload
+            Executions.sendRedirect("");
+        }
     }
 
     public String getTitle() {

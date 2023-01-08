@@ -29,7 +29,7 @@ public class DashboardServiceSessionImpl implements DashboardService {
             List<DashboardPanelConfig> defDashPanelConfigList = new ArrayList<>();
             defDashPanelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0, "Kalendář", "margin-bottom:10px", false));
             defDashPanelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0, "Správy", "margin-bottom:10px", false) );
-            dashCfgMap.put(0L, new DashboardConfig(DEFAULT_DASHBOARD_ID, "Výchozí dashboard", 4, defDashPanelConfigList));
+            dashCfgMap.put(DEFAULT_DASHBOARD_ID, new DashboardConfig(DEFAULT_DASHBOARD_ID, "Výchozí dashboard", 4, defDashPanelConfigList));
 
             storeDashboardCfgMapToSession(dashCfgMap, DashboardType.INT);
         }
@@ -41,7 +41,7 @@ public class DashboardServiceSessionImpl implements DashboardService {
             List<DashboardPanelConfig> defDashPanelConfigList = new ArrayList<>();
             defDashPanelConfigList.add(new DashboardPanelConfig(0, 0, DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE, 0, "Kalendář", "margin-bottom:10px", false));
             defDashPanelConfigList.add(new DashboardPanelConfig(1, 0, DashboardPanelLibrary.WidgetType.DATA_GRID, 0, "Správy", "margin-bottom:10px", false) );
-            dashCfgMap.put(0L, new DashboardConfig(DEFAULT_DASHBOARD_ID, "Výchozí dashboard", 4, defDashPanelConfigList));
+            dashCfgMap.put(DEFAULT_DASHBOARD_ID, new DashboardConfig(DEFAULT_DASHBOARD_ID, "Výchozí dashboard", 4, defDashPanelConfigList));
 
             storeDashboardCfgMapToSession(dashCfgMap, DashboardType.ZBER);
         }
@@ -75,6 +75,13 @@ public class DashboardServiceSessionImpl implements DashboardService {
     }
 
     @Override
+    public boolean isDefaultPresent(DashboardType type) {
+        Map<Long, DashboardConfig> dashCfgMap = getDashboardCfgMapSession(type);
+        DashboardConfig ret = dashCfgMap.get(DEFAULT_DASHBOARD_ID);
+        return ret != null;
+    }
+
+    @Override
     public List<DashboardConfig> getDashboardAll(DashboardType type) {
         return new ArrayList<>(getDashboardCfgMapSession(type).values());
     }
@@ -93,6 +100,13 @@ public class DashboardServiceSessionImpl implements DashboardService {
         }
 
         return -1L;
+    }
+
+    public Long createDefaultDashboard(String name, int cols, List<DashboardPanelConfig> panelConfigList, DashboardServiceSessionImpl.DashboardType type) {
+        Map<Long, DashboardConfig> dashCfgMap = getDashboardCfgMapSession(type);
+        dashCfgMap.put(DEFAULT_DASHBOARD_ID, new DashboardConfig(DEFAULT_DASHBOARD_ID, name, cols, panelConfigList));
+        storeDashboardCfgMapToSession(dashCfgMap, type);
+        return DEFAULT_DASHBOARD_ID;
     }
 
     @Override
