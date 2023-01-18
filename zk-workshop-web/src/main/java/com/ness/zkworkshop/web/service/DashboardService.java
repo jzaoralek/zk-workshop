@@ -13,10 +13,10 @@ public interface DashboardService {
      * @return
      */
     DashboardConfig getDashboard(Long dashboardId, DashboardServiceSessionImpl.DashboardType type);
+    DashboardConfig getDefaultDashboard(DashboardServiceSessionImpl.DashboardType type);
     boolean isDefaultPresent(DashboardServiceSessionImpl.DashboardType type);
     List<DashboardConfig> getDashboardAll(DashboardServiceSessionImpl.DashboardType type);
-    Long createDashboard(String name, int cols, List<DashboardPanelConfig> panelConfigList, DashboardServiceSessionImpl.DashboardType type);
-    Long createDefaultDashboard(String name, int cols, List<DashboardPanelConfig> panelConfigList, DashboardServiceSessionImpl.DashboardType type);
+    Long createDashboard(String name, int cols, List<DashboardPanelConfig> panelConfigList, DashboardServiceSessionImpl.DashboardType type, boolean defaultDashboard);
     void updateDashboard(Long dashboardId, DashboardConfig dashCfg, DashboardServiceSessionImpl.DashboardType type);
     void deleteDashboard(Long dashboardId, DashboardServiceSessionImpl.DashboardType type);
 }

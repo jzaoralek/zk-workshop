@@ -140,12 +140,14 @@
                     </portallayout>
                 </div>
 
-                <div if="${!vm.dashboardPresent}">
+                <div if="${!vm.dashboardPresent}" hflex="1" vflex="1">
                     <!-- Default layout neexistuje, zalozeni. -->
-                    <vlayout>
-                        <label value="Dashboard není definován" />
+                    <vbox align="center" pack="center" hflex="1" vflex="1">
+                        <div sclass="alert alert-warning">
+                            <label value="Dashboard není definován" />
+                        </div>
                         <button label="Založit" onClick="@command('createDashboardCmd')" />
-                    </vlayout>
+                    </vbox>
                 </div>
 
                 <!--

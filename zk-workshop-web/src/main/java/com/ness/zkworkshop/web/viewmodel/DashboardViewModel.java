@@ -155,7 +155,9 @@ public class DashboardViewModel extends BaseVM {
 			Executions.sendRedirect("");
 		} else {
 			// odstraneni custom dashboardu, redirect na default
-			Executions.sendRedirect("index.zul?dashboardId=" + DashboardServiceSessionImpl.DEFAULT_DASHBOARD_ID);
+			DashboardConfig defaultDashboardCfg = dashboardService.getDefaultDashboard(dashboardType);
+			long defaultDashboardId = defaultDashboardCfg != null ? defaultDashboardCfg.getId() : DashboardServiceSessionImpl.DEFAULT_DASHBOARD_ID;
+			Executions.sendRedirect("index.zul?dashboardId=" + defaultDashboardId);
 		}
 	}
 

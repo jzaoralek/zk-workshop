@@ -53,17 +53,17 @@ public class DashboardCreateModalVM extends BaseVM {
         if (!copyMode) {
             if (!adminMode) {
                 // vytvareni noveho custom dashboardu
-                newDashboardId = dashboardService.createDashboard(name, cols, new ArrayList<DashboardPanelConfig>(), dashboardType);
+                newDashboardId = dashboardService.createDashboard(name, cols, new ArrayList<DashboardPanelConfig>(), dashboardType, false);
             } else {
                 // zalozeni default dashboardu
-                newDashboardId = dashboardService.createDefaultDashboard(name, cols, new ArrayList<DashboardPanelConfig>(), dashboardType);
+                newDashboardId = dashboardService.createDashboard(name, cols, new ArrayList<DashboardPanelConfig>(), dashboardType, true);
             }
         } else {
             // rezim kopirovani dashboardu
             // panely defaultne odstranitelne
             List<DashboardPanelConfig> copyPnlCfgList = dashboardSrc.copyPanelConfigList();
             copyPnlCfgList.forEach(i -> i.setRemovable(true));
-            newDashboardId = dashboardService.createDashboard(name, dashboardSrc.getCols(), copyPnlCfgList, dashboardType);
+            newDashboardId = dashboardService.createDashboard(name, dashboardSrc.getCols(), copyPnlCfgList, dashboardType, false);
         }
 
         Clients.showNotification(Labels.getLabel("web.msg.info.changesSaved"),

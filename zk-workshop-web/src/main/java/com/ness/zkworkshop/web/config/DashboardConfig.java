@@ -1,7 +1,5 @@
 package com.ness.zkworkshop.web.config;
 
-import com.ness.zkworkshop.web.service.DashboardServiceSessionImpl;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,13 +11,15 @@ public class DashboardConfig {
     private final Long id;
     private String name;
     private final int cols;
+    private final boolean defaultDashboard;
     private List<DashboardPanelConfig> panelConfigList;
 
-    public DashboardConfig(Long id, String name, int cols, List<DashboardPanelConfig> panelConfigList) {
+    public DashboardConfig(Long id, String name, int cols, List<DashboardPanelConfig> panelConfigList, boolean defaultDashboard) {
         this.id = id;
         this.name = name;
         this.cols = cols;
         this.panelConfigList = panelConfigList;
+        this.defaultDashboard = defaultDashboard;
     }
 
     public List<DashboardPanelConfig> copyPanelConfigList() {
@@ -47,7 +47,7 @@ public class DashboardConfig {
     }
 
     public boolean isDefault() {
-        return id == DashboardServiceSessionImpl.DEFAULT_DASHBOARD_ID;
+        return defaultDashboard;
     }
 
     public Long getId() {

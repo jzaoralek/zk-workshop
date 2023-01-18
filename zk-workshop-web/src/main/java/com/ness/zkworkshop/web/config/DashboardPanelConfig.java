@@ -14,7 +14,7 @@ public class DashboardPanelConfig {
     private String style;
     /** Typ panelu dashboardu. */
     private DashboardPanelLibrary.WidgetType widgetType;
-    /** Poradi panelu v ramci typu panelu dashboardu. */
+    /** Poradi panelu v ramci seznamu pro WidgetType v dashboardPanelMap v DashboardPanelLibrary. */
     private int widgetIndex;
     /** Odstranitelnost panelu dashboardu. */
     private boolean removable;
