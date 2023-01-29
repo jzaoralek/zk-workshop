@@ -1,0 +1,18 @@
+<?page title="${c:l('web.application.name')} | Home" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+
+<?link rel="stylesheet" href="/sources/css/zk-admin-bootstrap-theme.css"?>
+<!--
+<?link rel="stylesheet" href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css"?>
+-->
+<?link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"?>
+<?link rel="stylesheet" href="/sources/css/layout.css" ?>
+<?link rel="stylesheet" href="/sources/css/zk-bootstrap.css" ?>
+
+<zk>
+	<window self="@{define(mainContent)}" hflex="1" vflex="1">
+		<bs-row style="margin-left: 3px; margin-right: 5px;" visible="@load(!vm.editMode)">
+			<apply templateURI="/pages/component/stateBoard.zul"/>
+		</bs-row>
+	</window>
+</zk>

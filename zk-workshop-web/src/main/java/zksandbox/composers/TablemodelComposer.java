@@ -1,19 +1,11 @@
 package zksandbox.composers;
 
+import org.zkoss.zhtml.I;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.SelectorComposer;
-import org.zkoss.zul.Auxhead;
-import org.zkoss.zul.Button;
-import org.zkoss.zul.Checkbox;
-import org.zkoss.zul.Frozen;
-import org.zkoss.zul.Label;
-import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Listhead;
-import org.zkoss.zul.Listheader;
-import org.zkoss.zul.Spinner;
-import org.zkoss.zul.Vlayout;
+import org.zkoss.zul.*;
 
 import zksandbox.component.CustomAutopaging;
 import zksandbox.tablemodel.TableModel;
@@ -140,6 +132,54 @@ public class TablemodelComposer extends SelectorComposer<Listbox> {
 				frozen.setColumns(colIdx - 1);
 			} else {
 				frozen.setColumns(0);
+			}
+		}
+
+		checkAndIndicateFrozenCols();
+	}
+
+	private void checkAndIndicateFrozenCols() {
+		int frozenColumns = 0;
+		if (listbox.getFrozen() != null && listbox.getFrozen().getColumns() > 0) {
+			Frozen frozen = listbox.getFrozen();
+			frozenColumns = frozen.getColumns();
+		}
+
+		Listhead listhead = null;
+		Listheader listheader = null;
+		String frozenIndId = null;
+		Hlayout headerHLayout = null;
+		Component frozenColInd = null;
+
+		for (Component cmp : listbox.getChildren()) {
+			if (cmp instanceof Listhead) {
+				listhead = (Listhead)cmp;
+				for (Component listheadChild : listhead.getChildren()) {
+					if (listheadChild instanceof Listheader) {
+						listheader = (Listheader)listheadChild;
+						// sestaveni unikatniho ID pro frozen indicator
+						frozenIndId = listbox.getId() + listheader.getColumnIndex() + "frozenInd";
+						headerHLayout = (Hlayout)listheader.getFirstChild();
+						if ((listheader.getColumnIndex() + 1) <= frozenColumns) {
+							// listheader.setStyle("background: red");
+							// pridani indikatoru jen pokud jiz na sloupci neexistuje
+							frozenColInd = headerHLayout.getFellowIfAny(frozenIndId);
+							if (frozenColInd == null) {
+								I frozenInd = new I();
+								frozenInd.setSclass("z-icon-lock");
+								frozenInd.setId(frozenIndId);
+								headerHLayout.appendChild(frozenInd);
+							}
+						} else {
+							// listheader.setStyle("background: ");
+							// odebrani indikatoru ze sloupce
+							frozenColInd = headerHLayout.getFellowIfAny(frozenIndId);
+							if (frozenColInd != null) {
+								headerHLayout.removeChild(frozenColInd);
+							}
+						}
+					}
+				}
 			}
 		}
 	}
