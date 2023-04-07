@@ -135,7 +135,7 @@ public class TablemodelComposer extends SelectorComposer<Listbox> {
 			}
 		}
 
-		checkAndIndicateFrozenCols();
+		// checkAndIndicateFrozenCols();
 	}
 
 	private void checkAndIndicateFrozenCols() {

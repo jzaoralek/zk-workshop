@@ -27,6 +27,9 @@
         <label value="${c:l('web.search')}" sclass="banner" />
     </a>
     -->
+    <hbox viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.LastVisitedPageVM')">
+        <label value="@load(vm.pageLastVisited)" />
+    </hbox>
     <hbox hflex="1" vflex="1" pack="end" align="center"
           viewModel="@id('vm') @init('zksandbox.i18n.LocaleVM')" >
 

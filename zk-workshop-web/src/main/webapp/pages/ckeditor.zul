@@ -1,0 +1,25 @@
+<?page title="${c:l('web.application.name')} | CK Editor" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.ProfileViewModel')"
+		form="@id('fx') @load(vm.currentUser) @save(vm.currentUser, before='save')"
+		border="none" hflex="1" vflex="1">
+			<caption iconSclass="z-icon-user" sclass="fn-caption" label="CK Editor"/>
+			<panelchildren>
+				<vlayout>
+					<hlayout>
+						<ckeditor id="cked" hflex="1"
+								  height="300px"
+								  value="@bind(vm.htmlContent)"
+								  customConfigurationsPath="/sources/js/ckeditor.js" >
+						</ckeditor>
+					</hlayout>
+
+					<html content="@load(vm.htmlContent)" />
+				</vlayout>
+			</panelchildren>
+	</panel>
+	
+</zk>

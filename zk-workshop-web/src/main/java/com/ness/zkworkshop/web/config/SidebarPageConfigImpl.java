@@ -24,6 +24,7 @@ public class SidebarPageConfigImpl implements SidebarPageConfig{
 		pageMap.put("fn7",new SidebarPage("chart", "Chart" ,null,"/pages/chart.zul", "z-icon-signal"));
 		pageMap.put("fn8",new SidebarPage("spreadsheet", "Spreadsheet" ,null,"/pages/spreadsheet.zul", "z-icon-table"));
 		pageMap.put("fn9",new SidebarPage("subjectList", "Subjekty" ,null,"/pages/subjekt-list.zul", "z-icon-list"));
+		pageMap.put("fn10",new SidebarPage("calendar", "Kalendář" ,null,"/pages/calendar.zul", "z-icon-calendar"));
 	}
 	
 	public List<SidebarPage> getPages(){

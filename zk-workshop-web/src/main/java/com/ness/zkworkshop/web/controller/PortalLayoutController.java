@@ -12,6 +12,7 @@ import com.ness.zkworkshop.web.util.WebUtils;
 import org.javatuples.Pair;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -272,6 +273,8 @@ public class PortalLayoutController extends SelectorComposer<Component> {
                         DashboardPanelLibrary.WidgetType.MODULE).contains(panel.getType())) {
             panelchilds.appendChild(new Include(panel.getContentSrc()));
             panelToAdd.appendChild(panelchilds);
+
+            panelToAdd.getCaption().addEventListener(Events.ON_CLICK, event -> Executions.sendRedirect(panel.getPanelUri()));
         } else if (panel.getType() == DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE) {
             panelchilds.appendChild(new Calendar());
             panelToAdd.appendChild(panelchilds);

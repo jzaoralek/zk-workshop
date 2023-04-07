@@ -18,7 +18,7 @@
 	<properties>
 		<zk.version>9.6.1</zk.version>
 		<zkcharts.version>3.0.3-Eval</zkcharts.version>
-		<zkcalendar.version>3.0.0</zkcalendar.version>
+		<zkcalendar.version>3.1.1</zkcalendar.version>
 		<pivottable.version>2.5.2-Eval</pivottable.version>
 		<gmapsz.version>3.2.0</gmapsz.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -76,6 +76,12 @@
             <id>spring-milestones</id>
             <url>https://repo.spring.io/milestone</url>
         </repository>
+
+		<repository>
+			<id>ZK CE</id>
+			<name>ZK CE Repository</name>
+			<url>https://mavensync.zkoss.org/maven2</url>
+		</repository>
     </repositories>
     
 	<dependencies>
@@ -132,6 +138,11 @@
 		    <artifactId>keikai-ex</artifactId>
 		    <version>5.6.1-Eval</version>
 		</dependency>
+		<dependency>
+			<groupId>org.zkoss.calendar</groupId>
+			<artifactId>calendar</artifactId>
+			<version>${zkcalendar.version}</version>
+		</dependency>
 
 		<!-- Addons 
 		<dependency>
@@ -150,11 +161,6 @@
 			<groupId>org.zkoss.zkforge</groupId>
 			<artifactId>ckez</artifactId>
 			<version>4.14.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.calendar</groupId>
-			<artifactId>calendar</artifactId>
-			<version>${zkcalendar.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.pivot</groupId>
@@ -249,6 +255,13 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.15</version>
+		</dependency>
+
+		<!-- CKEditor -->
+		<dependency>
+			<groupId>org.zkoss.zkforge</groupId>
+			<artifactId>ckez</artifactId>
+			<version>4.11.1.0</version>
 		</dependency>
 
 		<!-- filters -->

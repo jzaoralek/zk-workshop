@@ -1,0 +1,20 @@
+<window id="modalDialog" title="@init(vm.title)" border="normal" width="460px"
+    position="center,center" closable="true"
+    viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.CalendarEventVM')" >
+    <vbox vflex="1" hflex="1">
+        <hbox vflex="1" hflex="1">
+            <!-- Barva typu eventu -->
+            <vlayout width="10px" style="${vm.style}" vflex="1" />
+            <vlayout hflex="1">
+                <textbox rows="6" value="${vm.content}" hflex="1" readonly="true"/>
+                <hlayout>
+                    <datebox value="${vm.begin}" format="dd.MM.yyyy HH:mm" hflex="1" readonly="true" buttonVisible="false"/>
+                    <label value=" - "/>
+                    <datebox value="${vm.end}" format="dd.MM.yyyy HH:mm" hflex="1" readonly="true" buttonVisible="false"/>
+                </hlayout>
+            </vlayout>
+        </hbox>
+        <button id="closeBtn" hflex="1" label="Zavřít"
+            onClick="modalDialog.detach()"/>
+    </vbox>
+</window>

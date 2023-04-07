@@ -6,6 +6,11 @@
 		<value>sk</value>
 	</library-property>
 
+	<library-property>
+		<name>org.zkoss.calendar.theme.preferred</name>
+		<value>breeze</value>
+	</library-property>
+
 	<!-- Labels -->
 	<system-config>
 		<label-location>/WEB-INF/labels/labels_en.properties</label-location>
@@ -16,6 +21,10 @@
 	<desktop-config>
 		<theme-uri>/sources/css/styles.css</theme-uri>
 	</desktop-config>
+
+	<listener>
+		<listener-class>com.ness.zkworkshop.web.interceptor.SdatDesktopInit</listener-class>
+	</listener>
 	
 <!-- 	<library-property> -->
 <!-- 	    <name>org.zkoss.theme.preferred</name> -->

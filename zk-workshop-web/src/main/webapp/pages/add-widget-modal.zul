@@ -1,4 +1,4 @@
-<window id="modalDialog" title="${c:l('web.addWidget')}" border="normal" width="375px"
+<window id="modalDialog" title="${c:l('web.addWidget')}" border="normal" width="575px"
     position="center,center" closable="true"
     viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.AddWidgetModalVM')" >
     <vlayout hflex="1">
@@ -20,6 +20,7 @@
                  multiple="false"
                  checkmark="true"
                  hflex="1"
+                 visible="false"
                  height="150px"
                  style="border: none;" >
             <listhead>
@@ -33,6 +34,13 @@
                 </listitem>
             </template>
         </listbox>
+
+        <hlayout>
+            <ckeditor id="cked" hflex="1"
+                      height="300px"
+                      customConfigurationsPath="/sources/js/ckeditor.js" >
+            </ckeditor>
+        </hlayout>
 
         <hbox pack="end" hflex="1">
             <button label="OK"

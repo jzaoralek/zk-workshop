@@ -25,6 +25,7 @@ public class ProfileViewModel implements Serializable{
 	
 	//data for the view
 	private User currentUser;
+	private String htmlContent;
 	
 	public User getCurrentUser(){
 		return currentUser;
@@ -48,7 +49,7 @@ public class ProfileViewModel implements Serializable{
 	@NotifyChange("currentUser") //@NotifyChange annotates data changed notification after calling this method 
 	public void save(){
 		currentUser = userInfoService.updateUser(currentUser);
-		Clients.showNotification(Labels.getLabel("web.msg.info.changesSaved"), 
+		Clients.showNotification(Labels.getLabel("web.msg.info.changesSaved", new Object[] {currentUser.getAccount()}),
 				Clients.NOTIFICATION_TYPE_INFO, 
 				null, 
 				null, 
@@ -60,5 +61,13 @@ public class ProfileViewModel implements Serializable{
 	public void reload(){
 		UserCredential cre = authService.getUserCredential();
 		currentUser = userInfoService.findUser(cre.getAccount());
+	}
+
+	public String getHtmlContent() {
+		return htmlContent;
+	}
+
+	public void setHtmlContent(String htmlContent) {
+		this.htmlContent = htmlContent;
 	}
 }

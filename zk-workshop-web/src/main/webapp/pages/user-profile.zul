@@ -44,7 +44,7 @@
 							</row>
 							<row>
 								<cell sclass="row-title">${c:l('web.country')} :</cell>
-								<cell>							
+								<cell>
 									<combobox id="countriesCombobox" 
 										model="@load(vm.countryList)"
 										selectedItem="@bind(vm.currentUser.country)"

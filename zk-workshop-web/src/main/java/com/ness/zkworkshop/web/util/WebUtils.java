@@ -34,4 +34,27 @@ public final class WebUtils {
         }
         return (HttpServletRequest) exec.getNativeRequest();
     }
+
+    /**
+     * Vraci uri na aktualni stranku vcetne parametru requestu.
+     * @return
+     */
+    public static String getRequestPathWithParams() {
+        StringBuilder sb = new StringBuilder(getRequestPath());
+        String params = getHttpServletRequest().getQueryString();
+        if (params != null && !"".equals(params)) {
+            sb.append("?");
+            sb.append(params);
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Vraci uri na aktualni stranku.
+     * @return
+     */
+    public static String getRequestPath() {
+        return Executions.getCurrent().getDesktop().getRequestPath();
+    }
 }
