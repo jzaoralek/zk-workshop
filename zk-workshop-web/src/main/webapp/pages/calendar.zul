@@ -5,38 +5,7 @@
     <panel self="@{define(mainContent)}" vflex="1">
         <caption sclass="fn-caption" iconSclass="z-icon-calendar">Calendar</caption>
         <panelchildren>
-            <div apply="com.ness.zkworkshop.web.controller.CalendarController" vflex="1">
-                <hlayout valign="middle">
-                    <button id="today" label="Today" />
-                    <button id="prev" iconSclass="z-icon-arrow-left"/>
-                    <button id="next" iconSclass="z-icon-arrow-right"/>
-                    <separator width="50px" />
-                    <button id="pageDay" label="Day" width="60px" />
-                    <button id="pageWeek" label="Week" width="60px"/>
-                    <button id="pageMonth" label="Month" width="60px"/>
-                    <separator width="50px"/>
-                    Filter :
-                    <textbox id="filter"/>
-                    <button id="applyFilter" label="Apply"/>
-                    <button id="resetFilter" label="Reset"/>
-                </hlayout>
-                <calendars id="calendars"
-                           days="7"
-                           vflex="1"
-                           hflex="1"
-                           readonly="false"
-                           firstDayOfWeek="Monday"
-                           mold="month"
-                           weekOfYear="true"/>
-            </div>
-
-            <hlayout vflex="1" if="false">
-                <calendars days="7"
-                           hflex="1"
-                           readonly="false"
-                           firstDayOfWeek="Monday"
-                           apply="com.ness.zkworkshop.web.controller.CalendarController" />
-            </hlayout>
+            <include src="/pages/calendar-core.zul" showControls="true" weekOfYear="true" />
         </panelchildren>
     </panel>
 </zk>

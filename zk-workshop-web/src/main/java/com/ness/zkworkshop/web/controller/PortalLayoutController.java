@@ -270,10 +270,10 @@ public class PortalLayoutController extends SelectorComposer<Component> {
         if (EnumSet.of(DashboardPanelLibrary.WidgetType.DATA_GRID,
                         DashboardPanelLibrary.WidgetType.CHART,
                         DashboardPanelLibrary.WidgetType.MESSAGES,
-                        DashboardPanelLibrary.WidgetType.MODULE).contains(panel.getType())) {
+                        DashboardPanelLibrary.WidgetType.MODULE,
+                        DashboardPanelLibrary.WidgetType.CALENDAR).contains(panel.getType())) {
             panelchilds.appendChild(new Include(panel.getContentSrc()));
             panelToAdd.appendChild(panelchilds);
-
             panelToAdd.getCaption().addEventListener(Events.ON_CLICK, event -> Executions.sendRedirect(panel.getPanelUri()));
         } else if (panel.getType() == DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE) {
             panelchilds.appendChild(new Calendar());

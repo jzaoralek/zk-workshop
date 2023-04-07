@@ -18,14 +18,8 @@ public final class DashboardPanelLibrary {
         MENU_ITEM,
         MODULE,
         CHART,
-        MESSAGES
-        /*
-        NOTIFICATIONS,
-        CALENDAR_EVENTS,
-        SPREADSHEET,
-        DETAIL,
-        DOCUMENT;
-         */
+        MESSAGES,
+        CALENDAR;
     }
 
     private Map<WidgetType, List<DashboardPanel>> dashboardPanelMap;
@@ -54,6 +48,8 @@ public final class DashboardPanelLibrary {
         dashboardPanelMap.put(WidgetType.MESSAGES, Arrays.asList(new DashboardPanel(1, "Správy", "/pages/messages-core.zul", "", "", WidgetType.MESSAGES)));
         // MODULE
         dashboardPanelMap.put(WidgetType.MODULE, Arrays.asList(new DashboardPanel(1, "Výkazy", "/pages/module-vykazy.zul", "", "/sources/imgs/doc.png", WidgetType.MODULE)));
+        // CALENDAR
+        dashboardPanelMap.put(WidgetType.CALENDAR, Arrays.asList(new DashboardPanel(1, "Kalendář událostí", "/pages/calendar-widget.zul", pageConfig.getPage("fn10").getUri(), "/sources/imgs/doc.png", WidgetType.CALENDAR)));
     }
 
     public int getDashWidgetIdx(DashboardPanel panel) {

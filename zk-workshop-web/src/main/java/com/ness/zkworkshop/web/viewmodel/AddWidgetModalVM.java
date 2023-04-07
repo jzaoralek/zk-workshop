@@ -46,6 +46,7 @@ public class AddWidgetModalVM extends BaseVM {
     @DependsOn("widgetTypeSelected")
     public boolean isTypeSupported() {
         return EnumSet.of(DashboardPanelLibrary.WidgetType.CALENDAR_SIMPLE,
+                    DashboardPanelLibrary.WidgetType.CALENDAR,
                     DashboardPanelLibrary.WidgetType.DATA_GRID,
                     DashboardPanelLibrary.WidgetType.MENU_ITEM,
                     DashboardPanelLibrary.WidgetType.CHART,
