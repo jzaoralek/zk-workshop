@@ -5,7 +5,10 @@
     <panel self="@{define(mainContent)}" vflex="1">
         <caption sclass="fn-caption" iconSclass="z-icon-calendar">Calendar</caption>
         <panelchildren>
-            <include src="/pages/calendar-core.zul" showControls="true" weekOfYear="true" />
+            <include src="/pages/calendar-core.zul"
+                     showControls="true"
+                     weekOfYear="true"
+                     showFilter="true"/>
         </panelchildren>
     </panel>
 </zk>

@@ -8,12 +8,13 @@ import org.zkoss.calendar.event.CalendarsEvent;
 import org.zkoss.calendar.impl.*;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Label;
-import org.zkoss.zul.Textbox;
-import org.zkoss.zul.Window;
+import org.zkoss.zul.*;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -26,14 +27,13 @@ import java.util.TimeZone;
 
 public class CalendarController extends SelectorComposer {
 
-    @Wire("calendars")
+    @Wire
     private Calendars calendars;
     @Wire
     private Textbox filter;
     private DemoCalendarModel model;
-    //the in editing calendar ui event
-    private CalendarsEvent calendarsEvent = null;
-
+    @Wire
+    private Combobox calendarModeCombo;
     // @Wire("tooltipText")
     // private Label tooltipText;
 
@@ -46,8 +46,9 @@ public class CalendarController extends SelectorComposer {
 
     private void initModel() {
         CalendarItemGenerator.zoneId = calendars.getDefaultTimeZone().toZoneId();
-        // model = new SimpleCalendarModel(CalendarItemGenerator.generateList());
         model = new DemoCalendarModel(CalendarItemGenerator.generateList());
+        // iniciace rezimu na default mesic
+        calendarModeCombo.setSelectedIndex(2);
 
         DefaultCalendarItem calendarItem = new DefaultCalendarItem.Builder()
                 .withTitle("Custom událost")
@@ -69,56 +70,93 @@ public class CalendarController extends SelectorComposer {
         model.add(calendarItemSimple);
     }
 
-    //control the calendar position
-    @Listen("onClick = #today")
+    /**
+     * Prechod na aktualni datum.
+     */
+    @Listen(Events.ON_CLICK + " = #today")
     public void gotoToday(){
         TimeZone timeZone = calendars.getDefaultTimeZone();
         calendars.setCurrentDate(Calendar.getInstance(timeZone).getTime());
     }
-    @Listen("onClick = #next")
+
+    /**
+     * Prechod na dalsi den/tyden/mesic.
+     * Podle vybraneho rezimu.
+     */
+    @Listen(Events.ON_CLICK + " = #next")
     public void gotoNext(){
         calendars.nextPage();
     }
-    @Listen("onClick = #prev")
+
+    /**
+     * Prechod na predchozi den/tyden/mesic.
+     * Podle vybraneho rezimu.
+     */
+    @Listen(Events.ON_CLICK + " = #prev")
     public void gotoPrev(){
         calendars.previousPage();
     }
 
-    //control page display
-    @Listen("onClick = #pageDay")
-    public void changeToDay(){
-        calendars.setMold("default");
-        calendars.setDays(1);
-    }
-    @Listen("onClick = #pageWeek")
-    public void changeToWeek(){
-        calendars.setMold("default");
-        calendars.setDays(7);
-    }
-    @Listen("onClick = #pageMonth")
-    public void changeToYear(){
-        calendars.setMold("month");
+    /**
+     * Prepinani rezimu den/tyden/mesic.
+     */
+    @Listen(Events.ON_SELECT + " = #calendarModeCombo")
+    public void changeMode(){
+        String selectedValue = calendarModeCombo.getSelectedItem().getValue();
+        if ("day".equals(selectedValue)) {
+            calendars.setMold("default");
+            calendars.setDays(1);
+        } else if ("week".equals(selectedValue)) {
+            calendars.setMold("default");
+            calendars.setDays(7);
+        } else {
+            calendars.setMold("month");
+        }
     }
 
-    //control the filter
-    @Listen("onClick = #applyFilter")
+    /*
+    public void onChangeMode(SelectEvent event) {
+        Comboitem selectedItem = calendarModeCombo.getSelectedItem();
+        String selectedValue = selectedItem.getValue();
+        if ("day".equals(selectedValue)) {
+            calendars.setMold("default");
+            calendars.setDays(1);
+        } else if ("week".equals(selectedValue)) {
+            calendars.setMold("default");
+            calendars.setDays(7);
+        } else {
+            calendars.setMold("month");
+        }
+    }
+     */
+
+    /**
+     * Filtrovani.
+     */
+    @Listen(Events.ON_CLICK + " = #applyFilter")
     public void applyFilter(){
         model.setFilterText(filter.getValue());
         calendars.setModel(model);
     }
-    @Listen("onClick = #resetFilter")
+
+    /**
+     * Zruseni filtru.
+     */
+    @Listen(Events.ON_CLICK + " = #resetFilter")
     public void resetFilter(){
         filter.setText("");
         model.setFilterText("");
         calendars.setModel(model);
     }
 
-    //listen to the calendar-edit of a event data
+    /**
+     * Detail eventu.
+     * @param event
+     */
     @Listen(CalendarsEvent.ON_ITEM_EDIT + "  = #calendars")
     public void createEvent(CalendarsEvent event) {
-        calendarsEvent = event;
         //to display a shadow when editing
-        calendarsEvent.stopClearGhost();
+        event.stopClearGhost();
 
         Map<String, Object> args = new HashMap<>();
         args.put("calendarItem", event.getCalendarItem());

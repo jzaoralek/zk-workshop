@@ -1,20 +1,26 @@
 <zk>
     <custom-attributes showControls="${arg.showControls}" />
+    <custom-attributes showFilter="${arg.showFilter}" />
     <custom-attributes weekOfYear="${arg.weekOfYear}" />
     <vbox apply="com.ness.zkworkshop.web.controller.CalendarController" vflex="1" hflex="1" >
-        <hlayout valign="middle" if="${showControls}">
-            <button id="today" label="Today" />
-            <button id="prev" iconSclass="z-icon-arrow-left"/>
-            <button id="next" iconSclass="z-icon-arrow-right"/>
-            <separator width="50px" />
-            <button id="pageDay" label="Day" width="60px" />
-            <button id="pageWeek" label="Week" width="60px"/>
-            <button id="pageMonth" label="Month" width="60px"/>
-            <separator width="50px"/>
-            Filter :
-            <textbox id="filter"/>
-            <button id="applyFilter" label="Apply"/>
-            <button id="resetFilter" label="Reset"/>
+        <hlayout valign="middle" if="${showControls}" hflex="1">
+            <hbox pack="start" hflex="1">
+                <button id="today" label="Dnes" />
+            </hbox>
+            <hbox pack="${arg.showFilter ? 'center' : 'end'}" hflex="2">
+                <button id="prev" iconSclass="z-icon-arrow-left" tooltiptext="Předchozí"/>
+                <combobox id="calendarModeCombo" width="75px" readonly="true" >
+                    <comboitem label="Den" value="day" />
+                    <comboitem label="Týden" value="week" />
+                    <comboitem label="Měsíc" value="month" />
+                </combobox>
+                <button id="next" iconSclass="z-icon-arrow-right" tooltiptext="Další"/>
+            </hbox>
+            <hbox pack="end" hflex="1" if="${showFilter}">
+                <textbox id="filter" />
+                <button id="applyFilter" iconSclass="z-icon-check" tooltiptext="Použít"/>
+                <button id="resetFilter" iconSclass="z-icon-times" tooltiptext="Reset"/>
+            </hbox>
         </hlayout>
         <calendars id="calendars"
                    days="7"
