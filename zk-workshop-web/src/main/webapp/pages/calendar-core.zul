@@ -29,6 +29,10 @@
                    readonly="false"
                    firstDayOfWeek="Monday"
                    mold="month"
-                   weekOfYear="${weekOfYear}"/>
+                   weekOfYear="${weekOfYear}"
+                   tooltip="tooltipPopup, position=after_pointer"/>
+        <popup id="tooltipPopup">
+            <label id="tooltipText" multiline="true"/>
+        </popup>
     </vbox>
 </zk>

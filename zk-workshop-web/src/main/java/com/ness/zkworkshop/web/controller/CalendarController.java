@@ -34,8 +34,8 @@ public class CalendarController extends SelectorComposer {
     private DemoCalendarModel model;
     @Wire
     private Combobox calendarModeCombo;
-    // @Wire("tooltipText")
-    // private Label tooltipText;
+    @Wire
+    private Label tooltipText;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -164,10 +164,8 @@ public class CalendarController extends SelectorComposer {
         window.doModal();
     }
 
-    /*
     @Listen(CalendarsEvent.ON_ITEM_TOOLTIP +"= calendars")
     public void showTooltip(CalendarsEvent event) {
-        tooltipText.setValue(event.getCalendarItem().getTitle() + "-" + event.getCalendarItem().getContent());
+        tooltipText.setValue(event.getCalendarItem().getTitle() + "\n" + event.getCalendarItem().getContent());
     }
-    */
 }
