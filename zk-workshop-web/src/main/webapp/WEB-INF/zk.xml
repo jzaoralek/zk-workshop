@@ -31,7 +31,6 @@
 <!-- 	    <value>breeze</value> -->
 <!-- 	</library-property> -->
 	<language-config>
-		<addon-uri>/WEB-INF/zk-components.xml</addon-uri>
 		<addon-uri>/WEB-INF/lang-addon.xml</addon-uri>
 	</language-config>
 

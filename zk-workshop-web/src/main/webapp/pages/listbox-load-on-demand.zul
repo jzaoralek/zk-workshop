@@ -10,7 +10,7 @@
 
                 <listbox id="list" model="@bind(vm.hugeList)" width="200px" height="540px">
                     <listhead>
-                        <listheader label="Load On Demand" sort="auto" />
+                        <listheader label="Load On Demand" />
                     </listhead>
                 </listbox>
 

@@ -1,0 +1,19 @@
+<language-addon>
+    <addon-name>core-components</addon-name>
+    <language-name>xul/html</language-name>
+
+    <component>
+        <component-name>data-table</component-name>
+        <macro-uri>/pages/component/data-table.zul</macro-uri>
+        <inline>true</inline>
+    </component>
+
+    <component>
+        <component-name>button</component-name>
+        <extends>button</extends>
+        <property>
+            <property-name>autodisable</property-name>
+            <property-value>self</property-value>
+        </property>
+    </component>
+</language-addon>
