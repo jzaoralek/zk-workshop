@@ -1,0 +1,36 @@
+<?page title="${c:l('web.application.name')} | Calendar config" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk>
+    <window self="@{define(mainContent)}"
+            hflex="1" vflex="1" border="none"
+            viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.CalendarConfigVM')">
+
+        <listbox model="@bind(vm.calCfgList)" vflex="1" >
+            <auxhead>
+                <auxheader label="Barvy položek kalendáře" align="left" />
+                <auxheader colspan="2" align="right">
+                    <button label="Uložit" onClick="@command('submitCmd')" style="margin-right: 10px;" />
+                </auxheader>
+            </auxhead>
+            <listhead>
+                <listheader/>
+                <listheader/>
+                <listheader hflex="min"/>
+            </listhead>
+            <template name="model">
+                <listitem>
+                    <listcell>
+                        <label value="@bind(each.name)"/>
+                    </listcell>
+                    <listcell>
+                        <label value="@bind(each.value)"/>
+                    </listcell>
+                    <listcell>
+                        <colorbox width="60px" height="35px" value="@bind(each.value)" />
+                    </listcell>
+                </listitem>
+            </template>
+        </listbox>
+    </window>
+</zk>

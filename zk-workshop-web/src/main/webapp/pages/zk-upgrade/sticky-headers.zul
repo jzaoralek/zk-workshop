@@ -1,0 +1,13 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Sticky headers</caption>
+		<panelchildren>
+			<a onClick='execution.sendRedirect("https://www.zkoss.org/wiki/Small_Talks/2021/August/New_Features_of_ZK_9.6.0#Grid.2FListbox.2FTree_Supports_Sticky_Headers", "_blank")' label="Sticky headers" />
+		</panelchildren>
+	</panel>
+</zk>
+

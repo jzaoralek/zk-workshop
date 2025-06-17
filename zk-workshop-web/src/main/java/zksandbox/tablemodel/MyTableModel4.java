@@ -30,12 +30,25 @@ public class MyTableModel4 extends TableModel<MyCustomDto> {
 		columns.add(Column.fixColumn("Column 5", "300px"));
 		columns.add(Column.fixColumn("Column 6", "300px"));
 		columns.add(Column.fixColumn("Column 7", "300px"));
+		columns.add(Column.fixColumn("Column 8", "300px"));
+		columns.add(Column.fixColumn("Column 9", "300px"));
+		columns.add(Column.fixColumn("Column 10", "300px"));
+		columns.add(Column.fixColumn("Column 11", "300px"));
+		columns.add(Column.fixColumn("Column 12", "300px"));
+		columns.add(Column.fixColumn("Column 13", "300px"));
+		columns.add(Column.fixColumn("Column 14", "300px"));
+		columns.add(Column.fixColumn("Column 15", "300px"));
+		columns.add(Column.fixColumn("Column 16", "300px"));
+		columns.add(Column.fixColumn("Column 17", "300px"));
+		columns.add(Column.fixColumn("Column 18", "300px"));
+		columns.add(Column.fixColumn("Column 19", "300px"));
+
 		return columns;
 	}
 
 	@Override
 	protected List<MyCustomDto> buildRows() {
-		int records = 100;
+		int records = 10;
 
 		List<MyCustomDto> rows = new ArrayList<>(records);
 		for (int i = 0; i < records; i++) {
@@ -73,9 +86,8 @@ public class MyTableModel4 extends TableModel<MyCustomDto> {
 				return createComplicatedListcell(rowData.getCol6());
 			case 6:
 				return createComplicatedListcell(rowData.getCol7());
-
 			default:
-				return null;
+				return createComplicatedListcell(rowData.getCol7());
 		}
 	}
 

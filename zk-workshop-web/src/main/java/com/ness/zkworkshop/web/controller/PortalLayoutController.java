@@ -271,6 +271,7 @@ public class PortalLayoutController extends SelectorComposer<Component> {
                         DashboardPanelLibrary.WidgetType.CHART,
                         DashboardPanelLibrary.WidgetType.MESSAGES,
                         DashboardPanelLibrary.WidgetType.MODULE,
+                        DashboardPanelLibrary.WidgetType.MENU_ITEM,
                         DashboardPanelLibrary.WidgetType.CALENDAR).contains(panel.getType())) {
             panelchilds.appendChild(new Include(panel.getContentSrc()));
             panelToAdd.appendChild(panelchilds);

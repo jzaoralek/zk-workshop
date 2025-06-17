@@ -1,0 +1,19 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Toast</caption>
+		<panelchildren>
+			<!-- Toast -->
+			<hlayout style="margin-top: 20px; margin-bottom: 10px; margin-left: 10px;">
+				<label value="Toast - EE" />
+			</hlayout>
+			<button onClick="@command('showToastWarnCmd')" label="Toast - upozornění" />
+			<button onClick="@command('showToastInfoCmd')" label="Toast - info" />
+			<button onClick="@command('showToastErrorCmd')" label="Toast - chyba" />
+		</panelchildren>
+	</panel>
+</zk>
+

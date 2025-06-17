@@ -1,8 +1,64 @@
 <?page title="${c:l('web.application.name')} | Modál" contentType="text/html;charset=UTF-8" ?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
-
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk>
-	<panel self="@{define(mainContent)}"
+	<window self="@{define(mainContent)}"
+			border="none"
+			id="cuboid_window"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ModalDemoVM')"
+			height="100%">
+
+		<style>
+			@-moz-document url-prefix() {
+			textarea {
+			height: 3em;
+			}
+			}
+		</style>
+
+		<div class="z-hlayout" style="height:100%; width:100%;">
+
+
+			<borderlayout>
+				<west size="40%" splittable="true" collapsible="true" >
+					<vlayout hflex="1" vflex="1">
+						<button onClick="@command('detailMessagesCmd')" label="Messages" />
+						<button onClick="@command('detailSubjectListCmd')" label="Subject list" />
+					</vlayout>
+				</west>
+
+				<center hflex="3" vflex="1" autoscroll="true">
+					<vbox hflex="1" vflex="1" spacing="0" style="background: red;">
+						<!-- CuboidFilter -->
+						<include src="/pages/messages-core.zul" visible="@load(vm.messagesVisible)"/>
+
+						<include src="/pages/subjekt-list-core.zul" visible="@load(!vm.messagesVisible)"/>
+					</vbox>
+				</center>
+			</borderlayout>
+		</div>
+	</window>
+
+
+
+
+
+
+
+	<style>
+		/*
+		.z-listbox-frozen .z-frozen {
+			height: 0px !important;
+		}
+
+		.z-listbox-frozen .z-frozen-body {
+			overflow: auto !important;
+		}
+		*/
+	</style>
+
+	<panel self="@{define(mainContent)}" if="false"
 		viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ModalDemoVM')">
 			<caption sclass="fn-caption" iconSclass="z-icon-window-maximize">Modál</caption>
 			<panelchildren>
@@ -10,7 +66,54 @@
 					<label value="Hodnota předaná do modálu:"/>
 					<textbox value="@bind(vm.modalArg)" />
 				</vlayout>
-				<button label="Otevřít modál" onClick="@command('openModalCmd')" />				
+				<button label="Otevřít modál" onClick="@command('openModalCmd')" />
+
+				<listbox id="listbox" height="300px" sizedByContent="true"
+						 emptyMessage="No items match your search"
+						 tooltiptext="Double Click to View Detail" >
+					<frozen columns="3"/>
+					<listhead sizable="true">
+						<listheader label="Id" visible="false"  />
+						<listheader label="Item Id" visible="false"  />
+						<listheader label="Item Code" width="70px" visible="true"   />
+						<listheader label="Item Description" width="300px" visible="true"  />
+						<listheader label="Created Date" width="150px" visible="true" />
+						<listheader label="Created By" width="150px" visible="true" />
+						<listheader label="Terminated Date" width="150px" visible="true" />
+						<listheader label="Terminated By" width="150px" visible="true" />
+						<listheader label="UOM" visible="true"  />
+						<listheader label="Composition" visible="true"  />
+						<listheader label="Default" visible="true" />
+					</listhead>
+					<listitem>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+					</listitem>
+					<listitem>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+					</listitem>
+				</listbox>
+
+
 			</panelchildren>
 	</panel>
 </zk>

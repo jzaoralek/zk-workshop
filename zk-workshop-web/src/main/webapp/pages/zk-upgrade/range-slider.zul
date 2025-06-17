@@ -1,0 +1,17 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Range slider</caption>
+		<panelchildren>
+
+			<rangeslider startValue="10" endValue="90"/>
+			<separator />
+			<rangeslider orient="vertical" startValue="20" endValue="80" markScale="20" />
+
+		</panelchildren>
+	</panel>
+</zk>
+

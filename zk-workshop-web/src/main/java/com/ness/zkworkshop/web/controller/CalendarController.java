@@ -17,11 +17,14 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -36,6 +39,8 @@ public class CalendarController extends SelectorComposer {
     private Combobox calendarModeCombo;
     @Wire
     private Label tooltipText;
+    @Wire
+    private Label currentMonth;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -60,14 +65,37 @@ public class CalendarController extends SelectorComposer {
         model.add(calendarItem);
 
         SimpleCalendarItem calendarItemSimple = new SimpleCalendarItem();
-        calendarItemSimple.setTitle("Simple calendar item title");
-        calendarItemSimple.setContent("Simple calendar item content");
+        calendarItemSimple.setTitle("Simple item content");
+        calendarItemSimple.setContent("Simple item title");
         calendarItemSimple.setBegin(Date.from(LocalDateTime.now().plusHours(1).truncatedTo(ChronoUnit.HOURS).atZone(ZoneId.systemDefault()).toInstant()));
         calendarItemSimple.setEndDate(Date.from(LocalDateTime.now().plusHours(2).truncatedTo(ChronoUnit.HOURS).atZone(ZoneId.systemDefault()).toInstant()));
         calendarItemSimple.setStyle("background-colo0093f9r: #"); //affects the whole item
         calendarItemSimple.setHeaderStyle("background-color: red; color: white;"); //affects the header node, may override setStyle for this node
         calendarItemSimple.setContentStyle("background-color: #00f7d6; color: blue;"); //affects the content node, may override setStyle for this node
         model.add(calendarItemSimple);
+        
+        updateCurrentMonth();
+    }
+    
+    private void updateCurrentMonth() {
+    	LocalDate localdate = calendars.getCurrentDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    	String month = localdate.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, new Locale("cs", "CZ"));
+    	
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.FULL, new Locale("cs", "CZ")));
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, new Locale("cs", "CZ")));
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.NARROW, new Locale("cs", "CZ")));
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.NARROW_STANDALONE, new Locale("cs", "CZ")));
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.SHORT, new Locale("cs", "CZ")));
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.SHORT_STANDALONE, new Locale("cs", "CZ")));
+    	
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.FULL, new Locale("en", "US")));
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, new Locale("en", "US")));
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.NARROW, new Locale("en", "US")));
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.NARROW_STANDALONE, new Locale("en", "US")));
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.SHORT, new Locale("en", "US")));
+    	System.out.println(localdate.getMonth().getDisplayName(TextStyle.SHORT_STANDALONE, new Locale("en", "US")));
+    	
+    	currentMonth.setValue(month + " " + localdate.getYear());
     }
 
     /**
@@ -77,6 +105,7 @@ public class CalendarController extends SelectorComposer {
     public void gotoToday(){
         TimeZone timeZone = calendars.getDefaultTimeZone();
         calendars.setCurrentDate(Calendar.getInstance(timeZone).getTime());
+        updateCurrentMonth();
     }
 
     /**
@@ -86,6 +115,7 @@ public class CalendarController extends SelectorComposer {
     @Listen(Events.ON_CLICK + " = #next")
     public void gotoNext(){
         calendars.nextPage();
+        updateCurrentMonth();
     }
 
     /**
@@ -95,6 +125,7 @@ public class CalendarController extends SelectorComposer {
     @Listen(Events.ON_CLICK + " = #prev")
     public void gotoPrev(){
         calendars.previousPage();
+        updateCurrentMonth();
     }
 
     /**
@@ -166,6 +197,6 @@ public class CalendarController extends SelectorComposer {
 
     @Listen(CalendarsEvent.ON_ITEM_TOOLTIP +"= calendars")
     public void showTooltip(CalendarsEvent event) {
-        tooltipText.setValue(event.getCalendarItem().getTitle() + "\n" + event.getCalendarItem().getContent());
+        tooltipText.setValue(event.getCalendarItem().getContent() + "\n" + event.getCalendarItem().getTitle());
     }
 }

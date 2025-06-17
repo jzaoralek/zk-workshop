@@ -1,4 +1,11 @@
 <zk>
+	<script>
+		zk.afterLoad('calendar', function() {
+		    msgcal = {};
+		    msgcal.dayMORE = "+{0}";
+		    msgcal.monthMORE = "+{0}";
+		});//zk.afterLoad
+	</script>
     <custom-attributes showControls="${arg.showControls}" />
     <custom-attributes showFilter="${arg.showFilter}" />
     <custom-attributes weekOfYear="${arg.weekOfYear}" />
@@ -6,10 +13,11 @@
         <hlayout valign="middle" if="${showControls}" hflex="1">
             <hbox pack="start" hflex="1">
                 <button id="today" label="Dnes" />
+                <label id="currentMonth" />
             </hbox>
             <hbox pack="${arg.showFilter ? 'center' : 'end'}" hflex="2">
                 <button id="prev" iconSclass="z-icon-arrow-left" tooltiptext="Předchozí"/>
-                <combobox id="calendarModeCombo" width="75px" readonly="true" >
+                <combobox id="calendarModeCombo" readonly="true" >
                     <comboitem label="Den" value="day" />
                     <comboitem label="Týden" value="week" />
                     <comboitem label="Měsíc" value="month" />
@@ -24,7 +32,7 @@
         </hlayout>
         <calendars id="calendars"
                    days="7"
-                   height="500px;"
+                   vflex="1"
                    hflex="1"
                    readonly="false"
                    firstDayOfWeek="Monday"

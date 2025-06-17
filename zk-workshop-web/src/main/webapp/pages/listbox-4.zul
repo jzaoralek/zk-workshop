@@ -1,4 +1,4 @@
-<zk>
+ <zk>
 	<window hflex="1" vflex="1" border="none"
 		viewModel="@id('vm') @init('zksandbox.vm.MyDatatable4VM')">
 		<!--
@@ -29,7 +29,7 @@
 	            <listheader label="Comment"  />
 	            <listheader label="Confirm" width="80px"/>
 	        </listhead>
-	        
+
 	    </listbox>
 	</window>
 </zk>

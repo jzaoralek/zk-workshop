@@ -1,0 +1,19 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Coachmark</caption>
+		<panelchildren>
+			<hbox align="center" pack="center" hflex="1" vflex="1">
+				<button id="infoButton" label="Information" />
+				<coachmark target="infoButton" onTargetClick="self.close()">
+					<label>Wellcome! click here for more information!</label>
+					<button style="display: block;margin: 10px auto 0" label="got it!" onClick="self.parent.close()"/>
+				</coachmark>
+			</hbox>
+		</panelchildren>
+	</panel>
+</zk>
+

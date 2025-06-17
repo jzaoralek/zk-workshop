@@ -1,0 +1,33 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Stepbar</caption>
+		<panelchildren>
+			<div apply="com.ness.zkworkshop.web.controller.StepbarComposer">
+				<stepbar id="stepbar">
+					<template name="model">
+						<step title="${each.title}"/>
+					</template>
+				</stepbar>
+				<separator height="30px"/>
+				<div id="stepContent" align="center"/>
+				<separator height="30px"/>
+				<hlayout>
+					<button id="back" label="Back"/>
+					<separator hflex="1"/>
+					<button id="next" label="Next"/>
+				</hlayout>
+				<div>
+					<separator bar="true" height="30px"/>
+					<button id="toggleAdditionalStep" label="Toggle Additional Step 2.1"/>
+					<button id="toggleStepComplete" visible="false" label="Toggle Complete"/>
+					<button id="toggleStepError" label="Toggle Error"/>
+				</div>
+			</div>
+		</panelchildren>
+	</panel>
+</zk>
+

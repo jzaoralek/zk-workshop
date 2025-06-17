@@ -1,0 +1,14 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}">
+	<caption sclass="fn-caption" iconSclass="z-icon-folder">Listbox - huge data</caption>
+	<panelchildren>
+			<vbox hflex="1" vflex="1"
+					 viewModel="@id('vm') @init('zksandbox.vm.MyDatatable5VM')">
+				<data-table tableModel="${vm.tableModel}" noPaging="${true}" hflex="1" vflex="1"/>
+			</vbox>
+	</panelchildren>
+	</panel>
+</zk>

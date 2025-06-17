@@ -1,0 +1,60 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<style>
+		.mail {
+			background-color: #f2f2f2;
+			border: 1px solid #d7d7d7;
+			padding: 15px;
+		}
+
+		.maillogo {
+			padding: 15px 0;
+		}
+
+		.maillabel {
+			width: 50px;
+			color: #959595;
+			display: block;
+			font-weight: bold;
+		}
+
+		.mailinput {
+			border: 1px solid #d7d7d7;
+			padding: 3px;
+		}
+
+		.mailformrow {
+			padding-bottom: 8px;
+		}
+	</style>
+	<panel self="@{define(mainContent)}">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Chosenbox</caption>
+		<panelchildren>
+			<vlayout hflex="1" apply="org.zkoss.bind.BindComposer"
+					 viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.ChosenboxVM')">
+				<vlayout sclass="mail" hflex="1">
+					<hbox sclass="mailformrow" hflex="1" align="center">
+						<label sclass="maillabel" value="Label">To</label>
+						<chosenbox sclass="mailinput" hflex="1"
+								   model="@load(vm.contactsModel)"
+								   emptyMessage="type or select contacts (existing or new ones)"
+								   creatable="true" createMessage="Create new contact: {0}"
+								   onSearch="@command('newContact', contact=event.value)" />
+					</hbox>
+					<hbox sclass="mailformrow" hflex="1" align="center">
+						<label sclass="maillabel" value="Label"></label>
+						<chosenbox sclass="mailinput" hflex="1"
+								   model="@load(vm.labelsModel)"
+								   emptyMessage="choose one or more labels" />
+					</hbox>
+					<textbox sclass="mailinput" multiline="true" hflex="1"
+							 height="100px">
+					</textbox>
+				</vlayout>
+			</vlayout>
+		</panelchildren>
+	</panel>
+</zk>
+

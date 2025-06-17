@@ -4,7 +4,7 @@
 			<button tooltiptext="Tree" onClick="@command('switchToTreeModeCmd')" iconSclass="z-icon-sitemap" disabled="@load(vm.treeMode)"/>
 			<button tooltiptext="Grid" onClick="@command('switchToListboxModeCmd')" iconSclass="z-icon-table" disabled="@load(vm.listboxMode)"/>
 		</hbox>
-		<tree id="tree" hflex="1" model="${vm.treeModel}" visible="@load(vm.treeMode)">
+		<tree id="tree" hflex="1" model="@load(vm.treeModel)" visible="@load(vm.treeMode)">
 			<treecols>
 				<treecol hflex="1" label="${c:l('web.path')}" />
 				<treecol hflex="1" label="${c:l('web.description')}" />

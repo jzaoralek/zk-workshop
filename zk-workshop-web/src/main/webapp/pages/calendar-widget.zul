@@ -2,5 +2,6 @@
     <include src="/pages/calendar-core.zul"
              showControls="true"
              weekOfYear="false"
-             showFilter="false"/>
+             showFilter="false"
+             height="500px"/>
 </zk>

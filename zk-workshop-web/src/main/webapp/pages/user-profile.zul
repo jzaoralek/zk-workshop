@@ -66,11 +66,106 @@
 						Editujete profil <label value="@load(vm.currentUser.fullName)"/>.
 					</div>
 					<hlayout>
-						<button onClick="@command('save')" iconSclass="z-icon-check" label="${c:l('web.save')}"/>
+						<button onClick="@command('save', element=cursorPosVlayout)" iconSclass="z-icon-check" label="${c:l('web.save')}"/>
 						<button onClick="@command('reload')" iconSclass="z-icon-refresh" label="${c:l('web.reload')}"/>
 					</hlayout>
+					
+					<vlayout xmlns:w="client" id="cursorPosVlayout" >
+						<textbox w:onBind="registerCursorPositionListener(this)"
+							apply="com.ness.zkworkshop.web.controller.CursorPositionComposer" 
+							rows="10" 
+							width="100%" 
+							id="thetextbox"
+							value="@bind(vm.textval)" />
+						<button onClick="@command('insertValue', element=thetextbox)" label="Insert text at the cursor position in the textbox" />
+						<button label="updatePosition-JS" w:onClick="cursorPosition();" />				
+					</vlayout>
+					
+					<bandbox id="bd"
+						apply="org.zkoss.bind.BindComposer"
+						viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.TreeViewModel')"
+						readonly="true"
+						width="100%" >
+						<bandpopup width="550px" height="500px" >
+							<vlayout>
+								<hbox>
+									<button tooltiptext="Tree" onClick="@command('switchToTreeModeCmd')" iconSclass="z-icon-sitemap" disabled="@load(vm.treeMode)"/>
+									<button tooltiptext="Grid" onClick="@command('switchToListboxModeCmd')" iconSclass="z-icon-table" disabled="@load(vm.listboxMode)"/>
+								</hbox>
+								<tree id="tree" 
+									model="@load(vm.treeModel)"
+									vflex="1" 
+									hflex="1"
+									mold="paging"
+									pageSize="10" >
+								</tree>
+						
+								<listbox model="@bind(vm.treeList)" visible="@load(vm.listboxMode)" if="false" >
+									<listhead>
+										<listheader hflex="1" label="${c:l('web.path')}" />
+										<listheader hflex="1" label="${each.data.description}"/>
+										<listheader hflex="min" label="Size"/>
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell>
+												<label value="@bind(each.path)"/>
+											</listcell>
+											<listcell>
+												<label value="@bind(each.description)"/>
+											</listcell>
+											<listcell>
+												<label value="@bind(each.size)"/>
+											</listcell>
+										</listitem>
+									</template>
+								</listbox>
+								<button label="reload" onClick="@command('treeModelReloadCmd')" />
+							</vlayout>
+						</bandpopup>
+					</bandbox>
 				</vlayout>
 			</panelchildren>
 	</panel>
+	
+	<script>
+	  	<![CDATA[
+	     function getCursorPosition(element) {
+	         var el = $(element).get(0);
+	         var pos = 0;
+	         if ('selectionStart' in el) {
+	             pos = el.selectionStart;
+	         } else if ('selection' in document) {
+	             el.focus();
+	             var Sel = document.selection.createRange();
+	             var SelLength = document.selection.createRange().text.length;
+	             Sel.moveStart('character', -el.value.length);
+	             pos = Sel.text.length - SelLength;
+	         }
+	         return pos;
+	     }
+	     
+	     function setCursorPosition(elementId, position) {
+	         var el = $(jq('$'+elementId)).get(0);
+	         if ('selectionStart' in el) {
+	             el.selectionStart = position;
+	             el.selectionEnd = position;
+	             el.focus();
+	         }
+	     }
+	
+	     function registerCursorPositionListener(wgt){
+	         console.log("binding:"+wgt.uuid)
+	         jq(wgt).bind("keydown click focus", function() {
+	             fireUpdate(wgt);
+	         });
+	     }
+	     
+	     function fireUpdate(wgt){
+	         wgt.fire('onCursorPos',{'cursorPos':getCursorPosition(wgt.$n())},{toServer:true},-1);
+	     }
+	     
+	  ]]>
+  </script>
 	
 </zk>

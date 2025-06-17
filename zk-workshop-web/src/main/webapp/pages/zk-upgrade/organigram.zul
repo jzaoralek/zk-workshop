@@ -1,0 +1,36 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Organigram</caption>
+		<panelchildren>
+			<organigram width="600px">
+				<orgchildren>
+					<orgitem label="Item1">
+						<orgchildren>
+							<orgitem label="Item2">
+								<orgchildren>
+									<orgitem label="Item3"/>
+									<orgitem label="Item4" selected="true">
+										<orgchildren>
+											<orgitem label="Item5"/>
+										</orgchildren>
+									</orgitem>
+								</orgchildren>
+							</orgitem>
+							<orgitem label="Item6">
+								<orgchildren>
+									<orgitem label="Item7"/>
+									<orgitem label="Item8"/>
+								</orgchildren>
+							</orgitem>
+						</orgchildren>
+					</orgitem>
+				</orgchildren>
+			</organigram>
+		</panelchildren>
+	</panel>
+</zk>
+

@@ -1,0 +1,26 @@
+<hbox hflex="1" vflex="1" 
+	align="center" pack="center" >
+    <div width="250px">
+    	<a href="/" style="text-decoration: none;">
+	        <label value="ZK 9.6.4 Upgrade Demo" sclass="banner" />
+    	</a>
+    </div>
+
+    <style>
+        .z-popup-content-szp {
+            padding: 0px;
+        }
+
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #F9FCFF !important;
+            text-shadow: none !important;
+            opacity: 1;  /* Firefox */
+        }
+    </style>
+
+    <hbox hflex="1" vflex="1" pack="end" align="center"
+          viewModel="@id('vm') @init('zksandbox.i18n.LocaleVM')" >
+
+    </hbox>
+
+</hbox>

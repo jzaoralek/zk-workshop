@@ -1,0 +1,30 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Input group</caption>
+		<panelchildren>
+			<vlayout>
+				<inputgroup>
+					@<textbox />
+				</inputgroup>
+
+				<inputgroup>
+					<textbox placeholder="Recipient's username"/>@example.com
+				</inputgroup>
+
+				<inputgroup>
+					$<textbox/>.00
+				</inputgroup>
+
+				<inputgroup>
+					With textarea
+					<textbox multiline="true" rows="5" cols="30"/>
+				</inputgroup>
+			</vlayout>
+		</panelchildren>
+	</panel>
+</zk>
+

@@ -1,0 +1,29 @@
+<?meta http-equiv="Content-Type" content="text/html; charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<zk>	
+	<borderlayout hflex="1" vflex="1">
+		<north border="none"
+			collapsible="false"
+			splittable="false"
+			sclass="template-north">
+			<include src="/pages/template/banner-zk-upgrade.zul" />
+		</north>
+		<west width="260px" border="none" 
+			collapsible="true"
+			splittable="true"
+			minsize="300">
+			<include src="/pages/template/sidebar-zk-upgrade.zul" />
+		</west>
+		<center id="mainContent" autoscroll="true" >
+			<div self="@{insert(mainContent)}" hflex="1" vflex="1" >
+			</div>
+		</center>
+		<south border="none"
+			collapsible="false"
+			splittable="false"
+			sclass="template-south" >
+			<include src="/pages/template/footer.zul" />
+		</south>
+	</borderlayout>
+</zk>

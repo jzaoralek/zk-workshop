@@ -1,0 +1,48 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Checkbox režimy - switch, toggle</caption>
+		<panelchildren>
+			<grid id="settings">
+				<columns>
+					<column/>
+					<column width="100px"/>
+				</columns>
+				<auxhead>
+					<auxheader colspan="2" label="Checkbox modes"/>
+				</auxhead>
+				<rows>
+					<row>
+						Switch
+						<checkbox mold="switch" checked="true"/>
+					</row>
+					<row>
+						Switch (disabled)
+						<checkbox mold="switch" checked="true" disabled="true"/>
+					</row>
+					<row>
+						Switch (disabled)
+						<checkbox mold="switch" disabled="true"/>
+					</row>
+
+					<row>
+						Toggle
+						<checkbox mold="toggle" checked="true"/>
+					</row>
+					<row>
+						Toggle (disabled)
+						<checkbox mold="toggle" checked="true" disabled="true"/>
+					</row>
+					<row>
+						Toggle (disabled)
+						<checkbox mold="toggle" disabled="true"/>
+					</row>
+				</rows>
+			</grid>
+		</panelchildren>
+	</panel>
+</zk>
+

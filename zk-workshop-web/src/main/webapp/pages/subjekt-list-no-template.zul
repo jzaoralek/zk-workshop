@@ -1,0 +1,47 @@
+<?page title="${c:l('web.application.name')} | ${c:l('web.subject.list')}" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<vbox viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.SubjektListVM')" hflex="1" vflex="1" >
+	<listbox model="@bind(vm.subjektList)"
+			 onSelect="@command('detail')"
+			 mold="paging"
+			 pageSize="5"
+			 selectedItem="@bind(vm.subjektSelected)"
+			 hflex="1"
+			 vflex="1" >
+		<auxhead>
+			<auxheader>
+				Kód
+			</auxheader>
+			<auxheader>
+				Název
+			</auxheader>
+			<auxheader/>
+		</auxhead>
+		<listhead>
+			<listheader hflex="1"/>
+			<listheader hflex="3"/>
+			<listheader hflex="min"/>
+		</listhead>
+		<template name="model">
+			<listitem>
+				<listcell>
+					<label value="@bind(each.kod)"/>
+				</listcell>
+				<listcell>
+					<label value="@bind(each.nazev)"/>
+				</listcell>
+				<listcell>
+					<button iconSclass="z-icon-ellipsis-h"
+							popup="menuCourse_${each.kod}, position=after_end" />
+					<menupopup id="menuCourse_${each.kod}" >
+						<!-- Aktivace/Deaktivace -->
+						<menuitem label="Položka 1" />
+						<menuitem label="Položka 2" />
+						<menuitem label="Položka 3" />
+					</menupopup>
+				</listcell>
+			</listitem>
+		</template>
+	</listbox>
+</vbox>

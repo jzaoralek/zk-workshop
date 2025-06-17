@@ -1,5 +1,5 @@
 <?page title="${c:l('web.application.name')} | Calendar" contentType="text/html;charset=UTF-8" ?>
-<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
 
 <zk>
     <panel self="@{define(mainContent)}" vflex="1">

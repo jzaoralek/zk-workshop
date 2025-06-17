@@ -1,0 +1,30 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Linelayout</caption>
+		<panelchildren>
+			<linelayout orient="horizontal" lineStyle="background:rgba(0,0,0,0.5)" >
+				<lineitem>
+					<label>8 am</label>
+					<button>good morning</button>
+				</lineitem>
+				<lineitem opposite="true" pointIconSclass="z-icon-plus-circle" pointStyle="background: #FF4051">
+					<label>12 pm</label>
+					<button>lunch time</button>
+				</lineitem>
+				<lineitem>
+					<label>6 pm</label>
+					<button>dinner time</button>
+				</lineitem>
+				<lineitem opposite="true">
+					<label>10 pm</label>
+					<button>good night</button>
+				</lineitem>
+			</linelayout>
+		</panelchildren>
+	</panel>
+</zk>
+

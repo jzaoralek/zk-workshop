@@ -1,0 +1,37 @@
+<zk>
+	<navbar id="navbar"
+			orient="vertical"
+			sclass="vertical"
+			viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.SidebarZkUpgradeVM')"
+			style="border: none;" >
+			<nav label="ZK PE - od v8.5.1.2" iconSclass="z-icon-home">
+				<navitem label="Toolbar - overflow button" href="/zk-workshop-web/pages/zk-upgrade/toolbar-overflow-button.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navseparator/>
+				<navitem label="Input group" href="/zk-workshop-web/pages/zk-upgrade/input-group.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Range slider" href="/zk-workshop-web/pages/zk-upgrade/range-slider.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Rating" href="/zk-workshop-web/pages/zk-upgrade/rating.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Switch, toggle" href="/zk-workshop-web/pages/zk-upgrade/checkbox-switch-toggle.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navseparator />
+				<navitem label="Sticky headers" href="/zk-workshop-web/pages/zk-upgrade/sticky-headers.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Pdf Viewer" href="/zk-workshop-web/pages/zk-upgrade/pdf-viewer.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+			</nav>
+			<nav label="ZK EE" iconSclass="z-icon-magic" style="margin-top: 20px;">
+				<navitem label="Knob" href="/zk-workshop-web/pages/zk-upgrade/knob.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Signature" href="/zk-workshop-web/pages/zk-upgrade/signature.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Chosenbox" href="/zk-workshop-web/pages/zk-upgrade/chosenbox.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Coachmark" href="/zk-workshop-web/pages/zk-upgrade/coachmark.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Searchbox" href="/zk-workshop-web/pages/zk-upgrade/searchbox.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Linelayout" href="/zk-workshop-web/pages/zk-upgrade/linelayout.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Cascader" href="/zk-workshop-web/pages/zk-upgrade/cascader.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Toast" href="/zk-workshop-web/pages/zk-upgrade/toast.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Organigram" href="/zk-workshop-web/pages/zk-upgrade/organigram.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="ZK Calendar" href="/zk-workshop-web/pages/calendar.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Stepbar" href="/zk-workshop-web/pages/zk-upgrade/stepbar.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Navbar" href="/zk-workshop-web/pages/zk-upgrade/navbar.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="WCAG 2" href="/zk-workshop-web/pages/zk-upgrade/wcag2.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navseparator/>
+				<navitem label="Listbox - load on demand" href="/zk-workshop-web/pages/listbox-load-on-demand.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+				<navitem label="Listbox - huge data" href="/zk-workshop-web/pages/listbox-5.zul" selected="@init(vm.isNavItemSelected(self.href))" />
+			</nav>
+	</navbar>
+</zk>

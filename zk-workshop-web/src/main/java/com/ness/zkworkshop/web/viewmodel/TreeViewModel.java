@@ -45,6 +45,12 @@ public class TreeViewModel {
 		this.mode = TreeListboxMode.LISTBOX;
 	}
 	
+	@NotifyChange("treeModel")
+	@Command
+	public void treeModelReloadCmd() {
+		this.treeModel = new DefaultTreeModel<>(PackageDataUtil.getRoot());
+	}
+	
 	@DependsOn("mode")
 	public boolean isTreeMode() {
 		return this.mode == TreeListboxMode.TREE;

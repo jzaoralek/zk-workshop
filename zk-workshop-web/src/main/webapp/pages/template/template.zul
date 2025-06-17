@@ -1,7 +1,9 @@
 <?meta http-equiv="Content-Type" content="text/html; charset=UTF-8"?>
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 
-<zk>	
+<zk>
+	<script src="/sources/js/sdat-mutation-observer.js"></script>
+	
 	<borderlayout hflex="1" vflex="1">
 		<north border="none"
 			collapsible="false"

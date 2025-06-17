@@ -1,0 +1,25 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+    <panel self="@{define(mainContent)}">
+        <caption sclass="fn-caption" iconSclass="z-icon-folder">Listbox - load on demand</caption>
+        <panelchildren>
+            <div apply="org.zkoss.bind.BindComposer"
+                 viewModel="@id('vm') @init('zksandbox.vm.LoadOnDemandViewModel')">
+
+                <listbox id="list" model="@bind(vm.hugeList)" width="200px" height="540px">
+                    <listhead>
+                        <listheader label="Load On Demand" sort="auto" />
+                    </listhead>
+                </listbox>
+
+                <style>
+                    div.z-listbox-body .z-listcell {
+                    padding: 2px 5px;
+                    }
+                </style>
+            </div>
+        </panelchildren>
+    </panel>
+</zk>

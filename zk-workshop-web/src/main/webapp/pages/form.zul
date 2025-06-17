@@ -1,0 +1,35 @@
+<?page title="${c:l('web.application.name')} | ${c:l('web.userProfile')}" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		viewModel="@id('vm') @init('com.ness.zkworkshop.web.viewmodel.FormVM')"
+		border="none" hflex="1" vflex="1">
+			<caption iconSclass="z-icon-user" sclass="fn-caption" label="Formulář"/>
+			<panelchildren>
+				<vlayout>
+					<grid width="500px">
+						<columns>
+							<column align="right" hflex="min" valign="top"/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<cell sclass="row-title">Enum radiobutton:</cell>
+								<cell>
+									<vlayout>
+										<radiogroup id="group" selectedItem="@bind(vm.stavKeDniMode)">
+											<radio forEach="${vm.stavKeDniModeValues}" label="${each}" value="${each}"/>
+										</radiogroup>
+									</vlayout>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<hlayout>
+						<button onClick="@command('submitCmd')" iconSclass="z-icon-check" label="${c:l('web.save')}"/>
+					</hlayout>
+				</vlayout>
+			</panelchildren>
+	</panel>
+</zk>

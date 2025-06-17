@@ -1,0 +1,63 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk>
+	<style>
+		/*
+		.z-listbox-frozen .z-frozen {
+			height: 0px !important;
+		}
+
+		.z-listbox-frozen .z-frozen-body {
+			overflow: auto !important;
+		}
+		*/
+	</style>
+
+	<panel>
+			<panelchildren>
+				<listbox id="listbox" height="300px" sizedByContent="true"
+						 emptyMessage="No items match your search"
+						 tooltiptext="Double Click to View Detail" >
+					<frozen columns="0"/>
+					<listhead sizable="true">
+						<listheader label="Id" visible="false"  />
+						<listheader label="Item Id" visible="false"  />
+						<listheader label="Item Code" width="70px" visible="true"   />
+						<listheader label="Item Description" width="300px" visible="true"  />
+						<listheader label="Created Date" width="150px" visible="true" />
+						<listheader label="Created By" width="150px" visible="true" />
+						<listheader label="Terminated Date" width="150px" visible="true" />
+						<listheader label="Terminated By" width="150px" visible="true" />
+						<listheader label="UOM" visible="true"  />
+						<listheader label="Composition" visible="true"  />
+						<listheader label="Default" visible="true" />
+					</listhead>
+					<listitem>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+					</listitem>
+					<listitem>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+						<listcell label="cell"/>
+					</listitem>
+				</listbox>
+			</panelchildren>
+	</panel>
+</zk>

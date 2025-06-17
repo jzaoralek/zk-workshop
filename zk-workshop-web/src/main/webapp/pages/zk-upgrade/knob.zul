@@ -1,0 +1,65 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Knob - slider režim</caption>
+		<panelchildren>
+			<vlayout spacing="0px" hflex="1">
+				<hlayout spacing="10px" hflex="1">
+					<groupbox title="VOLUME" width="240px" height="280px" closable="false">
+						<slider mold="knob" width="100%" height="100%"
+								maxpos="11" curpos="7" step="1"
+								angleArc="240"
+								strokeWidth="25"/>
+					</groupbox>
+					<vlayout spacing="0px">
+						<groupbox title="BASS" width="120px" height="140px" closable="false">
+							<slider mold="knob" width="100%" height="100%"
+									curpos="65" step="1"
+									angleArc="240" strokeWidth="13"/>
+						</groupbox>
+						<groupbox title="TREBLE" width="120px" height="140px" closable="false">
+							<slider mold="knob" width="100%" height="100%"
+									curpos="45" step="1"
+									angleArc="240" strokeWidth="13"/>
+						</groupbox>
+					</vlayout>
+				</hlayout>
+				<groupbox width="370px" title="Other Controls">
+					<hlayout hflex="1" sclass="otherControls" spacing="0">
+						<vlayout hflex="1">
+							A<slider orient="vertical" height="100px" curpos="20" />
+						</vlayout>
+						<vlayout hflex="1">
+							B<slider orient="vertical" height="100px" curpos="90" />
+						</vlayout>
+						<vlayout hflex="1">
+							C<slider orient="vertical" height="100px" curpos="10" />
+						</vlayout>
+						<vlayout hflex="1">
+							D<slider orient="vertical" height="100px" curpos="30" />
+						</vlayout>
+						<vlayout hflex="1">
+							E<slider orient="vertical" height="100px" curpos="70" />
+						</vlayout>
+						<vlayout hflex="1">
+							F<slider orient="vertical" height="100px" curpos="50" />
+						</vlayout>
+					</hlayout>
+				</groupbox>
+			</vlayout>
+
+			<style>
+				.otherControls .z-vlayout-inner {
+				text-align: center;
+				}
+				.otherControls .z-vlayout-inner > * {
+				display: inline-block;
+				}
+			</style>
+		</panelchildren>
+	</panel>
+</zk>
+

@@ -1,0 +1,27 @@
+<?page title="${c:l('web.application.name')} | ZK Upgrade" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template/template-zk-upgrade.zul"?>
+
+<zk>
+	<panel self="@{define(mainContent)}"
+		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
+		<caption sclass="fn-caption" iconSclass="z-icon-folder">Toolbar - overflow button</caption>
+		<panelchildren>
+			<tabbox height="100%" style="min-width: ">
+				<tabs>
+					<tab label="Tab 1" closable="true" />
+				</tabs>
+				<toolbar width="20%" overflowPopup="true" align="end" >
+					<toolbarbutton iconSclass="z-icon-plus-square" />
+					<toolbarbutton iconSclass="z-icon-pencil" />
+					<toolbarbutton iconSclass="z-icon-copy" />
+					<toolbarbutton iconSclass="z-icon-trash" />
+					<separator orient="vertical" bar="true" />
+					<separator orient="horizontal" bar="true" />
+					<toolbarbutton iconSclass="z-icon-refresh" />
+					<toolbarbutton iconSclass="z-icon-download" />
+				</toolbar>
+			</tabbox>
+		</panelchildren>
+	</panel>
+</zk>
+
