@@ -128,7 +128,7 @@
 			</panelchildren>
 	</panel>
 	
-	<script type="text/javascript">
+	<script>
 	  	<![CDATA[
 	     function getCursorPosition(element) {
 	         var el = $(element).get(0);

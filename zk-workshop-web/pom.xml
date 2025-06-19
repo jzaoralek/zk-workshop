@@ -16,36 +16,20 @@
 	</licenses>
 	
 	<properties>
-		<zk.version>10.1.0-Eval</zk.version>
-		<zkcharts.version>3.0.3-Eval</zkcharts.version>
-		<zkcalendar.version>3.1.1</zkcalendar.version>
-		<pivottable.version>2.5.2-Eval</pivottable.version>
-		<gmapsz.version>3.2.0</gmapsz.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+
+		<zk.version>10.1.0-Eval</zk.version>
+		<zkJakartaVersionEval>10.1.0-jakarta-Eval</zkJakartaVersionEval>
+		<keikai.version>7.0.0-jakarta.FL.202501171246-Eval</keikai.version>
+		<zkcharts.version>3.0.3-Eval</zkcharts.version>
+		<zkcalendar.version>3.1.1</zkcalendar.version>
+		<pivottable.version>2.5.2-Eval</pivottable.version>
+		<gmapsz.version>3.2.0</gmapsz.version>
 	</properties>
 
-	<!--
-	<repositories>
-		<repository>
-			<id>ZK Evaluation</id>
-			<url>https://mavensync.zkoss.org/eval</url>
-		</repository>
-		<repository>
-			<id>com.asual.maven.public</id>
-			<name>Asual Public Repository</name>
-			<url>http://www.asual.com/maven/content/groups/public</url>
-		</repository>
-		<repository>
-		    <id>Keikai EVAL</id>
-		    <name>Keikai Evaluation Repository</name>
-		    <url>https://mavensync.zkoss.org/eval</url>
-		</repository>
-	</repositories>
-	-->
-	
 	<repositories>
 		<repository>
 			<id>Keikai EVAL</id>
@@ -68,19 +52,7 @@
 			<name>Keikai OSE</name>
 			<url>https://mavensync.zkoss.org/maven2</url>
 		</repository>
-		<!--
-        <repository>
-            <id>szp-group</id>
-            <url>https://nexus.tempest.sk/repository/szp-group/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        -->
-        <repository>
+		<repository>
             <id>redhat GA</id>
             <url>https://maven.repository.redhat.com/ga/</url>
         </repository>
@@ -95,14 +67,6 @@
             <id>spring-milestones</id>
             <url>https://repo.spring.io/milestone</url>
         </repository>
-
-		<!--
-		<repository>
-			<id>ZK CE</id>
-			<name>ZK CE Repository</name>
-			<url>https://mavensync.zkoss.org/maven2</url>
-		</repository>
-		-->
     </repositories>
     
 	<dependencies>
@@ -110,7 +74,7 @@
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkmax</artifactId>
-			<version>${zk.version}</version>
+			<version>${zkJakartaVersionEval}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.zkoss.zk</groupId>
@@ -118,25 +82,48 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zuti</artifactId>
-			<version>${zk.version}</version>
+			<version>${zkJakartaVersionEval}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>za11y</artifactId>
-			<version>${zk.version}</version>
+			<version>${zkJakartaVersionEval}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkplus</artifactId>
-			<version>${zk.version}</version>
+			<version>${zkJakartaVersionEval}</version>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zk</artifactId>
+			<version>${zkJakartaVersionEval}</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zul</artifactId>
+			<version>${zkJakartaVersionEval}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkbind</artifactId>
+			<version>${zkJakartaVersionEval}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zhtml</artifactId>
+			<version>${zkJakartaVersionEval}</version>
+		</dependency>
+
+		<!-- Client MVVM -->
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>client-bind</artifactId>
 			<version>${zk.version}</version>
 		</dependency>
 
@@ -156,15 +143,26 @@
 		
 		<!-- Keikai -->
 		<dependency>
-		    <groupId>io.keikai</groupId>
-		    <artifactId>keikai-ex</artifactId>
-		    <version>6.1.0-Eval</version>
+			<groupId>io.keikai</groupId>
+			<artifactId>keikai-ex</artifactId>
+			<version>${keikai.version}</version>
 		</dependency>
+
+		<!-- Calendar -->
 		<dependency>
 			<groupId>org.zkoss.calendar</groupId>
 			<artifactId>calendar</artifactId>
 			<version>${zkcalendar.version}</version>
 		</dependency>
+
+		<!-- ZK Litner -->
+		<!--
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zklinter</artifactId>
+			<version>10.1.0-Eval</version>
+		</dependency>
+		-->
 
 		<!-- Addons 
 		<dependency>
@@ -197,42 +195,22 @@
 			<artifactId>iceblue_c</artifactId>
 			<version>${zk.version}</version>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>org.zkoss.theme</groupId>
-			<artifactId>breeze</artifactId>
-			<version>${zk.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.theme</groupId>
-			<artifactId>sapphire</artifactId>
-			<version>${zk.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.theme</groupId>
-			<artifactId>silvertail</artifactId>
-			<version>${zk.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.theme</groupId>
-			<artifactId>atlantic</artifactId>
-			<version>${zk.version}</version>
-		</dependency>
-		-->
-		<!-- ZK Litner -->
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zklinter</artifactId>
-			<version>10.1.0-Eval</version>
-		</dependency>
 
 		<!-- Java servlet -->
+		<!--
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
-			<!-- <scope>provided</scope> -->
 		</dependency>
+		-->
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>5.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<!-- Commons -->
 		<!--
@@ -324,13 +302,12 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.4.28.v20200408</version>
+				<version>11.0.25</version>
 				<configuration>
 					<webApp>
 						<contextPath>/${project.artifactId}</contextPath>
 						<allowDuplicateFragmentNames>true</allowDuplicateFragmentNames>
 					</webApp>
-					<scanIntervalSeconds>5</scanIntervalSeconds>
 				</configuration>
 			</plugin>
 			<!-- Compile java -->
@@ -371,6 +348,7 @@
 				</executions>
 			</plugin>
 			<!-- ZKLinter -->
+			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -388,6 +366,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
 		</plugins>
 	</build>
 </project>

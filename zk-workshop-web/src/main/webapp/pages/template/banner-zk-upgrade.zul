@@ -2,7 +2,7 @@
 	align="center" pack="center" >
     <div width="250px">
     	<a href="/" style="text-decoration: none;">
-	        <label value="ZK 9.6.4 Upgrade Demo" sclass="banner" />
+	        <label value="ZK Upgrade Demo" sclass="banner" />
     	</a>
     </div>
 

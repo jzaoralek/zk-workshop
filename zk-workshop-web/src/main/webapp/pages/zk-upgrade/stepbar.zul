@@ -13,7 +13,7 @@
 					</template>
 				</stepbar>
 				<separator height="30px"/>
-				<div id="stepContent" align="center"/>
+				<div id="stepContent" />
 				<separator height="30px"/>
 				<hlayout>
 					<button id="back" label="Back"/>

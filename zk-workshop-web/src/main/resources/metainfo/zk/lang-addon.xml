@@ -16,4 +16,19 @@
             <property-value>self</property-value>
         </property>
     </component>
+
+    <component>
+        <component-name>bs-row</component-name>
+        <extends>div</extends>
+        <property>
+            <property-name>sclass</property-name>
+            <property-value>row py-1</property-value>
+        </property>
+    </component>
+
+    <component>
+        <component-name>state-box</component-name>
+        <template-uri>/pages/component/stateBox.zul</template-uri>
+    </component>
+    
 </language-addon>

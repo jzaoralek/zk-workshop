@@ -11,12 +11,22 @@
 		<value>breeze</value>
 	</library-property>
 
+	<!-- Client MVVM
+	<library-property>
+		<name>org.zkoss.bind.defaultComposer.class</name>
+		<value>org.zkoss.clientbind.ClientBindComposer</value>
+	</library-property>
+	<listener>
+		<listener-class>org.zkoss.clientbind.BinderPropertiesRenderer</listener-class>
+	</listener>
+	-->
+
 	<!-- Labels -->
 	<system-config>
 		<label-location>/WEB-INF/labels/labels_en.properties</label-location>
 		<label-location>/WEB-INF/labels/labels.properties</label-location>
 	</system-config>
-	
+
 	<!-- CSS -->
 	<desktop-config>
 		<theme-uri>/sources/css/styles.css</theme-uri>
@@ -25,7 +35,7 @@
 	<listener>
 		<listener-class>com.ness.zkworkshop.web.interceptor.SdatDesktopInit</listener-class>
 	</listener>
-	
+
 <!-- 	<library-property> -->
 <!-- 	    <name>org.zkoss.theme.preferred</name> -->
 <!-- 	    <value>breeze</value> -->

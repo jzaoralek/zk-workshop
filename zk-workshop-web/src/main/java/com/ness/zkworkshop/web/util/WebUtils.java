@@ -1,12 +1,10 @@
 package com.ness.zkworkshop.web.util;
 
-
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class WebUtils {
 
