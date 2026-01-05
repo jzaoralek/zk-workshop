@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="spring-snapshots" />
+      <option name="name" value="spring-snapshots" />
+      <option name="url" value="https://repo.spring.io/snapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="ZK Evaluation" />
+      <option name="name" value="ZK Evaluation" />
+      <option name="url" value="https://mavensync.zkoss.org/eval" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Keikai EVAL" />
+      <option name="name" value="Keikai Evaluation Repository" />
+      <option name="url" value="https://mavensync.zkoss.org/eval" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="ZK EE" />
+      <option name="name" value="ZK EE" />
+      <option name="url" value="https://maven.zkoss.org/repo/zk/ee" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="OSE" />
+      <option name="name" value="Keikai OSE" />
+      <option name="url" value="https://mavensync.zkoss.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="ZK CE" />
+      <option name="name" value="ZK CE Repository" />
+      <option name="url" value="https://mavensync.zkoss.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="szp-group" />
+      <option name="name" value="szp-group" />
+      <option name="url" value="https://nexus.tempest.sk/repository/szp-group/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Keikai EE" />
+      <option name="name" value="Keikai EE Repository" />
+      <option name="url" value="https://maven.zkoss.org/repo/keikai/ee/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="redhat GA" />
+      <option name="name" value="redhat GA" />
+      <option name="url" value="https://maven.repository.redhat.com/ga/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-milestones" />
+      <option name="name" value="spring-milestones" />
+      <option name="url" value="https://repo.spring.io/milestone" />
+    </remote-repository>
+  </component>
+</project>

@@ -6,16 +6,25 @@
 		   viewModel="@id('vm')@init('com.ness.zkworkshop.web.viewmodel.ZKupgradeVM')">
 		<caption sclass="fn-caption" iconSclass="z-icon-folder">Searchbox</caption>
 		<panelchildren>
-			<zscript>
+			<zscript if="false">
 				ListModel model = new ListModelArray(new String[] {
 				"North America", "South America", "Europe", "Asia", "Africa", "Oceania", "Antarctica"
 				});
+				model.setMultiple(true);
+
 			</zscript>
-			<searchbox model="${model}" placeholder="An unknown place" autoclose="true" hflex="1">
+			<searchbox id="searchbox" model="@load(vm.itemList)"
+					   multiple="true"
+					   onSelect="@command('onSelectCmd')"
+					   selectedItems="@bind(vm.itemSelectedSet)"
+					   placeholder="An unknown place" autoclose="false" hflex="1" >
 				<template name="model">
+					<!--
 					<html><![CDATA[
 				   <i class="z-icon-globe"></i> ${each}
 				   ]]></html>
+				   -->
+					<label value="${each.subject}" />
 				</template>
 			</searchbox>
 		</panelchildren>

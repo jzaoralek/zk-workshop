@@ -21,8 +21,8 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 
-		<zk.version>10.1.0-Eval</zk.version>
-		<zkJakartaVersionEval>10.1.0-jakarta-Eval</zkJakartaVersionEval>
+		<zk.version>10.2.0-Eval</zk.version>
+		<zkJakartaVersionEval>10.2.0-jakarta-Eval</zkJakartaVersionEval>
 		<keikai.version>7.0.0-jakarta.FL.202501171246-Eval</keikai.version>
 		<zkcharts.version>3.0.3-Eval</zkcharts.version>
 		<zkcalendar.version>3.1.1</zkcalendar.version>
@@ -124,7 +124,7 @@
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>client-bind</artifactId>
-			<version>${zk.version}</version>
+			<version>${ }</version>
 		</dependency>
 
 		<!-- ZK Charts -->
@@ -270,6 +270,7 @@
 			<version>4.11.1.0</version>
 		</dependency>
 		-->
+
 		<!-- filters -->
 		<dependency>
 			<groupId>com.jhlabs</groupId>

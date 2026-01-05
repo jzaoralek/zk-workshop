@@ -11,7 +11,9 @@
 		<value>breeze</value>
 	</library-property>
 
-	<!-- Client MVVM
+	<!-- Client MVVM -->
+	<!-- Globalni nastaveni -->
+	<!--
 	<library-property>
 		<name>org.zkoss.bind.defaultComposer.class</name>
 		<value>org.zkoss.clientbind.ClientBindComposer</value>
@@ -20,6 +22,11 @@
 		<listener-class>org.zkoss.clientbind.BinderPropertiesRenderer</listener-class>
 	</listener>
 	-->
+
+	<library-property>
+		<name>org.zkforge.ckez.CKSource</name>
+		<value>https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js</value>
+	</library-property>
 
 	<!-- Labels -->
 	<system-config>

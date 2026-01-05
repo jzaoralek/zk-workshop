@@ -1,0 +1,5 @@
+
+
+java:S1488$"]Immediately return this expression instead of assigning it to the temporary variable "value".(Ήÿ‡•ώÿÿÿÿ8ωΨ¦–1
+l	java:S116"PRename this field "_size" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(α°φ€8Ω¦–1
+p	java:S116"ORename this field "_asc" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(φ³τσωÿÿÿÿ8‚Ω¦–1

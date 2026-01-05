@@ -26,6 +26,13 @@ public class Todo implements Serializable, Cloneable {
 		this.date = date;
 		this.description = description;
 	}
+
+	public Todo(Integer id, String subject) {
+		this.id = id;
+		this.subject = subject;
+		this.priority = Priority.LOW;
+	}
+
 	public Todo(String subject) {
 		this.subject = subject;
 		this.priority = Priority.LOW;
@@ -113,4 +120,15 @@ public class Todo implements Serializable, Cloneable {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "Todo{" +
+				"complete=" + complete +
+				", subject='" + subject + '\'' +
+				", priority=" + priority +
+				", date=" + date +
+				", description='" + description + '\'' +
+				", id=" + id +
+				'}';
+	}
 }

@@ -5,7 +5,7 @@ import zksandbox.tablemodel.FakeListModel;
 
 public class LoadOnDemandViewModel  {
 
-    private ListModel<String> hugeList = new FakeListModel(250000);
+    private ListModel<String> hugeList = new FakeListModel(30000);
 
     public ListModel<String> getHugeList() {
         return hugeList;

@@ -1,0 +1,13 @@
+
+?
+java:S1604º"(Make this anonymous inner class a lambda(Ž£¯š
+_
+java:S2583†"CChange this condition so that it does not always evaluate to "true"(¤ðËºýÿÿÿÿ
+h
+java:S1450""SRemove the "rows" field and declare it as a local variable in the relevant methods.(†šÀ#
+c	java:S119"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(ÎõÆúþÿÿÿÿ
+V	java:S125j"<This block of commented-out lines of code should be removed.(ý²±“üÿÿÿÿ
+G
+java:S1481”"+Remove this unused "column" local variable.(óâ®Òÿÿÿÿÿ
+8
+java:S1116À"Remove this empty statement.(ôŸŽìúÿÿÿÿ

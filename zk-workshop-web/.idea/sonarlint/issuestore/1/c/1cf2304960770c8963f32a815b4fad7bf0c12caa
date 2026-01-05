@@ -1,0 +1,37 @@
+
+_
+java:S2583‚"CChange this condition so that it does not always evaluate to "true"(¤ğËºıÿÿÿÿ
+o
+java:S1450"YRemove the "autopaging" field and declare it as a local variable in the relevant methods.(ÌÙû»
+B
+java:S1948",Make "tableModel" transient or serializable.(ùÁÒÉ
+B
+java:S1948",Make "autopaging" transient or serializable.(ÌÙû»
+[
+java:S1612$"@Replace this lambda with method reference 'this::onAfterRender'.(Í§íêÿÿÿÿÿ
+a
+java:S18541"FRemove this useless assignment to local variable "colsVisMenuOptions".(‚Ñ„ìüÿÿÿÿ
+R
+java:S14811"7Remove this unused "colsVisMenuOptions" local variable.(‚Ñ„ìüÿÿÿÿ
+P	java:S1252"<This block of commented-out lines of code should be removed.(Ûª“i
+L
+java:S4838@"6Change "Object" to the type handled by the Collection.(Ë¤±á
+>
+java:S1172m"(Remove this unused method parameter "e".(ÂËÀß
+C
+java:S1172w"(Remove this unused method parameter "e".(âîêóûÿÿÿÿ
+W	java:S125Š"<This block of commented-out lines of code should be removed.(Ü¤úÿÿÿÿÿ
+n
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 30 to the 15 allowed.(ùß°İÿÿÿÿÿ
+W	java:S125¤"<This block of commented-out lines of code should be removed.(”ÖÆôúÿÿÿÿ
+R	java:S125®"<This block of commented-out lines of code should be removed.(€íİ
+D
+java:S1172ß"(Remove this unused method parameter "e".(Öóûÿÿÿÿ
+D
+java:S1068".Remove this unused "autopaging" private field.(ÌÙû»
+Z
+java:S1144;"?Remove this unused private "generateShowHideCheckboxes" method.(«£üúÿÿÿÿ
+[
+java:S1144"?Remove this unused private "checkAndIndicateFrozenCols" method.(ùß°İÿÿÿÿÿ
+U
+java:S1144ó"9Remove this unused private "onColumnHiddenChange" method.(Ö¡ÃÕüÿÿÿÿ
