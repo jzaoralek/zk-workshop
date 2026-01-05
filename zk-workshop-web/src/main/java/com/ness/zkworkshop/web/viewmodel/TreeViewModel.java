@@ -84,8 +84,6 @@ public class TreeViewModel {
 			throw new IllegalArgumentException("zkRoot is null");
 		}
 
-		// test commit 2
-		
 		List<T_ELM> ret = new ArrayList<T_ELM>(64);
 		zkNodeToList(zkRoot.getChildren(), ret);
 		return ret;
