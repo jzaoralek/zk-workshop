@@ -19,6 +19,8 @@ public class SubjektListVM {
         for (int i = 1; i <= 10; i++) {
             subjektList.add(new Subjekt(i, "kod"+i, "nazev" + i));
         }
+
+        // test commit 3
     }
 
     @Command
